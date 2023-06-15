@@ -2,12 +2,14 @@ package com.proyectofinal.salud.entidades;
 
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
@@ -21,16 +23,18 @@ public class paciente extends persona {
     private String idPaciente;
     @Enumerated(EnumType.STRING)
     private obraSocial obraSocial;
-    private ArrayList<fichaMedica> historialMedico;
+    @OneToMany
+    private Collection<fichaMedica> historialMedico;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaNacimiento;
     private String sexo;
-    private ArrayList<turno> turnos;
+    @OneToMany
+    private Collection<turno> turnos;
 
     public paciente() {
     }
 
-    public paciente(String idPaciente, obraSocial obraSocial, ArrayList<fichaMedica> historialMedico, Date fechaNacimiento, String sexo, ArrayList<turno> turnos, String nombre, String apellido, String email, String telefono) {
+    public paciente(String idPaciente, obraSocial obraSocial, Collection<fichaMedica> historialMedico, Date fechaNacimiento, String sexo, Collection<turno> turnos, String nombre, String apellido, String email, String telefono) {
         super(nombre, apellido, email, telefono);
         this.idPaciente = idPaciente;
         this.obraSocial = obraSocial;
@@ -56,11 +60,11 @@ public class paciente extends persona {
         this.obraSocial = obraSocial;
     }
 
-    public ArrayList<fichaMedica> getHistorialMedico() {
+    public Collection<fichaMedica> getHistorialMedico() {
         return historialMedico;
     }
 
-    public void setHistorialMedico(ArrayList<fichaMedica> historialMedico) {
+    public void setHistorialMedico(Collection<fichaMedica> historialMedico) {
         this.historialMedico = historialMedico;
     }
 
@@ -80,11 +84,11 @@ public class paciente extends persona {
         this.sexo = sexo;
     }
 
-    public ArrayList<turno> getTurnos() {
+    public Collection<turno> getTurnos() {
         return turnos;
     }
 
-    public void setTurnos(ArrayList<turno> turnos) {
+    public void setTurnos(Collection<turno> turnos) {
         this.turnos = turnos;
     }
 
