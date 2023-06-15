@@ -15,8 +15,7 @@ public class imagen {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String idImagen;
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
+    @Lob@Basic(fetch = FetchType.LAZY)
     private byte[] archivo;
 
     public imagen() {
