@@ -54,6 +54,9 @@ public abstract class persona {
 
     @Override
     public String toString() {
-        return "Persona: " + "{Nombre = " + nombre + "} {Apellido = " + apellido + "} {Email = " + email + "} {Telefono = " + telefono + '}';
+        return "Persona: " + "{Nombre = " + nombre + "}\n"
+                +"{Apellido = " + apellido + "}\n"
+                +"{Email = " + email + "}\n"
+                +"{Telefono = " + telefono + '}';
     }
 }

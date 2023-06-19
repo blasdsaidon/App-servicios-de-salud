@@ -93,6 +93,11 @@ public class paciente extends persona {
 
     @Override
     public String toString() {
-        return "Paciente: " + "{Id del Paciente = " + idPaciente + "} {Obra Social = " + obraSocial + "} {Historial Medico = " + historialMedico + "} {Fecha De Nacimiento = " + fechaNacimiento + "} {Sexo = " + sexo + "} {Turnos = " + turnos + '}';
+        return "Paciente: " + "{Id del Paciente = " + idPaciente + "}\n"
+                +"{Obra Social = " + obraSocial + "}\n"
+                +"{Historial Medico = " + historialMedico + "}\n"
+                +"{Fecha De Nacimiento = " + fechaNacimiento + "}\n"
+                +"{Sexo = " + sexo + "}\n"
+                +"{Turnos = " + turnos + '}';
     }
 }

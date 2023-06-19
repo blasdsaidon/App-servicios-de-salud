@@ -25,7 +25,7 @@ public class medico extends persona {
     @Enumerated(EnumType.STRING)
     private obraSocial obraSocialRecibida;
     private ArrayList<Date> horariosDisponibles;
-    private Integer valorConsultar;
+    private Integer valorConsulta;
     private Integer calificacionServicio;
     @OneToMany
     private Collection<fichaMedica> historialConsultas;
@@ -36,13 +36,15 @@ public class medico extends persona {
     public medico() {
     }
 
+
     public medico(String idMedico, especialidad especialidad, obraSocial obraSocialRecibida, ArrayList<Date> horariosDisponibles, Integer valorConsultar, Integer calificacionServicio, Collection<fichaMedica> historialConsultas, Collection<turno> turnos, Boolean alta, String nombre, String apellido, String email, String telefono) {
+
         super(nombre, apellido, email, telefono);
         this.idMedico = idMedico;
         this.especialidad = especialidad;
         this.obraSocialRecibida = obraSocialRecibida;
         this.horariosDisponibles = horariosDisponibles;
-        this.valorConsultar = valorConsultar;
+        this.valorConsulta = valorConsulta;
         this.calificacionServicio = calificacionServicio;
         this.historialConsultas = historialConsultas;
         this.turnos = turnos;
@@ -81,12 +83,12 @@ public class medico extends persona {
         this.horariosDisponibles = horariosDisponibles;
     }
 
-    public Integer getValorConsultar() {
-        return valorConsultar;
+    public Integer getValorConsulta() {
+        return valorConsulta;
     }
 
-    public void setValorConsultar(Integer valorConsultar) {
-        this.valorConsultar = valorConsultar;
+    public void setValorConsulta(Integer valorConsulta) {
+        this.valorConsulta = valorConsulta;
     }
 
     public Integer getCalificacionServicio() {
@@ -123,6 +125,14 @@ public class medico extends persona {
 
     @Override
     public String toString() {
-        return "medico{" + "idMedico=" + idMedico + ", especialidad=" + especialidad + ", obraSocialRecibida=" + obraSocialRecibida + ", horariosDisponibles=" + horariosDisponibles + ", valorConsultar=" + valorConsultar + ", calificacionServicio=" + calificacionServicio + ", historialConsultas=" + historialConsultas + ", turnos=" + turnos + ", alta=" + alta + '}';
+        return "Medico: {" + "Id Medico = " + idMedico + "}\n"
+                +"{Especialidad = " + especialidad + "}\n"
+                +"{Obra Social Recibida = " + obraSocialRecibida + "}\n"
+                +"{Horarios Disponibles = " + horariosDisponibles + "}\n"
+                +"{Valor De La Consulta = " + valorConsulta + "}\n"
+                +"{Calificación Del Servicio = " + calificacionServicio + "}\n"
+                +"{Historial De Consultas = " + historialConsultas + "}\n"
+                +"{Turnos = " + turnos + "}\n"
+                +"{Alta = " + alta + '}';
     }
 }
