@@ -16,10 +16,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class medico extends persona {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String idMedico;
+    
     @Enumerated(EnumType.STRING)
     private especialidad especialidad;
     @Enumerated(EnumType.STRING)
@@ -32,15 +29,19 @@ public class medico extends persona {
     @OneToMany
     private Collection<turno> turnos;
     private Boolean alta;
-
     public medico() {
     }
 
+<<<<<<< HEAD
+    public medico( especialidad especialidad, obraSocial obraSocialRecibida, ArrayList<Date> horariosDisponibles, Integer valorConsulta, Integer calificacionServicio, Collection<fichaMedica> historialConsultas, Collection<turno> turnos, Boolean alta, String idPersona, String nombre, String apellido, String email, String telefono, com.proyectofinal.salud.entidades.imagen imagen, String password, com.proyectofinal.salud.enumeradores.rol rol) {
+        super(idPersona, nombre, apellido, email, telefono, imagen, password, rol);
+=======
 
     public medico(String idMedico, especialidad especialidad, obraSocial obraSocialRecibida, ArrayList<Date> horariosDisponibles, Integer valorConsultar, Integer calificacionServicio, Collection<fichaMedica> historialConsultas, Collection<turno> turnos, Boolean alta, String nombre, String apellido, String email, String telefono) {
 
         super(nombre, apellido, email, telefono);
         this.idMedico = idMedico;
+>>>>>>> development
         this.especialidad = especialidad;
         this.obraSocialRecibida = obraSocialRecibida;
         this.horariosDisponibles = horariosDisponibles;
@@ -51,14 +52,10 @@ public class medico extends persona {
         this.alta = alta;
     }
 
-    public String getIdMedico() {
-        return idMedico;
-    }
+ 
+    
 
-    public void setIdMedico(String idMedico) {
-        this.idMedico = idMedico;
-    }
-
+   
     public especialidad getEspecialidad() {
         return especialidad;
     }
@@ -125,6 +122,9 @@ public class medico extends persona {
 
     @Override
     public String toString() {
+<<<<<<< HEAD
+        return "medico{" + "especialidad=" + especialidad + ", obraSocialRecibida=" + obraSocialRecibida + ", horariosDisponibles=" + horariosDisponibles + ", valorConsulta=" + valorConsulta + ", calificacionServicio=" + calificacionServicio + ", historialConsultas=" + historialConsultas + ", turnos=" + turnos + ", alta=" + alta + '}';
+=======
         return "Medico: {" + "Id Medico = " + idMedico + "}\n"
                 +"{Especialidad = " + especialidad + "}\n"
                 +"{Obra Social Recibida = " + obraSocialRecibida + "}\n"
@@ -134,5 +134,8 @@ public class medico extends persona {
                 +"{Historial De Consultas = " + historialConsultas + "}\n"
                 +"{Turnos = " + turnos + "}\n"
                 +"{Alta = " + alta + '}';
+>>>>>>> development
     }
+
+   
 }
