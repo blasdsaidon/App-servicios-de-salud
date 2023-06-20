@@ -68,7 +68,11 @@ public class imagen {
 
     @Override
     public String toString() {
+<<<<<<< HEAD
         return "imagen{" + "idImagen=" + idImagen + ", mime=" + mime + ", nombre=" + nombre + ", archivo=" + archivo + '}';
+=======
+        return "Imagen: {" + "Id Imagen = " + idImagen + "} {Archivo = " + archivo + '}';
+>>>>>>> development
     }
 
  

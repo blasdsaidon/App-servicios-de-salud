@@ -109,7 +109,14 @@ public abstract class persona {
 
     @Override
     public String toString() {
+<<<<<<< HEAD
         return "persona{" + "idPersona=" + idPersona + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email + ", telefono=" + telefono + ", imagen=" + imagen + ", password=" + password + ", rol=" + rol + '}';
+=======
+        return "Persona: " + "{Nombre = " + nombre + "}\n"
+                +"{Apellido = " + apellido + "}\n"
+                +"{Email = " + email + "}\n"
+                +"{Telefono = " + telefono + '}';
+>>>>>>> development
     }
 
  

@@ -88,6 +88,7 @@ public class paciente extends persona {
 
     @Override
     public String toString() {
+<<<<<<< HEAD
         StringBuilder sb = new StringBuilder();
         sb.append("paciente{");
         sb.append("obraSocial=").append(obraSocial);
@@ -97,6 +98,14 @@ public class paciente extends persona {
         sb.append(", turnos=").append(turnos);
         sb.append('}');
         return sb.toString();
+=======
+        return "Paciente: " + "{Id del Paciente = " + idPaciente + "}\n"
+                +"{Obra Social = " + obraSocial + "}\n"
+                +"{Historial Medico = " + historialMedico + "}\n"
+                +"{Fecha De Nacimiento = " + fechaNacimiento + "}\n"
+                +"{Sexo = " + sexo + "}\n"
+                +"{Turnos = " + turnos + '}';
+>>>>>>> development
     }
 
     
