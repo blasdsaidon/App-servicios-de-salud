@@ -19,7 +19,6 @@ public class pacienteServicio {
     
     @Autowired
     private pacienteRepositorio pacienteRepo;
-    @Autowired
     private imagenServicio imagenServicio;
     
     @Transactional

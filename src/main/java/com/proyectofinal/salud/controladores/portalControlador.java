@@ -26,7 +26,10 @@ public class portalControlador {
     @Autowired
     private pacienteServicio pacienteServicio;
     
-   
+    @GetMapping("/")
+    public String inicio(){
+        return "inicio.html";
+    }
     
     @GetMapping("/registrar")
     public String registrar(){
