@@ -45,6 +45,6 @@ public class imagen {
 
     @Override
     public String toString() {
-        return "imagen{" + "idImagen=" + idImagen + ", archivo=" + archivo + '}';
+        return "Imagen: {" + "Id Imagen = " + idImagen + "} {Archivo = " + archivo + '}';
     }
 }

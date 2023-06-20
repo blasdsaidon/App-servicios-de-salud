@@ -31,6 +31,7 @@ public class fichaMedica {
 
     @Override
     public String toString() {
-        return "fichaMedica{" + "notas=" + notas + ", turno=" + turno + '}';
+        return "Ficha Medica: {" + "Notas = " + notas + "}\n"
+                +"{Turno = " + turno + '}';
     }
 }
