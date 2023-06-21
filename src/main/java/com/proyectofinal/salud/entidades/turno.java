@@ -67,6 +67,9 @@ public class turno {
 
     @Override
     public String toString() {
-        return "turno{" + "idTurno=" + idTurno + ", paciente=" + paciente + ", medico=" + medico + ", fecha=" + fecha + '}';
+        return "Turno: {" + "Id Turno = " + idTurno + "}\n"
+                +"{Paciente = " + paciente + "}\n"
+                +"{Medico = " + medico + "}\n"
+                +"{Fecha = " + fecha + '}';
     }
 }

@@ -1,5 +1,4 @@
 package com.proyectofinal.salud.entidades;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,30 +7,32 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class fichaMedica {
-    
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String idFichaMedica;
+    private String idfichaMedica;
+    
     private String notas;
     @OneToOne
     private turno turno;
 
     public fichaMedica() {
     }
-    
-       public fichaMedica(String idFichaMedica, String notas, turno turno) {
-        this.idFichaMedica = idFichaMedica;
+
+    public fichaMedica(String idfichaMedica, String notas, turno turno) {
+        this.idfichaMedica = idfichaMedica;
         this.notas = notas;
         this.turno = turno;
     }
-       
-    public String getIdFichaMedica() {
-        return idFichaMedica;
+    
+
+    public String getIdfichaMedica() {
+        return idfichaMedica;
     }
 
-    public void setIdFichaMedica(String idFichaMedica) {
-        this.idFichaMedica = idFichaMedica;
+    public void setIdfichaMedica(String idfichaMedica) {
+        this.idfichaMedica = idfichaMedica;
     }
 
     public String getNotas() {
@@ -52,8 +53,10 @@ public class fichaMedica {
 
     @Override
     public String toString() {
-        return "fichaMedica{" + "idFichaMedica=" + idFichaMedica + ", notas=" + notas + ", turno=" + turno + '}';
+
+        return "Ficha Medica: {" + "Notas = " + notas + "}\n"
+                +"{Turno = " + turno + '}';
+
     }
-     
+  
 }
- 

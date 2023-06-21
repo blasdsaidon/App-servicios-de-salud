@@ -1,56 +1,51 @@
 package com.proyectofinal.salud.entidades;
 
 import com.proyectofinal.salud.enumeradores.obraSocial;
-import java.util.ArrayList;
+import com.proyectofinal.salud.enumeradores.sexo;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 @Entity
 public class paciente extends persona {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String idPaciente;
+   
     @Enumerated(EnumType.STRING)
     private obraSocial obraSocial;
     @OneToMany
     private Collection<fichaMedica> historialMedico;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaNacimiento;
-    private String sexo;
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @DateTimeFormat(pattern = "dd-MM-yyyy")
+//    private Date fechaNacimiento;
+    private String fechaNacimiento;
+    @Enumerated(EnumType.STRING)
+    private sexo genero;
     @OneToMany
     private Collection<turno> turnos;
-
+    
     public paciente() {
     }
 
-    public paciente(String idPaciente, obraSocial obraSocial, Collection<fichaMedica> historialMedico, Date fechaNacimiento, String sexo, Collection<turno> turnos, String nombre, String apellido, String email, String telefono) {
-        super(nombre, apellido, email, telefono);
-        this.idPaciente = idPaciente;
+    public paciente( obraSocial obraSocial, Collection<fichaMedica> historialMedico, String fechaNacimiento, sexo genero, Collection<turno> turnos, String idPersona, String nombre, String apellido, String email, String telefono, com.proyectofinal.salud.entidades.imagen imagen, String password, com.proyectofinal.salud.enumeradores.rol rol) {
+        super(idPersona, nombre, apellido, email, telefono, imagen, password, rol);
+        
         this.obraSocial = obraSocial;
         this.historialMedico = historialMedico;
         this.fechaNacimiento = fechaNacimiento;
-        this.sexo = sexo;
+        this.genero = genero;
         this.turnos = turnos;
     }
+    
 
-    public String getIdPaciente() {
-        return idPaciente;
-    }
 
-    public void setIdPaciente(String idPaciente) {
-        this.idPaciente = idPaciente;
-    }
+    
 
     public obraSocial getObraSocial() {
         return obraSocial;
@@ -68,21 +63,23 @@ public class paciente extends persona {
         this.historialMedico = historialMedico;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getSexo() {
-        return sexo;
+    public sexo getGenero() {
+        return genero;
     }
 
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
+    public void setGenero(sexo genero) {
+        this.genero = genero;
     }
+
+    
 
     public Collection<turno> getTurnos() {
         return turnos;
@@ -94,6 +91,18 @@ public class paciente extends persona {
 
     @Override
     public String toString() {
-        return "Paciente: " + "{Id del Paciente = " + idPaciente + "} {Obra Social = " + obraSocial + "} {Historial Medico = " + historialMedico + "} {Fecha De Nacimiento = " + fechaNacimiento + "} {Sexo = " + sexo + "} {Turnos = " + turnos + '}';
+        return "Paciente: " + "{Id del Paciente = " + this.getIdPersona() + "}\n"
+                +"{Obra Social = " + obraSocial + "}\n"
+                +"{Historial Medico = " + historialMedico + "}\n"
+                +"{Fecha De Nacimiento = " + fechaNacimiento + "}\n"
+                +"{Sexo = " + genero + "}\n"
+                +"{Turnos = " + turnos + '}';
     }
+
+    
+
+  
+   
+
+   
 }
