@@ -35,8 +35,10 @@ public class portalControlador {
     
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo){
-        
-        return "registro.html";
+
+        List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
+        modelo.addAttribute("ListaOS", ListaOS);
+
     }
     
     @PostMapping("/registroPaciente")
