@@ -34,7 +34,7 @@ public class pacienteServicio {
 
         paciente paciente = new paciente();
 
-        validar(nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2);
+        validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2);
 
         paciente.setApellido(apellido);
         paciente.setNombre(nombre);
@@ -57,7 +57,7 @@ public class pacienteServicio {
 
         paciente paciente = new paciente();
 
-        validar(nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2);
+        validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2);
 
         Optional<paciente> respuesta = pacienteRepo.findById(idPaciente);
 
@@ -114,8 +114,8 @@ public class pacienteServicio {
         return ListaGenero;
     }
 
-    public void validar(String nombre, String apellido, String email, String telefono,
-            obraSocial obraSocial, sexo genero, Date fechaNacimiento, String password,
+    public void validar(String nombre, String apellido, String email, String telefono, 
+            Date fechaNacimiento, String password,
             String password2) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
@@ -130,14 +130,8 @@ public class pacienteServicio {
         if (telefono.isEmpty() || telefono == null) {
             throw new MiException("el telefono no puede ser nulo o estar vacío");
         }
-        if (obraSocial == null) {
-            throw new MiException("la obra social no puede ser nula, si no tiene obra social, elija la opción -no tiene-");
-        }
-        if (genero == null) {
-            throw new MiException("el genero no puede ser nulo");
-        }
-        if (fechaNacimiento.isEmpty() || fechaNacimiento == null) {
-            throw new MiException("la fecha de nacimientoe no puede ser nula estar vacía");
+        if (fechaNacimiento == null) {
+            throw new MiException("la fecha de nacimiento no puede ser nula estar vacía");
         }
         if (password.isEmpty() || password == null || password.length() <= 5) {
             throw new MiException("la contraseña no puede estar vacía, y debe tener más de 5 dígitos");
@@ -145,5 +139,10 @@ public class pacienteServicio {
         if (!password.equals(password2)) {
             throw new MiException("Las contraseñas ingresadas deben ser iguales");
         }
+    }
+    
+    public paciente buscarPacienteporEmail(String email){
+        paciente paciente = pacienteRepo.buscarPorEmail(email);
+        return paciente;
     }
 }
