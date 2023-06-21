@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -20,8 +21,10 @@ public class paciente extends persona {
     private obraSocial obraSocial;
     @OneToMany
     private Collection<fichaMedica> historialMedico;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaNacimiento;
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @DateTimeFormat(pattern = "dd-MM-yyyy")
+//    private Date fechaNacimiento;
+    private String fechaNacimiento;
     @Enumerated(EnumType.STRING)
     private sexo genero;
     @OneToMany
@@ -30,7 +33,7 @@ public class paciente extends persona {
     public paciente() {
     }
 
-    public paciente( obraSocial obraSocial, Collection<fichaMedica> historialMedico, Date fechaNacimiento, sexo genero, Collection<turno> turnos, String idPersona, String nombre, String apellido, String email, String telefono, com.proyectofinal.salud.entidades.imagen imagen, String password, com.proyectofinal.salud.enumeradores.rol rol) {
+    public paciente( obraSocial obraSocial, Collection<fichaMedica> historialMedico, String fechaNacimiento, sexo genero, Collection<turno> turnos, String idPersona, String nombre, String apellido, String email, String telefono, com.proyectofinal.salud.entidades.imagen imagen, String password, com.proyectofinal.salud.enumeradores.rol rol) {
         super(idPersona, nombre, apellido, email, telefono, imagen, password, rol);
         
         this.obraSocial = obraSocial;
@@ -60,11 +63,11 @@ public class paciente extends persona {
         this.historialMedico = historialMedico;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

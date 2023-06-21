@@ -84,7 +84,7 @@ public abstract class persona {
     }
 
     public imagen getImagen() {
-        return imagen;
+       return imagen;
     }
 
     public void setImagen(imagen imagen) {

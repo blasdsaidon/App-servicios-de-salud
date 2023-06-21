@@ -25,7 +25,7 @@ public class pacienteServicio {
     
     @Transactional
     public void crearPaciente(String nombre, String apellido, String email, String telefono, 
-            obraSocial obraSocial, sexo genero, Date fechaNacimiento, String password, String password2, 
+            obraSocial obraSocial, sexo genero, String fechaNacimiento, String password, String password2, 
             MultipartFile archivo) throws MiException{
         
         paciente paciente = new paciente();
@@ -44,6 +44,7 @@ public class pacienteServicio {
         pacienteRepo.save(paciente);
     }
     
+
     public List listadoObrasSocial(){
         obraSocial[] vectorOS = obraSocial.values();
         List<obraSocial> ListaOS = null;
@@ -52,4 +53,5 @@ public class pacienteServicio {
         }       
         return ListaOS;
     }
+
 }
