@@ -9,7 +9,6 @@ import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.repositorios.pacienteRepositorio;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -24,11 +23,13 @@ public class pacienteServicio {
 
     @Autowired
     private pacienteRepositorio pacienteRepo;
+
+    @Autowired
     private imagenServicio imagenServicio;
 
     @Transactional
     public void crearPaciente(String nombre, String apellido, String email, String telefono,
-            obraSocial obraSocial, sexo genero, String fechaNacimiento, String password, String password2,
+            obraSocial obraSocial, sexo genero, Date fechaNacimiento, String password, String password2,
             MultipartFile archivo) throws MiException {
 
         paciente paciente = new paciente();
@@ -43,15 +44,15 @@ public class pacienteServicio {
         paciente.setGenero(genero);
         paciente.setRol(rol.USER);
         paciente.setPassword(new BCryptPasswordEncoder().encode(password));
-        /* imagen imagen = imagenServicio.guardar(archivo);
-        paciente.setImagen(imagen);*/
+        imagen imagen = imagenServicio.guardar(archivo);
+        paciente.setImagen(imagen);
         paciente.setFechaNacimiento(fechaNacimiento);
         pacienteRepo.save(paciente);
     }
 
     @Transactional
     public void modificarPaciente(String idPaciente, String nombre, String apellido, String email, String telefono,
-            obraSocial obraSocial, sexo genero, String fechaNacimiento, String password, String password2,
+            obraSocial obraSocial, sexo genero, Date fechaNacimiento, String password, String password2,
             MultipartFile archivo) throws MiException {
 
         paciente paciente = new paciente();
@@ -114,7 +115,7 @@ public class pacienteServicio {
     }
 
     public void validar(String nombre, String apellido, String email, String telefono,
-            obraSocial obraSocial, sexo genero, String fechaNacimiento, String password,
+            obraSocial obraSocial, sexo genero, Date fechaNacimiento, String password,
             String password2) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {

@@ -10,9 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface medicoRepositorio extends JpaRepository<medico, String> {
     //Buscador de medicos segun especialidad.(Joaquin)
     @Query("SELECT m FROM medico m WHERE m.especialidad = :especialidad")
-    public medico buscarPorTitulo(@Param("especialidad") String especialidad);
-    
-    
-    
-    
+    public medico buscarPorTitulo(@Param("especialidad") String especialidad);  
 }
