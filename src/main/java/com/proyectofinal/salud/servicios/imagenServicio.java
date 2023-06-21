@@ -10,10 +10,7 @@ import com.proyectofinal.salud.repositorios.imagenRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- *
- * @author luisa
- */
+
 public class imagenServicio {
     
     @Autowired
