@@ -38,9 +38,11 @@ public class portalControlador {
 
         List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
         modelo.addAttribute("ListaOS", ListaOS);
+
         List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
         modelo.addAttribute("ListaGenero", ListaGenero);
         return "registro.html";
+
     }
     
     @PostMapping("/registroPaciente")

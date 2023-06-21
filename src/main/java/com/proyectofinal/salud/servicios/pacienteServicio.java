@@ -54,6 +54,7 @@ public class pacienteServicio {
         return ListaOS;
     }
 
+
       public List listadoGeneros(){
         sexo[] vectorsexo = sexo.values();
         List<sexo> ListaGenero = new ArrayList();
