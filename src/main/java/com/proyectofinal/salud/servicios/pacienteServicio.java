@@ -7,7 +7,9 @@ import com.proyectofinal.salud.enumeradores.rol;
 import com.proyectofinal.salud.enumeradores.sexo;
 import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.repositorios.pacienteRepositorio;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,8 +40,16 @@ public class pacienteServicio {
         paciente.setPassword(new BCryptPasswordEncoder().encode(password));
         imagen imagen = imagenServicio.guardar(archivo);
         paciente.setImagen(imagen);
-        paciente.setFechaNacimiento(fechaNacimiento);
-        
+        paciente.setFechaNacimiento(fechaNacimiento); 
         pacienteRepo.save(paciente);
+    }
+    
+    public List listadoObrasSocial(){
+        obraSocial[] vectorOS = obraSocial.values();
+        List<obraSocial> ListaOS = null;
+        for (obraSocial social : vectorOS) {
+            ListaOS.add(social);
+        }       
+        return ListaOS;
     }
 }

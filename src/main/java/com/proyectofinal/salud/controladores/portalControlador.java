@@ -10,6 +10,7 @@ import com.proyectofinal.salud.enumeradores.sexo;
 import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,7 +33,9 @@ public class portalControlador {
     }
     
     @GetMapping("/registrar")
-    public String registrar(){
+    public String registrar(ModelMap modelo){
+        List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
+        modelo.addAttribute("ListaOS", ListaOS);
         return "registro.html";
     }
     
@@ -43,6 +46,7 @@ public class portalControlador {
             @RequestParam String password2, MultipartFile archivo, ModelMap modelo ){
     
          try {
+             
             pacienteServicio.crearPaciente(nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2, archivo);
 
             modelo.put("exito", "Usuario registrado correctamente!");
