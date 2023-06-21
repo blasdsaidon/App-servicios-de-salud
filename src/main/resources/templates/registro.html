@@ -28,8 +28,14 @@
                     <button type="button" class="btn btn-primary">Ingrese</button> -->
                 </div>
             </header>
-
+            
             <main>
+              <div th:if="${error != null}" class="alert alert-success bg-danger" role="alert" style="width:400px;margin:auto;">
+                <h4 class="alert-heading bg-danger text-white" th:text="${error}" style="text-align:center"></h4>
+            </div>
+                        <div th:if="${exito != null}" class="alert alert-success bg-success" role="alert" style="width:400px;margin:auto;">
+                        </div>
+
                 <!-- Formulario registro -->
                 <div class="form-registro">
                     <form th:action="@{/registroPaciente}" method="POST" enctype="multipart/form-data">
@@ -55,7 +61,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="GENERO" class="form-label">Genero</label>
-                            <select class="form-select" name="genero">
+                            <select required class="form-select" name="genero">
                                 <option>Seleccione Genero</option>
                                 <option selected="genero" th:each="genero:${ListaGenero}"
                                         th:value="${genero}"
@@ -69,9 +75,16 @@
 
                         <div class="mb-3">
                             <label for="obra social" class="form-label">Obra Social</label>
+<<<<<<< HEAD
                             <select class="form-select" name="obraSocial">
                                 <option>Seleccione Obra Social</option>
                                 <option selected="obraSocial" th:each="obraSocial:${ListaOS}"
+=======
+                            <select required class="form-select" name="obraSocial">
+                                <option >Selecione Obra Social</option>
+                                <option selected="obraSocial" 
+                                th:each="obraSocial:${ListaOS}"
+>>>>>>> 04805a5bcee50941fb333b0e509569c1b331ad25
                                         th:value="${obraSocial}"
                                         th:text="${obraSocial}"/>
                             </select>
@@ -129,8 +142,10 @@
                             <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
                         </ul>
                 </div>
+                
             </footer>
 
+    <h4 class="alert-heading text-white" th:text="${exito}" style="text-align:center"></h4>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
             <script type="text/javascript">
                 function mostrarPassword(){
@@ -147,6 +162,8 @@
 
             </script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    </body>
+    
+
+                </body>
     
 </html>

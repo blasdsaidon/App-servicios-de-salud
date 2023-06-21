@@ -45,11 +45,12 @@ public class portalControlador {
             @RequestParam String password2,@RequestParam(required = false) MultipartFile archivo, ModelMap modelo){
     
          try {
-            Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);  
-            pacienteServicio.crearPaciente(nombre, apellido, email, telefono, obraSocial, genero, fechaNacimientoDate, password, password2, archivo);
+              
+            pacienteServicio.crearPaciente(nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2, archivo);
             modelo.put("exito", "Usuario registrado correctamente!");
             return "inicio.html";// queda sujeto a cambio de front. 
         } catch (Exception ex) {
+             System.out.println("entro");
             // modelo a cambiar por front.
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
