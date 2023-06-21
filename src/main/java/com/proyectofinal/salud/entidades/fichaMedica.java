@@ -12,7 +12,6 @@ public class fichaMedica {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String idfichaMedica;
-    
     private String notas;
     @OneToOne
     private turno turno;
@@ -56,7 +55,5 @@ public class fichaMedica {
 
         return "Ficha Medica: {" + "Notas = " + notas + "}\n"
                 +"{Turno = " + turno + '}';
-
     }
-  
 }

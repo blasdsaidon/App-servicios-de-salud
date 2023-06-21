@@ -1,9 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.proyectofinal.salud.controladores;
-
 
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.sexo;
@@ -55,8 +50,6 @@ public class portalControlador {
             modelo.put("email", email);
 
             return "registro.html";
-        }
-       
+        }  
     }
-
 }

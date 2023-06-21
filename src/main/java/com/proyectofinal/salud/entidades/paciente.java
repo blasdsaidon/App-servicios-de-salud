@@ -11,10 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 @Entity
 public class paciente extends persona {
-
    
     @Enumerated(EnumType.STRING)
     private obraSocial obraSocial;
@@ -32,17 +30,12 @@ public class paciente extends persona {
 
     public paciente( obraSocial obraSocial, Collection<fichaMedica> historialMedico, Date fechaNacimiento, sexo genero, Collection<turno> turnos, String idPersona, String nombre, String apellido, String email, String telefono, com.proyectofinal.salud.entidades.imagen imagen, String password, com.proyectofinal.salud.enumeradores.rol rol) {
         super(idPersona, nombre, apellido, email, telefono, imagen, password, rol);
-        
         this.obraSocial = obraSocial;
         this.historialMedico = historialMedico;
         this.fechaNacimiento = fechaNacimiento;
         this.genero = genero;
         this.turnos = turnos;
-    }
-    
-
-
-    
+    }  
 
     public obraSocial getObraSocial() {
         return obraSocial;
@@ -76,8 +69,6 @@ public class paciente extends persona {
         this.genero = genero;
     }
 
-    
-
     public Collection<turno> getTurnos() {
         return turnos;
     }
@@ -95,11 +86,4 @@ public class paciente extends persona {
                 +"{Sexo = " + genero + "}\n"
                 +"{Turnos = " + turnos + '}';
     }
-
-    
-
-  
-   
-
-   
 }

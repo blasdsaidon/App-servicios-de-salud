@@ -9,9 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
+
 //Solucion Atributos clase abstracta para que sean heredados a las hijas
 @MappedSuperclass
 public abstract class persona {
+    
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -39,9 +41,7 @@ public abstract class persona {
         this.imagen = imagen;
         this.password = password;
         this.rol = rol;
-    }
-    
-    
+    }  
     
     public String getNombre() {
         return nombre;
@@ -114,6 +114,4 @@ public abstract class persona {
                 +"{Email = " + email + "}\n"
                 +"{Telefono = " + telefono + '}';
     }
-
- 
 }

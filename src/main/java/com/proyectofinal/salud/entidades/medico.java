@@ -8,15 +8,11 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class medico extends persona {
 
-    
     @Enumerated(EnumType.STRING)
     private especialidad especialidad;
     @Enumerated(EnumType.STRING)
@@ -29,12 +25,12 @@ public class medico extends persona {
     @OneToMany
     private Collection<turno> turnos;
     private Boolean alta;
+    
     public medico() {
     }
 
     public medico( especialidad especialidad, obraSocial obraSocialRecibida, ArrayList<Date> horariosDisponibles, Integer valorConsulta, Integer calificacionServicio, Collection<fichaMedica> historialConsultas, Collection<turno> turnos, Boolean alta, String idPersona, String nombre, String apellido, String email, String telefono, com.proyectofinal.salud.entidades.imagen imagen, String password, com.proyectofinal.salud.enumeradores.rol rol) {
         super(idPersona, nombre, apellido, email, telefono, imagen, password, rol);
-
         this.especialidad = especialidad;
         this.obraSocialRecibida = obraSocialRecibida;
         this.horariosDisponibles = horariosDisponibles;
@@ -44,10 +40,6 @@ public class medico extends persona {
         this.turnos = turnos;
         this.alta = alta;
     }
-
- 
-    
-
    
     public especialidad getEspecialidad() {
         return especialidad;
@@ -124,8 +116,5 @@ public class medico extends persona {
                 +"{Historial De Consultas = " + historialConsultas + "}\n"
                 +"{Turnos = " + turnos + "}\n"
                 +"{Alta = " + alta + '}';
-
     }
-
-   
 }
