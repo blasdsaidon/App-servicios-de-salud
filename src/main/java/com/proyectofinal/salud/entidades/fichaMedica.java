@@ -25,7 +25,6 @@ public class fichaMedica {
         this.turno = turno;
     }
     
-
     public String getIdfichaMedica() {
         return idfichaMedica;
     }
@@ -52,7 +51,6 @@ public class fichaMedica {
 
     @Override
     public String toString() {
-
         return "Ficha Medica: {" + "Notas = " + notas + "}\n"
                 +"{Turno = " + turno + '}';
     }

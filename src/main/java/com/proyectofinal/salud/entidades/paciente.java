@@ -20,9 +20,10 @@ public class paciente extends persona {
     @OneToMany
     private Collection<fichaMedica> historialMedico;
 //    @Temporal(TemporalType.TIMESTAMP)
-//    @DateTimeFormat(pattern = "dd-MM-yyyy")
-//    private Date fechaNacimiento;
-    private String fechaNacimiento;
+//    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date fechaNacimiento;
+//    private String fechaNacimiento;
     @Enumerated(EnumType.STRING)
     private sexo genero;
     @OneToMany
@@ -31,7 +32,7 @@ public class paciente extends persona {
     public paciente() {
     }
 
-    public paciente( obraSocial obraSocial, Collection<fichaMedica> historialMedico, String fechaNacimiento, sexo genero, Collection<turno> turnos, String idPersona, String nombre, String apellido, String email, String telefono, com.proyectofinal.salud.entidades.imagen imagen, String password, com.proyectofinal.salud.enumeradores.rol rol) {
+    public paciente( obraSocial obraSocial, Collection<fichaMedica> historialMedico, Date fechaNacimiento, sexo genero, Collection<turno> turnos, String idPersona, String nombre, String apellido, String email, String telefono, com.proyectofinal.salud.entidades.imagen imagen, String password, com.proyectofinal.salud.enumeradores.rol rol) {
         super(idPersona, nombre, apellido, email, telefono, imagen, password, rol);
         this.obraSocial = obraSocial;
         this.historialMedico = historialMedico;
@@ -56,11 +57,11 @@ public class paciente extends persona {
         this.historialMedico = historialMedico;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
