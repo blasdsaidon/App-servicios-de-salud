@@ -3,8 +3,6 @@ package com.proyectofinal.salud.controladores;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.sexo;
 import com.proyectofinal.salud.servicios.pacienteServicio;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,7 +48,11 @@ public class portalControlador {
             modelo.put("exito", "Usuario registrado correctamente!");
             return "inicio.html";// queda sujeto a cambio de front. 
         } catch (Exception ex) {
-             System.out.println("entro");
+            List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
+            modelo.addAttribute("ListaOS", ListaOS);
+            List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
+            modelo.addAttribute("ListaGenero", ListaGenero);
+            System.out.println("entro");
             // modelo a cambiar por front.
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);

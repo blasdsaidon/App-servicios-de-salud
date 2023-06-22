@@ -35,8 +35,7 @@ public class pacienteServicio {
             MultipartFile archivo) throws MiException, ParseException {
 
         paciente paciente = new paciente();
-
-        validar(nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2);
+        validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2);
         Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
         paciente.setApellido(apellido);
         paciente.setNombre(nombre);
@@ -58,9 +57,8 @@ public class pacienteServicio {
             MultipartFile archivo) throws MiException, ParseException {
 
         paciente paciente = new paciente();
-
-        validar(nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2);
-Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
+        validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2);
+        Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
         Optional<paciente> respuesta = pacienteRepo.findById(idPaciente);
 
         if (respuesta.isPresent()) {
@@ -115,10 +113,14 @@ Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimie
         ListaGenero.addAll(Arrays.asList(vectorsexo));
         return ListaGenero;
     }
+    
+    public paciente buscarMedicoporEmail(String email){
+        paciente paciente = pacienteRepo.buscarPorEmail(email);
+        return paciente;
+    }
 
     public void validar(String nombre, String apellido, String email, String telefono,
-            obraSocial obraSocial, sexo genero, String fechaNacimiento, String password,
-            String password2) throws MiException {
+            String fechaNacimiento, String password,String password2) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("el nombre no puede ser nulo o estar vacío");
@@ -132,12 +134,6 @@ Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimie
         if (telefono.isEmpty() || telefono == null) {
             throw new MiException("el telefono no puede ser nulo o estar vacío");
         }
-        if (obraSocial == null) {
-            throw new MiException("la obra social no puede ser nula, si no tiene obra social, elija la opción -no tiene-");
-        }
-        if (genero == null) {
-            throw new MiException("el genero no puede ser nulo");
-        }
         if (fechaNacimiento.isEmpty()) {
             throw new MiException("la fecha de nacimientoe no puede ser nula estar vacía");
         }
@@ -148,4 +144,6 @@ Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimie
             throw new MiException("Las contraseñas ingresadas deben ser iguales");
         }
     }
+    
+    
 }
