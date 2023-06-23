@@ -67,7 +67,6 @@ public class medicoServicio implements UserDetailsService {
             medico.setObraSocialRecibida(obraSocial);
             medicoRepo.save(medico);
         }
-
     }
 
     @Transactional
@@ -79,7 +78,6 @@ public class medicoServicio implements UserDetailsService {
 
             medicoRepo.save(medico);
         }
-
     }
 
     @Transactional
@@ -157,7 +155,7 @@ public class medicoServicio implements UserDetailsService {
         if (email.isEmpty() || email == null) {
             throw new MiException("el email no puede ser nulo o estar vacío");
         }
-        if (telefono.isEmpty() || telefono == null) {
+        if (telefono.isEmpty() || telefono == null || password.length() <= 10) {
             throw new MiException("el telefono no puede ser nulo o estar vacío");
         }
         if (valorConsulta == null) {

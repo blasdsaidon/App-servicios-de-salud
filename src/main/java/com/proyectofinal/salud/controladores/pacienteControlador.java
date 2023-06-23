@@ -36,7 +36,8 @@ public class pacienteControlador {
     public String registroPaciente(@RequestParam String nombre,@RequestParam String apellido,
             @RequestParam String email,@RequestParam String telefono,@RequestParam(required = false) obraSocial obraSocial,
             @RequestParam(required = false) sexo genero,@RequestParam String fechaNacimiento,@RequestParam String password,
-            @RequestParam String password2,@RequestParam(required = false) MultipartFile archivo, ModelMap modelo, RedirectAttributes redireccion){
+            @RequestParam String password2,@RequestParam(required = false) MultipartFile archivo,
+            ModelMap modelo, RedirectAttributes redireccion){
     
          try {
             pacienteServicio.crearPaciente(nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2, archivo);
