@@ -44,6 +44,7 @@ public class pacienteServicio implements UserDetailsService{
 
         paciente paciente = new paciente();
         validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2);
+        
         Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
         paciente.setApellido(apellido);
         paciente.setNombre(nombre);
@@ -66,6 +67,7 @@ public class pacienteServicio implements UserDetailsService{
 
         paciente paciente = new paciente();
         validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2);
+        
         Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
         Optional<paciente> respuesta = pacienteRepo.findById(idPaciente);
 
@@ -109,21 +111,27 @@ public class pacienteServicio implements UserDetailsService{
     }
 
     public List listadoObrasSocial() {
+        
         obraSocial[] vectorOS = obraSocial.values();
         List<obraSocial> ListaOS = new ArrayList();
         ListaOS.addAll(Arrays.asList(vectorOS));
+        
         return ListaOS;
     }
 
     public List listadoGeneros() {
+        
         sexo[] vectorsexo = sexo.values();
         List<sexo> ListaGenero = new ArrayList();
         ListaGenero.addAll(Arrays.asList(vectorsexo));
+        
         return ListaGenero;
     }
     
     public paciente buscarMedicoporEmail(String email){
+        
         paciente paciente = pacienteRepo.buscarPorEmail(email);
+        
         return paciente;
     }
 
