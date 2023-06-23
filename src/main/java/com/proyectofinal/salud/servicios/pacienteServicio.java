@@ -137,7 +137,7 @@ public class pacienteServicio {
             throw new MiException("el genero no puede ser nulo");
         }
         if (fechaNacimiento.isEmpty() || fechaNacimiento == null) {
-            throw new MiException("la fecha de nacimientoe no puede ser nula estar vacía");
+            throw new MiException("la fecha de nacimiento no puede ser nula");
         }
         if (password.isEmpty() || password == null || password.length() <= 5) {
             throw new MiException("la contraseña no puede estar vacía, y debe tener más de 5 dígitos");
