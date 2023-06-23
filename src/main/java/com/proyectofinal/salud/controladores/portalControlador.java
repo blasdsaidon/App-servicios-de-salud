@@ -3,8 +3,6 @@ package com.proyectofinal.salud.controladores;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.sexo;
 import com.proyectofinal.salud.servicios.pacienteServicio;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,11 +43,16 @@ public class portalControlador {
             @RequestParam String password2,@RequestParam(required = false) MultipartFile archivo, ModelMap modelo){
     
          try {
-            Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);  
-            pacienteServicio.crearPaciente(nombre, apellido, email, telefono, obraSocial, genero, fechaNacimientoDate, password, password2, archivo);
+              
+            pacienteServicio.crearPaciente(nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2, archivo);
             modelo.put("exito", "Usuario registrado correctamente!");
             return "inicio.html";// queda sujeto a cambio de front. 
         } catch (Exception ex) {
+            List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
+            modelo.addAttribute("ListaOS", ListaOS);
+            List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
+            modelo.addAttribute("ListaGenero", ListaGenero);
+            System.out.println("entro");
             // modelo a cambiar por front.
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);

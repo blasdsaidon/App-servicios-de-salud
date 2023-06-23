@@ -7,6 +7,8 @@ import com.proyectofinal.salud.enumeradores.rol;
 import com.proyectofinal.salud.enumeradores.sexo;
 import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.repositorios.pacienteRepositorio;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -29,13 +31,12 @@ public class pacienteServicio {
 
     @Transactional
     public void crearPaciente(String nombre, String apellido, String email, String telefono,
-            obraSocial obraSocial, sexo genero, Date fechaNacimiento, String password, String password2,
-            MultipartFile archivo) throws MiException {
+            obraSocial obraSocial, sexo genero, String fechaNacimiento, String password, String password2,
+            MultipartFile archivo) throws MiException, ParseException {
 
         paciente paciente = new paciente();
-
-        validar(nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2);
-
+        validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2);
+        Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
         paciente.setApellido(apellido);
         paciente.setNombre(nombre);
         paciente.setEmail(email);
@@ -46,19 +47,18 @@ public class pacienteServicio {
         paciente.setPassword(new BCryptPasswordEncoder().encode(password));
         imagen imagen = imagenServicio.guardar(archivo);
         paciente.setImagen(imagen);
-        paciente.setFechaNacimiento(fechaNacimiento);
+        paciente.setFechaNacimiento(fechaNacimientoDate);
         pacienteRepo.save(paciente);
     }
 
     @Transactional
     public void modificarPaciente(String idPaciente, String nombre, String apellido, String email, String telefono,
-            obraSocial obraSocial, sexo genero, Date fechaNacimiento, String password, String password2,
-            MultipartFile archivo) throws MiException {
+            obraSocial obraSocial, sexo genero, String fechaNacimiento, String password, String password2,
+            MultipartFile archivo) throws MiException, ParseException {
 
         paciente paciente = new paciente();
-
-        validar(nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2);
-
+        validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2);
+        Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
         Optional<paciente> respuesta = pacienteRepo.findById(idPaciente);
 
         if (respuesta.isPresent()) {
@@ -72,7 +72,7 @@ public class pacienteServicio {
             paciente.setPassword(new BCryptPasswordEncoder().encode(password));
             /* imagen imagen = imagenServicio.guardar(archivo);
             paciente.setImagen(imagen);*/
-            paciente.setFechaNacimiento(fechaNacimiento);
+            paciente.setFechaNacimiento(fechaNacimientoDate);
             pacienteRepo.save(paciente);
         }      
     }
@@ -113,10 +113,14 @@ public class pacienteServicio {
         ListaGenero.addAll(Arrays.asList(vectorsexo));
         return ListaGenero;
     }
+    
+    public paciente buscarMedicoporEmail(String email){
+        paciente paciente = pacienteRepo.buscarPorEmail(email);
+        return paciente;
+    }
 
     public void validar(String nombre, String apellido, String email, String telefono,
-            obraSocial obraSocial, sexo genero, Date fechaNacimiento, String password,
-            String password2) throws MiException {
+            String fechaNacimiento, String password,String password2) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("el nombre no puede ser nulo o estar vacío");
@@ -130,14 +134,8 @@ public class pacienteServicio {
         if (telefono.isEmpty() || telefono == null) {
             throw new MiException("el telefono no puede ser nulo o estar vacío");
         }
-        if (obraSocial == null) {
-            throw new MiException("la obra social no puede ser nula, si no tiene obra social, elija la opción -no tiene-");
-        }
-        if (genero == null) {
-            throw new MiException("el genero no puede ser nulo");
-        }
-        if (fechaNacimiento.isEmpty() || fechaNacimiento == null) {
-            throw new MiException("la fecha de nacimiento no puede ser nula");
+        if (fechaNacimiento.isEmpty()) {
+            throw new MiException("la fecha de nacimientoe no puede ser nula estar vacía");
         }
         if (password.isEmpty() || password == null || password.length() <= 5) {
             throw new MiException("la contraseña no puede estar vacía, y debe tener más de 5 dígitos");
