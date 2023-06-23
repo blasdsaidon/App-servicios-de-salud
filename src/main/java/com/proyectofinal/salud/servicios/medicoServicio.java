@@ -1,7 +1,8 @@
-
 package com.proyectofinal.salud.servicios;
+
 import com.proyectofinal.salud.entidades.imagen;
 import com.proyectofinal.salud.entidades.medico;
+import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.rol;
@@ -12,30 +13,37 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class medicoServicio {
+public class medicoServicio implements UserDetailsService {
+
     @Autowired
     private medicoRepositorio medicoRepo;
     @Autowired
     private imagenServicio imagenServicio;
-  
-    
-    
 
     @Transactional
-    public void crearMedico(String nombre, String apellido, String email, String telefono, 
-            Integer valorConsulta, especialidad especialidad,String password, 
-            String password2,MultipartFile archivo) throws MiException, ParseException {
+    public void crearMedico(String nombre, String apellido, String email, String telefono,
+            Integer valorConsulta, especialidad especialidad, String password,
+            String password2, MultipartFile archivo) throws MiException, ParseException {
 
         medico medico = new medico();
         validar(nombre, apellido, email, telefono, valorConsulta, especialidad, password, password2);
-       
+
         medico.setApellido(apellido);
         medico.setNombre(nombre);
         medico.setEmail(email);
@@ -48,37 +56,36 @@ public class medicoServicio {
         medico.setEspecialidad(especialidad);
         medicoRepo.save(medico);
     }
+
     @Transactional
-    public void cargarObrasSociales(String idMedico,obraSocial obraSocial){
-        
+    public void cargarObrasSociales(String idMedico, obraSocial obraSocial) {
+
         Optional<medico> respuesta = medicoRepo.findById(idMedico);
         medico medico = respuesta.get();
-       
+
         if (respuesta.isPresent()) {
             medico.setObraSocialRecibida(obraSocial);
             medicoRepo.save(medico);
         }
-        
+
     }
-    
-     
-     @Transactional
-    public void darDeBaja(String idMedico,Boolean alta){
-        
+
+    @Transactional
+    public void darDeBaja(String idMedico, Boolean alta) {
+
         Optional<medico> respuesta = medicoRepo.findById(idMedico);
         medico medico = respuesta.get();
         if (respuesta.isPresent()) {
-            
+
             medicoRepo.save(medico);
         }
-        
+
     }
-    
-    
+
     @Transactional
     public void modificarMedico(String idMedico, String nombre, String apellido, String email, String telefono,
-            Integer valorConsulta, especialidad especialidad, String password, String password2, 
-            MultipartFile archivo)throws MiException, ParseException {
+            Integer valorConsulta, especialidad especialidad, String password, String password2,
+            MultipartFile archivo) throws MiException, ParseException {
 
         medico medico = new medico();
         validar(nombre, apellido, email, telefono, valorConsulta, especialidad, password, password2);
@@ -96,19 +103,19 @@ public class medicoServicio {
             medico.setPassword(new BCryptPasswordEncoder().encode(password));
             /* imagen imagen = imagenServicio.guardar(archivo);
             paciente.setImagen(imagen);*/
-            
+
             medicoRepo.save(medico);
-        }      
+        }
     }
 
     @Transactional
-    public void eliminar(String idMedico) throws MiException{
-        
+    public void eliminar(String idMedico) throws MiException {
+
         medico medico = medicoRepo.getById(idMedico);
-        
+
         medicoRepo.delete(medico);
     }
-    
+
     @Transactional(readOnly = true)
     public List<medico> listarMedicos() {
 
@@ -118,10 +125,10 @@ public class medicoServicio {
 
         return medicos;
     }
-    
+
     @Transactional(readOnly = true)
-    public medico getOne(String idMedico){
-       return medicoRepo.getOne(idMedico);
+    public medico getOne(String idMedico) {
+        return medicoRepo.getOne(idMedico);
     }
 
     public List listadoObrasSocial() {
@@ -130,16 +137,16 @@ public class medicoServicio {
         ListaOS.addAll(Arrays.asList(vectorOS));
         return ListaOS;
     }
-    
-    public List listadoEspecialidad(){
+
+    public List listadoEspecialidad() {
         especialidad[] vectorE = especialidad.values();
         List<especialidad> ListaE = new ArrayList();
         ListaE.addAll(Arrays.asList(vectorE));
         return ListaE;
     }
-    
-   public void validar(String nombre, String apellido, String email, String telefono, 
-        Integer valorConsulta, especialidad especialidad,String password,String password2)throws MiException {
+
+    public void validar(String nombre, String apellido, String email, String telefono,
+            Integer valorConsulta, especialidad especialidad, String password, String password2) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("el nombre no puede ser nulo o estar vacío");
@@ -153,13 +160,13 @@ public class medicoServicio {
         if (telefono.isEmpty() || telefono == null) {
             throw new MiException("el telefono no puede ser nulo o estar vacío");
         }
-        if ( valorConsulta == null) {
+        if (valorConsulta == null) {
             throw new MiException("el valor de consulta no puede ser nulo o estar vacío");
         }
         if (especialidad == null) {
             throw new MiException("La especialidad no puede ser nulo o estar vacío");
         }
-       
+
         if (password.isEmpty() || password == null || password.length() <= 5) {
             throw new MiException("la contraseña no puede estar vacía, y debe tener más de 5 dígitos");
         }
@@ -167,5 +174,29 @@ public class medicoServicio {
             throw new MiException("Las contraseñas ingresadas deben ser iguales");
         }
     }
-      
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        paciente medico = medicoRepo.buscarPorEmail(email);
+
+        if (medico != null) {
+
+            List<GrantedAuthority> permisos = new ArrayList();
+
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + medico.getRol().toString());
+
+            permisos.add(p);
+
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+
+            HttpSession session = attr.getRequest().getSession(true);
+
+            session.setAttribute("usuariosession", medico);
+
+            return new User(medico.getEmail(), medico.getPassword(), permisos);
+        } else {
+            return null;
+        }
+    }
 }
