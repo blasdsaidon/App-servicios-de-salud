@@ -34,7 +34,6 @@ public class pacienteServicio implements UserDetailsService{
 
     @Autowired
     private pacienteRepositorio pacienteRepo;
-
     @Autowired
     private imagenServicio imagenServicio;
 

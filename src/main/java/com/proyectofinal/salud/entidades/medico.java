@@ -2,7 +2,6 @@ package com.proyectofinal.salud.entidades;
 
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
-import java.util.Date;
 import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

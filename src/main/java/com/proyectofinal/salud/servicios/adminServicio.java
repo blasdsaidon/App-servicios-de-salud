@@ -6,7 +6,6 @@ import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.enumeradores.rol;
 import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.repositorios.adminRepositorio;
-import com.proyectofinal.salud.repositorios.imagenRepositorio;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +25,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class adminServicio implements UserDetailsService{
+public class adminServicio implements UserDetailsService {
 
     @Autowired
     private adminRepositorio adminRepo;
@@ -70,7 +69,6 @@ public class adminServicio implements UserDetailsService{
             admin.setPassword(new BCryptPasswordEncoder().encode(password));
             adminRepo.save(admin);
         }
-
     }
 
     public void validar(String nombre, String apellido, String email, String telefono,
@@ -85,7 +83,7 @@ public class adminServicio implements UserDetailsService{
         if (email.isEmpty() || email == null) {
             throw new MiException("el email no puede ser nulo o estar vacío");
         }
-        if (telefono.isEmpty() || telefono == null) {
+        if (telefono.isEmpty() || telefono == null || password.length() <= 10) {
             throw new MiException("el telefono no puede ser nulo o estar vacío");
         }
         if (password.isEmpty() || password == null || password.length() <= 5) {
@@ -95,28 +93,28 @@ public class adminServicio implements UserDetailsService{
             throw new MiException("Las contraseñas ingresadas deben ser iguales");
         }
     }
-    
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        
+
         paciente admin = adminRepo.buscarPorEmail(email);
-        
+
         if (admin != null) {
-            
+
             List<GrantedAuthority> permisos = new ArrayList();
-            
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+ admin.getRol().toString());
-            
+
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + admin.getRol().toString());
+
             permisos.add(p);
-   
+
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            
+
             HttpSession session = attr.getRequest().getSession(true);
-            
+
             session.setAttribute("usuariosession", admin);
-            
-            return new User(admin.getEmail(), admin.getPassword(),permisos);
-        }else{
+
+            return new User(admin.getEmail(), admin.getPassword(), permisos);
+        } else {
             return null;
         }
     }
