@@ -126,20 +126,25 @@ public class medicoServicio implements UserDetailsService {
 
     @Transactional(readOnly = true)
     public medico getOne(String idMedico) {
+        
         return medicoRepo.getOne(idMedico);
     }
 
     public List listadoObrasSocial() {
+        
         obraSocial[] vectorOS = obraSocial.values();
         List<obraSocial> ListaOS = new ArrayList();
         ListaOS.addAll(Arrays.asList(vectorOS));
+        
         return ListaOS;
     }
 
     public List listadoEspecialidad() {
+        
         especialidad[] vectorE = especialidad.values();
         List<especialidad> ListaE = new ArrayList();
         ListaE.addAll(Arrays.asList(vectorE));
+        
         return ListaE;
     }
 
@@ -147,29 +152,29 @@ public class medicoServicio implements UserDetailsService {
             Integer valorConsulta, especialidad especialidad, String password, String password2) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
-            throw new MiException("el nombre no puede ser nulo o estar vacío");
+            throw new MiException("El nombre no puede ser nulo o estar vacío.");
         }
         if (apellido.isEmpty() || apellido == null) {
-            throw new MiException("el apellido no puede ser nulo o estar vacío");
+            throw new MiException("El apellido no puede ser nulo o estar vacío.");
         }
         if (email.isEmpty() || email == null) {
-            throw new MiException("el email no puede ser nulo o estar vacío");
+            throw new MiException("El email no puede ser nulo o estar vacío.");
         }
         if (telefono.isEmpty() || telefono == null || password.length() <= 10) {
-            throw new MiException("el telefono no puede ser nulo o estar vacío");
+            throw new MiException("El telefono no puede ser nulo o estar vacío.");
         }
         if (valorConsulta == null) {
-            throw new MiException("el valor de consulta no puede ser nulo o estar vacío");
+            throw new MiException("El valor de consulta no puede ser nulo o estar vacío.");
         }
         if (especialidad == null) {
-            throw new MiException("La especialidad no puede ser nulo o estar vacío");
+            throw new MiException("La especialidad no puede ser nula o estar vacía.");
         }
 
         if (password.isEmpty() || password == null || password.length() <= 5) {
-            throw new MiException("la contraseña no puede estar vacía, y debe tener más de 5 dígitos");
+            throw new MiException("La contraseña no puede estar vacía, y debe tener 5 o más digitos.");
         }
         if (!password.equals(password2)) {
-            throw new MiException("Las contraseñas ingresadas deben ser iguales");
+            throw new MiException("Las contraseñas ingresadas deben ser iguales.");
         }
     }
 
