@@ -71,6 +71,20 @@ public class adminServicio implements UserDetailsService {
         }
     }
 
+    public admin buscarAdminPorEmail(String email) {
+
+        admin admin = adminRepo.buscarPorEmail(email);
+
+        return admin;
+    }
+
+    public admin buscarAdminPorTelefono(String telefono) {
+
+        admin admin = adminRepo.buscarPorTelefono(telefono);
+
+        return admin;
+    }
+    
     public void validar(String nombre, String apellido, String email, String telefono,
             String password, String password2) throws MiException {
 
@@ -80,11 +94,11 @@ public class adminServicio implements UserDetailsService {
         if (apellido.isEmpty() || apellido == null) {
             throw new MiException("El apellido no puede ser nulo o estar vacío.");
         }
-        if (email.isEmpty() || email == null) {
+        if (email.isEmpty() || email == null || buscarAdminPorEmail(email) != null) {
             throw new MiException("El email no puede ser nulo o estar vacío.");
         }
-        if (telefono.isEmpty() || telefono == null || password.length() <= 10) {
-            throw new MiException("El telefono no puede ser nulo o estar vacío.");
+        if (telefono.isEmpty() || telefono == null || telefono.length() <= 10 || buscarAdminPorTelefono(telefono) != null) {
+            throw new MiException("El telefono no puede ser nulo, estar vacío, y debe contener 10 carácteres.");
         }
         if (password.isEmpty() || password == null || password.length() <= 5) {
             throw new MiException("La contraseña no puede estar vacía, y debe tener 5 o más digitos.");
@@ -97,7 +111,7 @@ public class adminServicio implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        paciente admin = adminRepo.buscarPorEmail(email);
+        admin admin = adminRepo.buscarPorEmail(email);
 
         if (admin != null) {
 
