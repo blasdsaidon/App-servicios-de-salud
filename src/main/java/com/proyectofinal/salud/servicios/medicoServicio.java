@@ -126,26 +126,40 @@ public class medicoServicio implements UserDetailsService {
 
     @Transactional(readOnly = true)
     public medico getOne(String idMedico) {
-        
+
         return medicoRepo.getOne(idMedico);
     }
 
     public List listadoObrasSocial() {
-        
+
         obraSocial[] vectorOS = obraSocial.values();
         List<obraSocial> ListaOS = new ArrayList();
         ListaOS.addAll(Arrays.asList(vectorOS));
-        
+
         return ListaOS;
     }
 
     public List listadoEspecialidad() {
-        
+
         especialidad[] vectorE = especialidad.values();
         List<especialidad> ListaE = new ArrayList();
         ListaE.addAll(Arrays.asList(vectorE));
-        
+
         return ListaE;
+    }
+
+    public medico buscarMedicoPorEmail(String email) {
+
+        medico medico = medicoRepo.buscarPorEmail(email);
+
+        return medico;
+    }
+
+    public medico buscarMedicoPorTelefono(String telefono) {
+
+        medico medico = medicoRepo.buscarPorTelefono(telefono);
+
+        return medico;
     }
 
     public void validar(String nombre, String apellido, String email, String telefono,
@@ -157,11 +171,11 @@ public class medicoServicio implements UserDetailsService {
         if (apellido.isEmpty() || apellido == null) {
             throw new MiException("El apellido no puede ser nulo o estar vacío.");
         }
-        if (email.isEmpty() || email == null) {
+        if (email.isEmpty() || email == null || buscarMedicoPorEmail(email) != null) {
             throw new MiException("El email no puede ser nulo o estar vacío.");
         }
-        if (telefono.isEmpty() || telefono == null || password.length() <= 10) {
-            throw new MiException("El telefono no puede ser nulo o estar vacío.");
+        if (telefono.isEmpty() || telefono == null || telefono.length() != 10 || buscarMedicoPorTelefono(telefono) != null) {
+            throw new MiException("El telefono no puede ser nulo, estar vacío, y debe contener 10 carácteres.");
         }
         if (valorConsulta == null) {
             throw new MiException("El valor de consulta no puede ser nulo o estar vacío.");
@@ -181,7 +195,7 @@ public class medicoServicio implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        paciente medico = medicoRepo.buscarPorEmail(email);
+        medico medico = medicoRepo.buscarPorEmail(email);
 
         if (medico != null) {
 
