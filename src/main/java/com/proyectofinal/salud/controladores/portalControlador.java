@@ -1,6 +1,7 @@
 package com.proyectofinal.salud.controladores;
 
 import com.proyectofinal.salud.entidades.paciente;
+import com.proyectofinal.salud.entidades.persona;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import java.util.List;
@@ -30,7 +31,7 @@ public class portalControlador {
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo, HttpSession session) {
 
-        paciente logueado = (paciente) session.getAttribute("usuariosession");
+        persona logueado = (persona) session.getAttribute("usuariosession");
         if (logueado != null) {
             return "redirect:/";
         }
