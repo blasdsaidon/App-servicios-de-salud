@@ -2,7 +2,6 @@ package com.proyectofinal.salud.servicios;
 
 import com.proyectofinal.salud.entidades.admin;
 import com.proyectofinal.salud.entidades.imagen;
-import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.enumeradores.rol;
 import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.repositorios.adminRepositorio;
@@ -89,19 +88,27 @@ public class adminServicio implements UserDetailsService {
             String password, String password2) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
-            throw new MiException("El nombre no puede ser nulo o estar vacío.");
+            throw new MiException("El nombre ingresado no puede ser nulo o estar vacío.");
         }
         if (apellido.isEmpty() || apellido == null) {
-            throw new MiException("El apellido no puede ser nulo o estar vacío.");
-        }
-        if (email.isEmpty() || email == null || buscarAdminPorEmail(email) != null) {
+            throw new MiException("El apellido ingresado no puede ser nulo o estar vacío.");
+        } 
+        if (email.isEmpty() || email == null) {
             throw new MiException("El email no puede ser nulo o estar vacío.");
+        } else if (buscarAdminPorEmail(email) != null) {
+            throw new MiException("El email ingresado ya se encuentra registrado.");
         }
-        if (telefono.isEmpty() || telefono == null || telefono.length() <= 10 || buscarAdminPorTelefono(telefono) != null) {
-            throw new MiException("El telefono no puede ser nulo, estar vacío, y debe contener 10 carácteres.");
+        if (telefono.isEmpty() || telefono == null) {
+            throw new MiException("El número de teléfono no puede ser nulo o estar vacío.");
+        } else if (buscarAdminPorTelefono(telefono) != null) {
+            throw new MiException("El número de teléfono ingresado ya se encuentra registrado.");
+        } else if (telefono.length() != 10) {
+            throw new MiException("El número de teléfono ingresado debe contener 10 caracteres.");
         }
-        if (password.isEmpty() || password == null || password.length() <= 5) {
-            throw new MiException("La contraseña no puede estar vacía, y debe tener 5 o más digitos.");
+        if (password.isEmpty() || password == null) {
+            throw new MiException("La contraseña no puede ser nula o estar vacía.");
+        } else if (password.length() < 5) {
+            throw new MiException("La contraseña ingresada debe tener 5 digitos o más.");
         }
         if (!password.equals(password2)) {
             throw new MiException("Las contraseñas ingresadas deben ser iguales.");
