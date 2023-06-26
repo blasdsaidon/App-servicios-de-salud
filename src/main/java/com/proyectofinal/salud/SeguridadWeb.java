@@ -3,6 +3,7 @@ package com.proyectofinal.salud;
 import com.proyectofinal.salud.servicios.adminServicio;
 import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
+import com.proyectofinal.salud.servicios.personaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,20 +19,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SeguridadWeb extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    public pacienteServicio pacienteServicio;
-    @Autowired
-    public medicoServicio medicoServicio;
-    @Autowired
-    public adminServicio adminServicio;
+    public personaServicio personaServicio;
+    
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(pacienteServicio)
+        auth.userDetailsService(personaServicio)
                 .passwordEncoder(new BCryptPasswordEncoder());
-        auth.userDetailsService(medicoServicio)
-                .passwordEncoder(new BCryptPasswordEncoder());
-        auth.userDetailsService(adminServicio)
-                .passwordEncoder(new BCryptPasswordEncoder());
+       ;
     }
 
     @Override
