@@ -1,6 +1,7 @@
 package com.proyectofinal.salud.controladores;
 
 import com.proyectofinal.salud.enumeradores.especialidad;
+import com.proyectofinal.salud.enumeradores.sexo;
 import com.proyectofinal.salud.servicios.medicoServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +25,14 @@ public class medicoControlador {
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
 
-        List<especialidad> ListaE = medicoServicio.listadoEspecialidad();
-        modelo.addAttribute("ListaE", ListaE);
+        List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
+        modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
 
-        return "registro.html";
+        return "registro_medico.html";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/registroMedico")
-    public String registroAdmin(@RequestParam String nombre, @RequestParam String apellido,
+    public String registroMedico(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String email, @RequestParam String telefono, @RequestParam especialidad especialidad,
             @RequestParam Integer valorConsulta, @RequestParam String password,
             @RequestParam String password2, @RequestParam(required = false) MultipartFile archivo,
@@ -44,14 +44,16 @@ public class medicoControlador {
             return "redirect:/";// queda sujeto a cambio de front. 
 
         } catch (Exception ex) {
-            List<especialidad> ListaE = medicoServicio.listadoEspecialidad();
-            modelo.addAttribute("ListaE", ListaE);
-            // modelo a cambiar por front.
+            List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
+            modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
+            modelo.put("apellido", apellido);
+            modelo.put("telefono", telefono);
             modelo.put("email", email);
+            modelo.put("valorConsulta", valorConsulta);
 
-            return "registro.html";
+            return "registro_medico.html";
         }
     }
 }

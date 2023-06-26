@@ -12,9 +12,12 @@
             <li><a href="#" class="nav-link px-2 link-dark">Sobre Nosotros</a></li>
         </ul>
 
-        <div class="col-md-3 text-end">
+        <div class="col-md-3 text-end" th:if="${session.usuariosession == null}">
             <a href="paciente/registrar" type="button"  class="btn btn-outline-primary me-2">Registro</a>
-            <button type="button" class="btn btn-primary">Ingrese</button>
+            <a href="/login" type="button" class="btn btn-primary">Ingrese</a>
+        </div>
+        <div class="col-md-3 text-end" th:if="${session.usuariosession != null}">
+            <a href="/logout" type="button" class="btn btn-primary">LogOut</a>
         </div>
     </header>
 </div>

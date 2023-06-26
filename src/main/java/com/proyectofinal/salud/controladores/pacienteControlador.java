@@ -50,7 +50,6 @@ public class pacienteControlador {
             modelo.addAttribute("ListaOS", ListaOS);
             List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
             modelo.addAttribute("ListaGenero", ListaGenero);
-            System.out.println("entro");
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("apellido", apellido);
