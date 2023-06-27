@@ -17,33 +17,33 @@
             <div th:replace="/fragments/error :: div"></div>
             <div th:replace="/fragments/exito :: div"></div>
             <!-- Formulario Logeo -->
-            <div class="login">
+            <div class="form-registro">
                 <form th:action="@{/logincheck}" method="POST">
                     <div class="form-group my-3">
                         <h3 class="card-title">Accede a tu Cuenta</h3>
                     </div>
 
                     <div class="mb-3">
-                        <label for="email">Ingrese su email:</label>
-                        <input required style="width: 300px;" type="email" th:value="${email}" name="email" class="form-control"
+                        <label class="form-label" for="email">Ingrese su email:</label>
+                        <input  required class="form-control" type="email" th:value="${email}" name="email" 
                                id="Email1" aria-describedby="emailHelp" placeholder="123@ejemplo.com"/>
-
-                        <label for="password">Ingrese su contraseña:</label>
-                        <input required style="width: 300px;" type="password" th:value="${password}" name="password" class="form-control"
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Ingrese su contraseña:</label>
+                        <input required   type="password" th:value="${password}" name="password" class="form-control"
                                id="txtPassword" placeholder="Ingrese su contraseña"/>
                     </div>
 
-                    <button type="submit" class="btn btn-primary mt-3 botones">Ingresar</button>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Ingresar</button>
+
+                        <a th:href="@{/}" class="btn btn-secondary">Volver</a> 
+                    </div>
+
                 </form>
             </div>
 
-            <section class=" text-center container">
-                <div class="row mt-3">
-                    <div class="divVolver">
-                        <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
-                    </div>
-                </div>
-            </section>   
+               
         </main>
 
         <div th:replace="/fragments/footer :: div"></div>

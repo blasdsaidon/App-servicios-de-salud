@@ -19,7 +19,9 @@
             <!-- Formulario registro -->
             <div class="form-registro">
                 <form th:action="@{/paciente/registroPaciente}" method="POST" enctype="multipart/form-data">
-                    
+                    <div class="form-group my-3">
+                        <h3 class="card-title">Registro de pacientes</h3>
+                    </div>
                     <div class="mb-3">
                         <label for="Nombre" class="form-label">Nombre:</label>
                         <input required type="text" th:value="${nombre}" name="nombre" class="form-control" id="nombre"
