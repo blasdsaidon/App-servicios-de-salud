@@ -1,9 +1,17 @@
 /* GLOBAL STYLES
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
+.banner{
+    background-color:  #10c61f;
+    width: 100%;
+    height: 120px;
+    margin-bottom: 50px;
+}
+
+
 
 body {
-    padding-top: 3rem;
+    
     padding-bottom: 3rem;
     color: #5a5a5a;
     background-color: rgba(226, 247, 250, 0.651);
