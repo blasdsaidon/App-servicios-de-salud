@@ -13,13 +13,19 @@
     </head>
 
     <body>
-        <div th:replace="/fragments/header :: div"></div> 
+        <header>
+            <div class="banner d-flex justify-content-center align-items-center">
+               <a href="/"> <img src="/Otra-imagen/logo.png" height="100PX" alt="banner"></a>
+                    </div>
+                </header>
         <main>
             <div th:replace="/fragments/error :: div"></div>
             <!-- Formulario registro -->
             <div class="form-registro">
                 <form th:action="@{/paciente/registroPaciente}" method="POST" enctype="multipart/form-data">
-                    
+                    <div class="form-group my-3">
+                        <h3 class="card-title">Registro de pacientes</h3>
+                    </div>
                     <div class="mb-3">
                         <label for="Nombre" class="form-label">Nombre:</label>
                         <input required type="text" th:value="${nombre}" name="nombre" class="form-control" id="nombre"
@@ -95,7 +101,13 @@
                         <input required type="password" th:value="${password2}" name="password2" class="form-control" id="Password"
                                placeholder="Repita su contraseña">
                     </div>
-                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                        <div class="d-flex align-items-center"> 
+                        <p style="padding-right: 10px ; margin: 0px;">Ya tiene cuenta?</p>
+                        <a href="/login" class="btn btn-outline-primary">Ingrese</a> 
+                        </div>
+                    </div>
                 </form>
             </div>
         </main>
