@@ -22,7 +22,7 @@ public class adminControlador {
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
 
-        return "registro.html";
+        return "registroAdmin.html";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -43,7 +43,7 @@ public class adminControlador {
             modelo.put("nombre", nombre);
             modelo.put("email", email);
 
-            return "registro.html";
+            return "registroAdmin.html";
         }
     }
 }
