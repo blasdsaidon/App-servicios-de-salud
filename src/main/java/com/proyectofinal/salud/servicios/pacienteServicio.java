@@ -30,11 +30,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class pacienteServicio implements UserDetailsService{
+public class pacienteServicio implements UserDetailsService {
 
     @Autowired
     private pacienteRepositorio pacienteRepo;
-
     @Autowired
     private imagenServicio imagenServicio;
 
@@ -45,6 +44,7 @@ public class pacienteServicio implements UserDetailsService{
 
         paciente paciente = new paciente();
         validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2);
+
         Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
         paciente.setApellido(apellido);
         paciente.setNombre(nombre);
@@ -67,6 +67,7 @@ public class pacienteServicio implements UserDetailsService{
 
         paciente paciente = new paciente();
         validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2);
+
         Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
         Optional<paciente> respuesta = pacienteRepo.findById(idPaciente);
 
@@ -83,17 +84,17 @@ public class pacienteServicio implements UserDetailsService{
             paciente.setImagen(imagen);*/
             paciente.setFechaNacimiento(fechaNacimientoDate);
             pacienteRepo.save(paciente);
-        }      
+        }
     }
 
     @Transactional
-    public void eliminar(String idPaciente) throws MiException{
-        
+    public void eliminar(String idPaciente) throws MiException {
+
         paciente paciente = pacienteRepo.getById(idPaciente);
-        
+
         pacienteRepo.delete(paciente);
     }
-    
+
     @Transactional(readOnly = true)
     public List<paciente> listarPacientes() {
 
@@ -103,78 +104,99 @@ public class pacienteServicio implements UserDetailsService{
 
         return pacientes;
     }
-    
+
     @Transactional(readOnly = true)
-    public paciente getOne(String idPaciente){
-       return pacienteRepo.getOne(idPaciente);
+    public paciente getOne(String idPaciente) {
+        return pacienteRepo.getOne(idPaciente);
     }
 
     public List listadoObrasSocial() {
+
         obraSocial[] vectorOS = obraSocial.values();
         List<obraSocial> ListaOS = new ArrayList();
         ListaOS.addAll(Arrays.asList(vectorOS));
+
         return ListaOS;
     }
 
     public List listadoGeneros() {
+
         sexo[] vectorsexo = sexo.values();
         List<sexo> ListaGenero = new ArrayList();
         ListaGenero.addAll(Arrays.asList(vectorsexo));
+
         return ListaGenero;
     }
-    
-    public paciente buscarMedicoporEmail(String email){
+
+    public paciente buscarPacientePorEmail(String email) {
+
         paciente paciente = pacienteRepo.buscarPorEmail(email);
+
+        return paciente;
+    }
+
+    public paciente buscarPacientePorTelefono(String telefono) {
+
+        paciente paciente = pacienteRepo.buscarPorTelefono(telefono);
+
         return paciente;
     }
 
     public void validar(String nombre, String apellido, String email, String telefono,
-            String fechaNacimiento, String password,String password2) throws MiException {
+            String fechaNacimiento, String password, String password2) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
-            throw new MiException("el nombre no puede ser nulo o estar vacío");
+            throw new MiException("El nombre ingresado no puede ser nulo o estar vacío.");
         }
         if (apellido.isEmpty() || apellido == null) {
-            throw new MiException("el apellido no puede ser nulo o estar vacío");
+            throw new MiException("El apellido ingresado no puede ser nulo o estar vacío.");
         }
         if (email.isEmpty() || email == null) {
-            throw new MiException("el email no puede ser nulo o estar vacío");
+            throw new MiException("El email ingresado no puede ser nulo o estar vacío.");
+        } else if (buscarPacientePorEmail(email) != null) {
+            throw new MiException("El email ingresado ya se encuentra registrado.");
         }
         if (telefono.isEmpty() || telefono == null) {
-            throw new MiException("el telefono no puede ser nulo o estar vacío");
+            throw new MiException("El número télefono ingresado no puede ser nulo o estar vacío.");
+        } else if (buscarPacientePorTelefono(telefono) != null) {
+            throw new MiException("El número de teléfono ingresado ya se encuentra registrado.");
+        } else if (telefono.length() != 10) {
+            throw new MiException("El número de teléfono ingresado debe contener 10 caracteres.");
         }
         if (fechaNacimiento.isEmpty()) {
-            throw new MiException("la fecha de nacimientoe no puede ser nula estar vacía");
+            throw new MiException("La fecha de nacimiento ingresada no puede ser nula o estar vacía.");
         }
-        if (password.isEmpty() || password == null || password.length() <= 5) {
-            throw new MiException("la contraseña no puede estar vacía, y debe tener más de 5 dígitos");
+        if (password.isEmpty() || password == null) {
+            throw new MiException("La contraseña ingresada no puede ser nula o estar vacía.");
+        } else if (password.length() < 5) {
+            throw new MiException("La contraseña ingresada debe tener 5 digitos o más.");
         }
         if (!password.equals(password2)) {
-            throw new MiException("Las contraseñas ingresadas deben ser iguales");
+            throw new MiException("Las contraseñas ingresadas deben ser iguales.");
         }
     }
-    
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        
+
         paciente paciente = pacienteRepo.buscarPorEmail(email);
-        
+
         if (paciente != null) {
-            
+
             List<GrantedAuthority> permisos = new ArrayList();
-            
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+ paciente.getRol().toString());
-            
+
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + paciente.getRol().toString());
+
             permisos.add(p);
-   
+
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            
+
             HttpSession session = attr.getRequest().getSession(true);
-            
+
             session.setAttribute("usuariosession", paciente);
-            
-            return new User(paciente.getEmail(), paciente.getPassword(),permisos);
-        }else{
+
+            return new User(paciente.getEmail(), paciente.getPassword(), permisos);
+        } else {
             return null;
         }
     }
