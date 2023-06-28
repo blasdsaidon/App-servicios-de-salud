@@ -20,7 +20,7 @@
             <div class="form-registro">
                 <form th:action="@{/logincheck}" method="POST">
                     <div class="form-group my-3">
-                        <h3 class="card-title">Accede a tu Cuenta</h3>
+                        <h3 class="card-title">Accede a tu Cuenta:</h3>
                     </div>
 
                     <div class="mb-3">
@@ -28,6 +28,7 @@
                         <input  required class="form-control" type="email" th:value="${email}" name="email" 
                                id="Email1" aria-describedby="emailHelp" placeholder="123@ejemplo.com"/>
                     </div>
+                    
                     <div class="mb-3">
                         <label class="form-label" for="password">Ingrese su contraseña:</label>
                         <input required   type="password" th:value="${password}" name="password" class="form-control"
@@ -36,14 +37,11 @@
 
                     <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-primary">Ingresar</button>
-
                         <a th:href="@{/}" class="btn btn-secondary">Volver</a> 
                     </div>
 
                 </form>
-            </div>
-
-               
+            </div> 
         </main>
 
         <div th:replace="/fragments/footer :: div"></div>

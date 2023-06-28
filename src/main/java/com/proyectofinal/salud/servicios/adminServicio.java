@@ -28,26 +28,27 @@ public class adminServicio implements UserDetailsService {
 
     @Autowired
     private adminRepositorio adminRepo;
+    
     @Autowired
     private imagenServicio imagenServicio;
 
-    @Transactional
-    public void crearAdmin(String nombre, String apellido, String email,
-            String telefono, MultipartFile archivo, String password, String password2) throws MiException {
-
-        admin admin = new admin();
-        validar(nombre, apellido, email, telefono, password, password2);
-
-        admin.setNombre(nombre);
-        admin.setApellido(apellido);
-        admin.setEmail(email);
-        admin.setTelefono(telefono);
-        imagen imagen = imagenServicio.guardar(archivo);
-        admin.setRol(rol.ADMIN);
-        admin.setImagen(imagen);
-        admin.setPassword(new BCryptPasswordEncoder().encode(password));
-        adminRepo.save(admin);
-    }
+//    @Transactional
+//    public void crearAdmin(String nombre, String apellido, String email,
+//            String telefono, MultipartFile archivo, String password, String password2) throws MiException {
+//
+//        admin admin = new admin();
+//        validar(nombre, apellido, email, telefono, password, password2);
+//
+//        admin.setNombre(nombre);
+//        admin.setApellido(apellido);
+//        admin.setEmail(email);
+//        admin.setTelefono(telefono);
+//        imagen imagen = imagenServicio.guardar(archivo);
+//        admin.setRol(rol.ADMIN);
+//        admin.setImagen(imagen);
+//        admin.setPassword(new BCryptPasswordEncoder().encode(password));
+//        adminRepo.save(admin);
+//    }
 
     @Transactional
     public void modificarAdmin(String idAdmin, String nombre, String apellido, String email,

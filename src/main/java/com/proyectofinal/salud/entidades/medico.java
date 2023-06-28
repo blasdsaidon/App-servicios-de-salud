@@ -119,6 +119,4 @@ public class medico extends persona {
         sb.append('}');
         return sb.toString();
     }
-
-    
 }

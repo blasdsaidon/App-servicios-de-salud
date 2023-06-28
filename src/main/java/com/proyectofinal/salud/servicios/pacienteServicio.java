@@ -34,6 +34,7 @@ public class pacienteServicio implements UserDetailsService {
 
     @Autowired
     private pacienteRepositorio pacienteRepo;
+
     @Autowired
     private imagenServicio imagenServicio;
 
@@ -65,13 +66,13 @@ public class pacienteServicio implements UserDetailsService {
             obraSocial obraSocial, sexo genero, String fechaNacimiento, String password, String password2,
             MultipartFile archivo) throws MiException, ParseException {
 
-        paciente paciente = new paciente();
+        Optional<paciente> respuesta = pacienteRepo.findById(idPaciente);
         validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2);
 
         Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
-        Optional<paciente> respuesta = pacienteRepo.findById(idPaciente);
 
         if (respuesta.isPresent()) {
+            paciente paciente = respuesta.get();
             paciente.setApellido(apellido);
             paciente.setNombre(nombre);
             paciente.setEmail(email);

@@ -33,6 +33,7 @@ public class medicoServicio implements UserDetailsService {
 
     @Autowired
     private medicoRepositorio medicoRepo;
+
     @Autowired
     private imagenServicio imagenServicio;
 

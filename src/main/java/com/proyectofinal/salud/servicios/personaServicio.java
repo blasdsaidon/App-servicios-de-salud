@@ -1,10 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.proyectofinal.salud.servicios;
 
-import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.entidades.persona;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +21,11 @@ public class personaServicio implements UserDetailsService {
     @Autowired
     public medicoServicio medicoServicio;
     
-    
     @Autowired
     public pacienteServicio pacienteServicio;
     
     @Autowired
-    public adminServicio adminServicio;
-    
-    
+    public adminServicio adminServicio;    
     
    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -46,8 +38,6 @@ public class personaServicio implements UserDetailsService {
        } else if (adminServicio.buscarAdminPorEmail(email)!=null){
             persona = adminServicio.buscarAdminPorEmail(email);
        }
-        
-       
 
         if (persona != null) {
 
