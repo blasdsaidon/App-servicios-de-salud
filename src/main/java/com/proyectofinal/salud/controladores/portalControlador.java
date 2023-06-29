@@ -1,5 +1,6 @@
 package com.proyectofinal.salud.controladores;
 
+import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.entidades.persona;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.sexo;
@@ -37,7 +38,7 @@ public class portalControlador {
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo, HttpSession session) {
 
-        persona logueado = (persona) session.getAttribute("usuariosession");
+        paciente logueado = (paciente) session.getAttribute("usuariosession");
         if (logueado != null) {
             return "redirect:/";
         }
@@ -47,44 +48,7 @@ public class portalControlador {
         return "login.html";
     }
     
-    @GetMapping("/perfil")
-    public String perfil(ModelMap modelo,HttpSession session){
-       persona persona = (persona) session.getAttribute("usuariosession");
-       modelo.put("persona", persona);
-       List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
-       modelo.addAttribute("ListaOS", ListaOS); 
-       List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
-       modelo.addAttribute("ListaGenero", ListaGenero);
+    
        
-       
-       return "modificarPaciente.html";
-    }  
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
-    @PostMapping("/perfil/{idPersona}")
-    public String actualizar(@PathVariable String idPersona,@RequestParam  String nombre,@RequestParam String apellido,
-            @RequestParam String email,@RequestParam  String telefono, obraSocial obraSocial,
-            sexo genero, String fechaNacimiento,@RequestParam String password,
-            @RequestParam String password2, MultipartFile archivo, ModelMap modelo, RedirectAttributes redireccion) {
-
-        try {
-            pacienteServicio.modificarPaciente(idPersona, nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2, archivo);
-
-            modelo.put("exito", "Paciente actualizado correctamente!");
-
-            return "inicio.html";
-        } catch (Exception ex) {
-            List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
-            modelo.addAttribute("ListaOS", ListaOS);
-            List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
-            modelo.addAttribute("ListaGenero", ListaGenero);
-            modelo.put("error", ex.getMessage());
-            modelo.put("nombre", nombre);
-            modelo.put("apellido", apellido);
-            modelo.put("telefono", telefono);
-            modelo.put("email", email);
-            modelo.put("fechaNacimiento", fechaNacimiento);
-            return "modificarPaciente.html";
-        }
-       
-    }
+    
 }
