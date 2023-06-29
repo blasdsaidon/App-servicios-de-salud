@@ -1,10 +1,12 @@
 package com.proyectofinal.salud.controladores;
 
+import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.sexo;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -62,9 +64,20 @@ public class pacienteControlador {
         }  
     }
    /*Se añade controlador para modificar pacientes*/ 
-    
+     @GetMapping("/perfil")
+    public String perfil(ModelMap modelo,HttpSession session){
+       paciente paciente = (paciente) session.getAttribute("usuariosession");
+       modelo.put("persona", paciente);
+       List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
+       modelo.addAttribute("ListaOS", ListaOS); 
+       List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
+       modelo.addAttribute("ListaGenero", ListaGenero);
+       
+       
+       return "panelPaciente.html";
+    }  
   
-    @GetMapping("/modificar/{idPaciente}")
+    @GetMapping("/perfil/modificar/{idPaciente}")
     public String modificar(@PathVariable String idPaciente, ModelMap modelo){
             
             modelo.put("paciente", pacienteServicio.getOne(idPaciente));
@@ -76,7 +89,7 @@ public class pacienteControlador {
         return "modificarPaciente.html";  
     }
     
-    @PostMapping("/modificar/{idPaciente}")
+    @PostMapping("/perfil/modificar/{idPaciente}")
     public String modificar(@PathVariable String idPaciente,@RequestParam  String nombre,@RequestParam String apellido,
             @RequestParam String email,@RequestParam  String telefono, obraSocial obraSocial,
             sexo genero, String fechaNacimiento,@RequestParam String password,
