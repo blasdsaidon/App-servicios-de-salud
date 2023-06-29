@@ -1,12 +1,12 @@
 package com.proyectofinal.salud.controladores;
 
-import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.entidades.persona;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,17 +27,22 @@ public class portalControlador {
         modelo.put("exito", exito);
         return "inicio.html";
     }
-
+    
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo, HttpSession session) {
 
         persona logueado = (persona) session.getAttribute("usuariosession");
-        if (logueado != null) {
-            return "redirect:/";
+        if (logueado != null && logueado.getRol().toString().equals("USER")) {
+            return "redirect:/paciente/perfil";
+        }else if (logueado != null && logueado.getRol().toString().equals("ADMIN")){
+            return "redirect:/admin/perfil";
+        }else if(logueado != null && logueado.getRol().toString().equals("PROFESIONAL")){
+            return "redirect:/medico/perfil";
         }
         if (error != null) {
             modelo.put("error", "Usuario o Contraseña invalidos.");
         }
-        return "login.html";
+        return "inicio.html";
     }
 }

@@ -172,6 +172,14 @@ public class medicoServicio implements UserDetailsService {
         return medico;
     }
 
+      public medico buscarMedicoPorID(String idPersona) {
+
+        medico medico = medicoRepo.buscarMedicoPorID(idPersona);
+
+        return medico;
+    }
+    
+    
     public void validar(String nombre, String apellido, String email, String telefono,
             Integer valorConsulta, especialidad especialidad, String password, String password2) throws MiException {
 

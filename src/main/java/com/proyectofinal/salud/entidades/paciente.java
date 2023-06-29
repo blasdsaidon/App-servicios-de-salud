@@ -17,7 +17,7 @@ public class paciente extends persona {
 
     @Enumerated(EnumType.STRING)
     private obraSocial obraSocial;
-    @OneToMany
+    @OneToMany(mappedBy="paciente")
     private Collection<fichaMedica> historialMedico;
 //    @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy/MM/dd")
@@ -26,7 +26,7 @@ public class paciente extends persona {
 //    private String fechaNacimiento;
     @Enumerated(EnumType.STRING)
     private sexo genero;
-    @OneToMany
+    @OneToMany(mappedBy="paciente")
     private Collection<turno> turnos;
 
     public paciente() {
