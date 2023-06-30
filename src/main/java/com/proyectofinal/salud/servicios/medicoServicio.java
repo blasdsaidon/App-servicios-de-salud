@@ -2,14 +2,14 @@ package com.proyectofinal.salud.servicios;
 
 import com.proyectofinal.salud.entidades.imagen;
 import com.proyectofinal.salud.entidades.medico;
+import com.proyectofinal.salud.entidades.turno;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.rol;
 import com.proyectofinal.salud.enumeradores.sexo;
 import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.repositorios.medicoRepositorio;
-import java.text.ParseException;
-import java.util.ArrayList;
+import com.proyectofinal.salud.repositorios.turnoRepositorio;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +27,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 
 @Service
 public class medicoServicio implements UserDetailsService {
@@ -35,6 +40,9 @@ public class medicoServicio implements UserDetailsService {
     private medicoRepositorio medicoRepo;
     @Autowired
     private imagenServicio imagenServicio;
+
+    @Autowired
+    private turnoRepositorio turnoRepo;
 
     @Transactional
     public void crearMedico(String nombre, String apellido, String email, String telefono,
@@ -172,14 +180,13 @@ public class medicoServicio implements UserDetailsService {
         return medico;
     }
 
-      public medico buscarMedicoPorID(String idPersona) {
+    public medico buscarMedicoPorID(String idPersona) {
 
         medico medico = medicoRepo.buscarMedicoPorID(idPersona);
 
         return medico;
     }
-    
-    
+
     public void validar(String nombre, String apellido, String email, String telefono,
             Integer valorConsulta, especialidad especialidad, String password, String password2) throws MiException {
 
