@@ -22,4 +22,9 @@ public interface medicoRepositorio extends JpaRepository<medico, String> {
     @Query("SELECT m FROM medico m WHERE m.idPersona = :idPersona")
     public medico buscarMedicoPorID(@Param("idPersona") String idPersona);
     
+    /*SELECT turno.fecha, turno.hora, medico.nombre
+FROM turnos AS turno
+JOIN medicos AS medico ON turno.medico_id = medico.id
+JOIN especialidades AS especialidad ON medico.especialidad_id = especialidad.id
+WHERE especialidad.nombre = 'nombre_especialidad'*/
 }
