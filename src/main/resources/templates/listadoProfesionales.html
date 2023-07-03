@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html        
+    lang="es"
+    xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Listado Profesionales</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <table
+            class="table"
+            border="5px"
+            style="width: 100%; font-size: 20px; text-align: center"
+            >
+            <thead class="thead-dark">
+                <tr>
+                    <th style="width: 15%">Nombre</th>
+                    <th style="width: 15%">Apellido</th>
+                    <th style="width: 25%">Especialidad</th>
+                    <th style="width: 25%">Horarios disponibles</th>
+                </tr>
+            </thead>
+
+            <tbody th:each="profesionales : ${listadoProfesionales}">
+                <tr>
+                    <th scope="row">
+                        <div class="container">
+                            <h5 th:text="${profesionales.nombre}"></h5>
+                        </div>
+                    </th>
+                    <th scope="row">
+                        <div class="container">
+                            <h5 th:text="${profesionales.apellido}"></h5>
+                        </div>
+                    </th>
+                    <td>
+                        <div class="container">
+                            <h5 th:text="${profesionales.especialidad}"></h5>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="container">
+                            <h5 th:text="${profesionales.horariosDisponibles}"></h5>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

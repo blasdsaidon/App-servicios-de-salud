@@ -46,24 +46,21 @@
                         <label for="Telefono" class="form-label">Teléfono:</label>
                         <input required type="number" th:value="${telefono}" name="telefono" class="form-control" id="Telefono"
                                aria-describedby="telefonoHelp" placeholder="0123456789">
-                        <div id="emailHelp" class="form-text">No compartiremos esta información con nadie</div>
+                        <div id="emailHelp" class="form-text">No compartiremos esta información con nadie.</div>
                     </div>
 
                     <div class="mb-3">
                         <label for="Email1" class="form-label">Email address:</label>
                         <input required type="email" th:value="${email}" name="email" class="form-control" id="Email1"
                                aria-describedby="emailHelp" placeholder="123@ejemplo.com">
-                        <div id="emailHelp" class="form-text">No compartiremos esta información con nadie</div>
+                        <div id="emailHelp" class="form-text">No compartiremos esta información con nadie.</div>
                     </div>
 
                     <div class="mb-3">
                         <label for="especialidad" class="form-label">Especialidad:</label> 
                         <select required class="form-select" name="especialidad">
                             <option>Selecione Especialidad: </option>
-                            <option
-                                    th:each="especialidad:${ListaEspecialidades}"
-                                    th:value="${especialidad}"
-                                    th:text="${especialidad}"/>
+                            <option th:each="especialidad:${ListaEspecialidades}" th:value="${especialidad}" th:text="${especialidad}"/>
                         </select>
                     </div>
 

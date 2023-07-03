@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,7 +45,8 @@ public class pacienteControlador {
         try {
             pacienteServicio.crearPaciente(nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2, archivo);
             redireccion.addAttribute("exito", "El usuario se registró exitosamente!");
-            return "redirect:/";// queda sujeto a cambio de front. 
+            
+            return "redirect:/";
 
         } catch (Exception ex) {
             List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
@@ -61,16 +63,16 @@ public class pacienteControlador {
             return "registro.html";
         }  
     }
-   /*Se añade controlador para modificar pacientes*/ 
+    
      @GetMapping("/perfil")
     public String perfil(ModelMap modelo,HttpSession session){
+        
        paciente paciente = (paciente) session.getAttribute("usuariosession");
        modelo.put("persona", paciente);
        List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
        modelo.addAttribute("ListaOS", ListaOS); 
        List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
        modelo.addAttribute("ListaGenero", ListaGenero);
-       
        
        return "panelPaciente.html";
     }  
@@ -110,7 +112,8 @@ public class pacienteControlador {
             modelo.put("telefono", telefono);
             modelo.put("email", email);
             modelo.put("fechaNacimiento", fechaNacimiento);
-            return "modificarPaciente.html";/*suejeto a cambio de front*/
+            
+            return "modificarPaciente.html";
         }
     }
 }

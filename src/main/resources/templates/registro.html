@@ -54,10 +54,7 @@
                         <label for="GENERO" class="form-label">Género:</label>
                         <select required class="form-select" name="genero">
                             <option>Seleccione Género: </option>
-                            <option
-                                    th:each="genero:${ListaGenero}"
-                                    th:value="${genero}"
-                                    th:text="${genero}"/>
+                            <option th:each="genero:${ListaGenero}" th:value="${genero}" th:text="${genero}"/>
                         </select>
                     </div>
 
@@ -71,10 +68,7 @@
                         <label for="obra social" class="form-label">Obra Social:</label>
                         <select required class="form-select" name="obraSocial">
                             <option >Selecione Obra Social: </option>
-                            <option
-                                    th:each="obraSocial:${ListaOS}"
-                                    th:value="${obraSocial}"
-                                    th:text="${obraSocial}"/>
+                            <option th:each="obraSocial:${ListaOS}" th:value="${obraSocial}" th:text="${obraSocial}"/>
                         </select>
                     </div>
 

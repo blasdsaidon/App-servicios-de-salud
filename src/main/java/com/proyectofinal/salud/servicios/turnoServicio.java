@@ -10,7 +10,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,14 +20,15 @@ public class turnoServicio {
 
     @Autowired
     private pacienteRepositorio pacienteRepo;
+    
     @Autowired
     private medicoRepositorio medicoRepo;
+    
     @Autowired
     private turnoRepositorio turnoRepo;
 
     @Autowired
     private medicoServicio medicoServicio;
-
     
     @Transactional
     public turno crearTurno(medico medico, Date fechaTurno) { //String fechaTurno en lugar de Date ||  throws ParseException
@@ -42,7 +42,9 @@ public class turnoServicio {
 
         return turno;
     }
+    
 //---------------------------------------------------------------
+    
     @Transactional
     public void crearTurnosDisponibles(String idMedico, String fechaInicioString, 
             String fechaFinString, String horaInicioString, String horaFinString) throws ParseException {
@@ -81,7 +83,6 @@ public class turnoServicio {
             }
             medico.setTurnos(turnos);
             medicoRepo.save(medico);
-
         }
     }
 
@@ -98,7 +99,6 @@ public class turnoServicio {
     }
 
 //----------------------------------------------------------------
-    
     
     @Transactional
     public void asignarTurno(String idPaciente, turno turno) {
@@ -148,5 +148,4 @@ public class turnoServicio {
         medico medico = medicoServicio.buscarMedicoPorID(idMedico);
         return medico.getTurnos();
     }
-
 }

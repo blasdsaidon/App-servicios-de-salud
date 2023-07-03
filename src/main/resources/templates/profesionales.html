@@ -4,6 +4,7 @@
     xmlns:th="http://www.thymeleaf.org"
     xlmns:sec="http://www.thymeleaf.org/extras/spring-security"
     >
+    
     <head>
         <meta charset="utf-8" />
         <title>Profesionales</title>
@@ -18,27 +19,30 @@
 
     <body>
 
-        <div class="mb-3">
-            <label for="profesional" class="form-label">Especialidad:</label>
-            <select
-                onchange="listasProfesionales()"
-                required
-                id="profesionales"
-                class="form-select"
-                name="profesionales"
-                >
-                <option>Selecione Especialidad:</option>
-                <option th:value="${ListaMedicosGinecologos}"th:text="ginecologo"></option>
-                <option th:value="${ListaMedicosClinicos}" th:text="clinico"></option>
-                <option th:value="${ListaMedicosCardiologos}"th:text="cardiologo"></option>
-                <option th:value="${ListaMedicosPediatras}" th:text="Pediatra"></option>
-            </select>
+        <div class="form-registro">
+            <div class="form-group my-3">
+                <h3 class="card-title">-----</h3>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label" for="profesional" >Especialidad:</label>
+                <select onchange="listasProfesionales()" required id="profesionales" class="form-select" name="profesionales">
+                    <option>Selecione Especialidad:</option>
+                    <option th:value="${ListaMedicosGinecologos}"th:text="ginecologo"></option>
+                    <option th:value="${ListaMedicosClinicos}" th:text="clinico"></option>
+                    <option th:value="${ListaMedicosCardiologos}"th:text="cardiologo"></option>
+                    <option th:value="${ListaMedicosPediatras}" th:text="Pediatra"></option>
+                </select>
+            </div>
 
-            <br />
+            <div class="mb-3">
+                <label for="profesional" class="form-label">Profesional:</label>
+                <select required id="especialistas" class="form-select"></select>
+            </div>
 
-            <label for="profesional" class="form-label">Profesional:</label>
-            <select required id="especialistas" class="form-select">
-            </select>
+            <div class="d-flex justify-content-between">
+                <a th:href="@{/}" class="btn btn-secondary">Volver</a> 
+            </div>
 
             <script>
                 function listasProfesionales() {

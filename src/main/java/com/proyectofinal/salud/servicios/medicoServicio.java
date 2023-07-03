@@ -2,7 +2,6 @@ package com.proyectofinal.salud.servicios;
 
 import com.proyectofinal.salud.entidades.imagen;
 import com.proyectofinal.salud.entidades.medico;
-import com.proyectofinal.salud.entidades.turno;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.rol;
@@ -28,10 +27,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 
 @Service
 public class medicoServicio implements UserDetailsService {
