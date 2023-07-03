@@ -45,6 +45,7 @@
           </div>
             <div th:replace="/fragments/error :: div"></div>
 
+
             <!-- Formulario de perfil -->
             <div class="form-modificacion">
                 <form th:action="@{/perfil/__${paciente.idPaciente}__}" method="POST" enctype="multipart/form-data">
@@ -121,6 +122,7 @@
           </ul> 
   </div>
 </footer>
+
         <div th:replace="/fragments/footer :: div"></div>
         <div th:replace="/fragments/javaScriptPass :: script"></div>
     </body>

@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,44 +65,38 @@ public class pacienteControlador {
         }  
     }
    /*Se añade controlador para modificar pacientes*/ 
-     @GetMapping("/perfil")
+
+    
+@GetMapping("/perfil")
     public String perfil(ModelMap modelo,HttpSession session){
        paciente paciente = (paciente) session.getAttribute("usuariosession");
-       modelo.put("persona", paciente);
+       modelo.put("paciente", paciente);
+
        List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
        modelo.addAttribute("ListaOS", ListaOS); 
        List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
        modelo.addAttribute("ListaGenero", ListaGenero);
        
        
-       return "panelPaciente.html";
+
+       return "modificar_paciente.html";
     }  
-  
-    @GetMapping("/perfil/modificar/{idPaciente}")
-    public String modificar(@PathVariable String idPaciente, ModelMap modelo){
-            
-            modelo.put("paciente", pacienteServicio.getOne(idPaciente));
-            List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
-            modelo.addAttribute("ListaOS", ListaOS);
-            List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
-            modelo.addAttribute("ListaGenero", ListaGenero);
-        
-        return "modificarPaciente.html";  
-    }
-    
-    @PostMapping("/perfil/modificar/{idPaciente}")
-    public String modificar(@PathVariable String idPaciente,@RequestParam  String nombre,@RequestParam String apellido,
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
+    @PostMapping("/perfil/{idPersona}")
+    public String actualizar(@PathVariable String idPersona,@RequestParam  String nombre,@RequestParam String apellido,
+
             @RequestParam String email,@RequestParam  String telefono, obraSocial obraSocial,
             sexo genero, String fechaNacimiento,@RequestParam String password,
-            @RequestParam String password2, MultipartFile archivo, ModelMap modelo, RedirectAttributes redireccion){
-        
+            @RequestParam String password2, MultipartFile archivo, ModelMap modelo, RedirectAttributes redireccion, HttpSession session) {
+
         try {
-            pacienteServicio.modificarPaciente(idPaciente, nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2, archivo);
-            redireccion.addAttribute("exito", "El usuario se registró exitosamente!");
-            return "redirect:/";// queda sujeto a cambio de front. 
-            
-        
-        }catch (Exception ex){
+           
+            paciente pacienteModificado = pacienteServicio.modificarPaciente(idPersona, nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2, archivo);
+            session.setAttribute("usuariosession", pacienteModificado);
+            modelo.put("exito", "Paciente actualizado correctamente!");
+
+            return "inicio.html";
+        } catch (Exception ex) {
             List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
             modelo.addAttribute("ListaOS", ListaOS);
             List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
@@ -112,9 +107,7 @@ public class pacienteControlador {
             modelo.put("telefono", telefono);
             modelo.put("email", email);
             modelo.put("fechaNacimiento", fechaNacimiento);
-            return "modificarPaciente.html";/*suejeto a cambio de front*/
+            return "modificar_paciente.html";
         }
-    
-    
     }
 }

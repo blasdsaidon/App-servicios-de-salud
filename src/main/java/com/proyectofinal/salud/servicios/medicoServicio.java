@@ -11,8 +11,10 @@ import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.repositorios.medicoRepositorio;
 import com.proyectofinal.salud.repositorios.turnoRepositorio;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -47,11 +49,12 @@ public class medicoServicio implements UserDetailsService {
     @Transactional
     public void crearMedico(String nombre, String apellido, String email, String telefono,
             Integer valorConsulta, especialidad especialidad, String password,
-            String password2, MultipartFile archivo) throws MiException, ParseException {
+            String password2, MultipartFile archivo, Collection<obraSocial> obraSocialRecibida) throws MiException, ParseException {
 
         medico medico = new medico();
-        validar(nombre, apellido, email, telefono, valorConsulta, especialidad, password, password2);
-
+        validar(nombre, apellido, email, telefono, valorConsulta, especialidad, password, password2, obraSocialRecibida, true);
+        
+        medico.setObraSocialRecibida(obraSocialRecibida);
         medico.setApellido(apellido);
         medico.setNombre(nombre);
         medico.setEmail(email);
@@ -66,17 +69,17 @@ public class medicoServicio implements UserDetailsService {
         medicoRepo.save(medico);
     }
 
-    @Transactional
-    public void cargarObrasSociales(String idMedico, obraSocial obraSocial) {
-
-        Optional<medico> respuesta = medicoRepo.findById(idMedico);
-        medico medico = respuesta.get();
-
-        if (respuesta.isPresent()) {
-            medico.setObraSocialRecibida(obraSocial);
-            medicoRepo.save(medico);
-        }
-    }
+//    @Transactional
+//    public void cargarObrasSociales(obraSocial idMedico, obraSocial obraSocial) {
+//
+//        Optional<medico> respuesta = medicoRepo.findById(idMedico);
+//        medico medico = respuesta.get();
+//
+//        if (respuesta.isPresent()) {
+//            medico.setObraSocialRecibida(obraSocial);
+//            medicoRepo.save(medico);
+//        }
+//    }
 
     @Transactional
     public void darDeBaja(String idMedico, Boolean alta) {
@@ -90,16 +93,17 @@ public class medicoServicio implements UserDetailsService {
     }
 
     @Transactional
-    public void modificarMedico(String idMedico, String nombre, String apellido, String email, String telefono,
+    public medico modificarMedico(String idMedico, String nombre, String apellido, String email, String telefono,
             Integer valorConsulta, especialidad especialidad, String password, String password2,
-            MultipartFile archivo) throws MiException, ParseException {
+            MultipartFile archivo, Collection<obraSocial> obraSocialRecibida) throws MiException, ParseException {
 
         medico medico = new medico();
-        validar(nombre, apellido, email, telefono, valorConsulta, especialidad, password, password2);
+        validar(nombre, apellido, email, telefono, valorConsulta, especialidad, password, password2, obraSocialRecibida, false);
 
         Optional<medico> respuesta = medicoRepo.findById(idMedico);
 
         if (respuesta.isPresent()) {
+            medico = respuesta.get();
             medico.setApellido(apellido);
             medico.setNombre(nombre);
             medico.setEmail(email);
@@ -107,12 +111,14 @@ public class medicoServicio implements UserDetailsService {
             medico.setValorConsulta(valorConsulta);
             medico.setEspecialidad(especialidad);
             medico.setRol(rol.PROFESIONAL);
+            medico.setObraSocialRecibida(obraSocialRecibida);
             medico.setPassword(new BCryptPasswordEncoder().encode(password));
             /* imagen imagen = imagenServicio.guardar(archivo);
             paciente.setImagen(imagen);*/
 
             medicoRepo.save(medico);
         }
+        return medico;
     }
 
     @Transactional
@@ -188,7 +194,7 @@ public class medicoServicio implements UserDetailsService {
     }
 
     public void validar(String nombre, String apellido, String email, String telefono,
-            Integer valorConsulta, especialidad especialidad, String password, String password2) throws MiException {
+            Integer valorConsulta, especialidad especialidad, String password, String password2, Collection<obraSocial> obraSocialRecibida, boolean esNuevoUsuario) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("El nombre ingresado no puede ser nulo o estar vacío.");
@@ -196,18 +202,24 @@ public class medicoServicio implements UserDetailsService {
         if (apellido.isEmpty() || apellido == null) {
             throw new MiException("El apellido ingresado no puede ser nulo o estar vacío.");
         }
-        if (email.isEmpty() || email == null) {
+       if (email.isEmpty() || email == null) {
             throw new MiException("El email ingresado no puede ser nulo o estar vacío.");
-        } else if (buscarMedicoPorEmail(email) != null) {
+        } else if (esNuevoUsuario==true){
+            
+          if (buscarMedicoPorEmail(email) != null) {
             throw new MiException("El email ingresado ya se encuentra registrado.");
+          }
         }
         if (telefono.isEmpty() || telefono == null) {
-            throw new MiException("El número de teléfono no puede ser nulo o estar vacío.");
-        } else if (buscarMedicoPorTelefono(telefono) != null) {
-            throw new MiException("El número de teléfono ingresado ya se encuentra registrado.");
+            throw new MiException("El número télefono ingresado no puede ser nulo o estar vacío.");
+        
         } else if (telefono.length() != 10) {
             throw new MiException("El número de teléfono ingresado debe contener 10 caracteres.");
-        }
+        }   else if (esNuevoUsuario==true){
+              if (buscarMedicoPorTelefono(telefono) != null) {
+            throw new MiException("El número de teléfono ingresado ya se encuentra registrado.");
+              }
+          }
         if (valorConsulta == null) {
             throw new MiException("El valor de consulta ingresado no puede ser nulo o estar vacío.");
         } else if (valorConsulta < 0) {
@@ -223,6 +235,9 @@ public class medicoServicio implements UserDetailsService {
         }
         if (!password.equals(password2)) {
             throw new MiException("Las contraseñas ingresadas deben ser iguales.");
+        }
+        if (obraSocialRecibida.isEmpty()){
+            throw new MiException("Si no acepta obras sociales seleccione " + "NINGUNA"); 
         }
     }
 
