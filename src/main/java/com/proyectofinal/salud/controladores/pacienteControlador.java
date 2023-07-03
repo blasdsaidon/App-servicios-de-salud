@@ -5,6 +5,7 @@ import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.sexo;
 import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.servicios.pacienteServicio;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -77,9 +78,9 @@ public class pacienteControlador {
     }
     
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
-    @PostMapping("/perfil/{id}")
+    @PostMapping("/perfil/{idPersona}")
     public String actualizar(MultipartFile archivo,@PathVariable String id, @RequestParam String nombre,@RequestParam String email, 
-            @RequestParam String password,@RequestParam String password2, ModelMap modelo) {
+            @RequestParam String password,@RequestParam String password2, ModelMap modelo) throws ParseException {
 
         try {
             pacienteServicio.modificarPaciente(password, nombre, email, email, password, obraSocial.OSEP, sexo.OTRO, email, password, password2, archivo);
