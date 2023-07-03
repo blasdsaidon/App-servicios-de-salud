@@ -3,9 +3,11 @@ package com.proyectofinal.salud.controladores;
 import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.sexo;
+
 import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import java.text.ParseException;
+
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -25,16 +27,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/paciente")
 public class pacienteControlador {
 
+
     @Autowired
     private pacienteServicio pacienteServicio;
 
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
 
+
         List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
         modelo.addAttribute("ListaOS", ListaOS);
         List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
         modelo.addAttribute("ListaGenero", ListaGenero);
+
 
         return "registro.html";
     }
@@ -51,6 +56,7 @@ public class pacienteControlador {
             redireccion.addAttribute("exito", "El usuario se registró exitosamente!");
             return "redirect:/";// queda sujeto a cambio de front. 
 
+
         } catch (Exception ex) {
             List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
             modelo.addAttribute("ListaOS", ListaOS);
@@ -62,6 +68,7 @@ public class pacienteControlador {
             modelo.put("telefono", telefono);
             modelo.put("email", email);
             modelo.put("fechaNacimiento", fechaNacimiento);
+
 
             return "registro.html";
         }
@@ -99,6 +106,7 @@ public class pacienteControlador {
 
             return "registro.html";
         }
+
 
     }
    /*Se añade controlador para modificar pacientes*/ 
