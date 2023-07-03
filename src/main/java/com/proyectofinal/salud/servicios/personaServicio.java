@@ -4,7 +4,6 @@
  */
 package com.proyectofinal.salud.servicios;
 
-import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.entidades.persona;
 import java.util.ArrayList;
 import java.util.List;

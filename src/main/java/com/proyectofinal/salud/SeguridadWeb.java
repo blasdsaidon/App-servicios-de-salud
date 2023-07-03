@@ -1,8 +1,5 @@
 package com.proyectofinal.salud;
 
-import com.proyectofinal.salud.servicios.adminServicio;
-import com.proyectofinal.salud.servicios.medicoServicio;
-import com.proyectofinal.salud.servicios.pacienteServicio;
 import com.proyectofinal.salud.servicios.personaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
