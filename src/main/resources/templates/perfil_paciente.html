@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil del Paciente</title>
+    
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link href="/style/vistaPaciente.css" rel="stylesheet">
+        <link href="/style/style.css" rel ="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+  
+    <div class="container">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+          <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+          </a>
+    
+          <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="#" class="nav-link px-2 link-secondary">Inicio</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">Profesionales</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">Obras Sociales</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">Sobre Nosotros</a></li>
+            
+          </ul>
+    
+        </header>
+
+    <div class="container">
+        <h1>Perfil del Paciente</h1>
+        <img class="profile-image" src=".." alt="Imagen de perfil">
+        <p><strong>Nombre:</strong>"${nombre}"</p>
+        <p><strong>Apellido:</strong>"${apellido}"</p>
+        <p><strong>Telefono:</strong>"${telefono}"</p>
+        <p><strong>Obra Social:</strong>"${obra Social}"</p>
+        <p><strong>Genero:</strong>"${genero}"</p>
+        <p><strong>E-mail:</strong>"${email}"</p>
+        <p><strong>Fecha de nacimiento</strong>"${Fecha}"</p>
+        <div class="button-conteiner">
+            <button class="button" onclick="modificarDatos()">Modificar datos personales</button>
+            <button class="button" onclick="sacarTurno()">Sacar turno con el médico</button>
+            <button class="button" onclick="verTurnos()">Ver turnos</button>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">                
+      <a th:href="@{/}" class="btn btn-secondary">Volver</a> 
+  </div>
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+<div class="col-md-4 d-flex align-items-center">
+<a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(23, 226, 39, 1);transform: ;msFilter:;"><path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path></svg>
+</a>
+<span class="mb-3 mb-md-0 text-body-secondary">&copy; 2023 Salud Egg, Inc</span>
+</div>
+
+<ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+<li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
+<li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
+<li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
+</ul> 
+</div>
+    
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script src="/js/vistaPaciente.js"></script>
+<div th:replace="/fragments/footer :: div"></div>
+<div th:replace="/fragments/javaScriptPass :: script"></div>
+
+</body>
+</html>
