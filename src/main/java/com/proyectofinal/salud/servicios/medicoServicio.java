@@ -144,7 +144,13 @@ public class medicoServicio implements UserDetailsService {
 
         return medicoRepo.getOne(idMedico);
     }
-
+    @Transactional
+    public Collection OsRecibidas(String idPersona){
+       medico medico = medicoRepo.getById(idPersona);
+       Collection<obraSocial> os = medico.getObraSocialRecibida();
+        
+       return os; 
+    }
     public List listadoObrasSocial() {
 
         obraSocial[] vectorOS = obraSocial.values();

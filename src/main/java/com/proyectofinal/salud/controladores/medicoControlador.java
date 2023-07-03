@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.servlet.http.HttpSession;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -84,8 +85,9 @@ public class medicoControlador {
        modelo.addAttribute("ListaOS", ListaOS); 
         List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
         modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
-       Collection<obraSocial> os = medico.getObraSocialRecibida();
-       //List<String> oSocial = os.stream().map(fnctn)
+        String idPersona = medico.getIdPersona();
+        Collection<obraSocial> os = medicoServicio.OsRecibidas(idPersona);
+       
        modelo.addAttribute("oSRecibidas", os);
        return "modificar_medico.html";
     }  
@@ -97,12 +99,7 @@ public class medicoControlador {
             especialidad especialidad,@RequestParam String password,
             @RequestParam String password2, MultipartFile archivo, @RequestParam Collection<obraSocial> obraSocialRecibida, ModelMap modelo, RedirectAttributes redireccion, HttpSession session) {
         
-        Optional<medico> respuesta = medicoRepo.findById(idPersona);
-        medico medico = respuesta.get();
-        Collection<obraSocial> os = medico.getObraSocialRecibida();
-        System.out.println("asdasdasdasd");
-        System.out.println(os);
-        
+       
         try{
     
             medico medicoModificado = medicoServicio.modificarMedico(idPersona, nombre, apellido, email, telefono, valorConsulta, especialidad, password, password2, archivo, obraSocialRecibida);
@@ -111,10 +108,13 @@ public class medicoControlador {
         
             return "inicio.html";
         } catch (Exception ex) {
+            medico medico = (medico) session.getAttribute("usuariosession");
             List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
             modelo.addAttribute("ListaOS", ListaOS);
             List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
             modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
+             Collection<obraSocial> os = medico.getObraSocialRecibida();
+             modelo.addAttribute("oSRecibidas", os);
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("apellido", apellido);
