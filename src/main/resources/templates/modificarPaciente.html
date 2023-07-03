@@ -45,7 +45,84 @@
           </div>
             <div th:replace="/fragments/error :: div"></div>
 
-            
+
+            <!-- Formulario de perfil -->
+            <div class="form-modificacion">
+                <form th:action="@{/perfil/__${paciente.idPaciente}__}" method="POST" enctype="multipart/form-data">
+                    <input hidden th:value= "${idPaciente}" name="idPaciente">
+                    
+                    <div th:replace="/fragments/javaScriptPass :: script"></div>
+                    <div class="mb-3">
+                        <label for="Nombre" class="form-label">Nombre:</label>
+                        <input required type="text" th:value="${nombre}" name="nombre" class="form-control" id="nombre" aria-describedby="nombreHelp" placeholder="Juan">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Apellido" class="form-label">Apellido:</label>
+                        <input required type="text" th:value="${apellido}" name="apellido" class="form-control" id="apellido" aria-describedby="nombreHelp" placeholder=" Perez">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Telefono" class="form-label">Teléfono:</label>
+                        <input required type="number" th:value="${telefono}" name="telefono" class="form-control" id="Telefono" aria-describedby="telefonoHelp" placeholder="12345678910">
+                        <div id="emailHelp" class="form-text">No compartiremos esta información con nadie</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Email1" class="form-label">Email address:</label>
+                        <input required type="email" th:value="${email}" name="email" class="form-control" id="Email1" aria-describedby="emailHelp" placeholder="123@ejemplo.com">
+                        <div id="emailHelp" class="form-text">No compartiremos esta información con nadie</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="GENERO" class="form-label">Género:</label>
+                        <select required class="form-select" name="genero">
+                            <option>Seleccione Género: </option>
+                            <option selected="genero" 
+                                    th:each="genero:${ListaGenero}"
+                                    th:value="${genero}"
+                                    th:text="${genero}"/>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha-nacimiento" class="form-label">Fecha de nacimiento:</label>
+                        <input required type="date" th:value="${fechaNacimiento}" name="fechaNacimiento" class="form-control" id="fechaNac" >
+                    </div>
+
+                  
+                    <div class="mb-3">
+                        <label for="imagen" class="form-label">Imagen de perfil:</label>
+                        <input type="file"  name="archivo" class="form-control" id="imagen" placeholder="Añada una imagen de perfil">
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtPassword" class="form-label">Password:</label>
+                        <input required type="password" th:value="${password}" name="password" class="form-control" id="txtPassword" placeholder="Ingrese su contraseña">
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="mostrar" onclick="mostrarPassword()">
+                        <label class="form-check-label" for="mostrar">Mostrar contraseña</label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Password" class="form-label">Password:</label>
+                        <input required type="password" th:value="${password2}" name="password2" class="form-control" id="Password" placeholder="Repita su contraseña">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                </form>
+            </div>
+        </main>
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+          <div class="col-md-4 d-flex align-items-center">
+              <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(23, 226, 39, 1);transform: ;msFilter:;"><path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path></svg>
+              </a>
+              <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2023 Salud Egg, Inc</span>
+          </div>
+
+          <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+              <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
+              <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
+              <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
+          </ul> 
+  </div>
+</footer>
+
         <div th:replace="/fragments/footer :: div"></div>
         <div th:replace="/fragments/javaScriptPass :: script"></div>
     </body>

@@ -65,6 +65,7 @@ public class pacienteServicio implements UserDetailsService {
             obraSocial obraSocial, sexo genero, String fechaNacimiento, String password, String password2,
             MultipartFile archivo) throws MiException, ParseException {
 
+
         
         validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2, false);
         
@@ -75,6 +76,7 @@ public class pacienteServicio implements UserDetailsService {
         if (respuesta.isPresent()) {
             paciente = respuesta.get();
             System.out.println(paciente.toString());
+
             paciente.setApellido(apellido);
             paciente.setNombre(nombre);
             paciente.setEmail(email);

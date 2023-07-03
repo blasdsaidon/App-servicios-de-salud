@@ -26,12 +26,13 @@ public class medico extends persona {
     
     private Collection<obraSocial> obraSocialRecibida;
     @OneToMany
+
     private Collection<turno> horariosDisponibles;
     private Integer valorConsulta;
     private Integer calificacionServicio;
     @OneToMany
     private Collection<fichaMedica> historialConsultas;
-    @OneToMany
+    @OneToMany(mappedBy="medico")
     private Collection<turno> turnos;
     private Boolean alta;
     

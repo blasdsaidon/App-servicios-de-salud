@@ -47,7 +47,7 @@ public class medicoControlador {
 
         return "registro_medico.html";
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/registroMedico")
     public String registroMedico(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String email, @RequestParam String telefono, @RequestParam especialidad especialidad,

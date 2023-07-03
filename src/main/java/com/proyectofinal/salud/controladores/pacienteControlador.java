@@ -65,22 +65,26 @@ public class pacienteControlador {
         }  
     }
    /*Se añade controlador para modificar pacientes*/ 
+
     
 @GetMapping("/perfil")
     public String perfil(ModelMap modelo,HttpSession session){
        paciente paciente = (paciente) session.getAttribute("usuariosession");
        modelo.put("paciente", paciente);
+
        List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
        modelo.addAttribute("ListaOS", ListaOS); 
        List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
        modelo.addAttribute("ListaGenero", ListaGenero);
        
        
+
        return "modificar_paciente.html";
     }  
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
     @PostMapping("/perfil/{idPersona}")
     public String actualizar(@PathVariable String idPersona,@RequestParam  String nombre,@RequestParam String apellido,
+
             @RequestParam String email,@RequestParam  String telefono, obraSocial obraSocial,
             sexo genero, String fechaNacimiento,@RequestParam String password,
             @RequestParam String password2, MultipartFile archivo, ModelMap modelo, RedirectAttributes redireccion, HttpSession session) {
