@@ -33,15 +33,15 @@
     <div class="container">
         <h1>Perfil del Paciente</h1>
         <img class="profile-image" src=".." alt="Imagen de perfil">
-        <p><strong>Nombre:</strong>"${nombre}"</p>
-        <p><strong>Apellido:</strong>"${apellido}"</p>
-        <p><strong>Telefono:</strong>"${telefono}"</p>
-        <p><strong>Obra Social:</strong>"${obra Social}"</p>
-        <p><strong>Genero:</strong>"${genero}"</p>
-        <p><strong>E-mail:</strong>"${email}"</p>
-        <p><strong>Fecha de nacimiento</strong>"${Fecha}"</p>
+        <p><strong>Nombre: <span th:text="${paciente.nombre}"/></strong></p>
+        <p><strong>Apellido: <span th:text="${paciente.apellido}"/></strong></p>
+        <p><strong>Telefono: <span th:text="${paciente.telefono}"/></strong></p>
+        <p><strong>Obra Social: <span th:text="${paciente.obraSocial}"/></strong></p>
+        <p><strong>Genero: <span th:text="${paciente.genero}"/></strong></p>
+        <p><strong>E-mail: <span th:text="${paciente.email}"/></strong></p>
+        <p><strong>Fecha de nacimiento: <span th:text="${paciente.fechaNacimiento}"/></strong></p>
         <div class="button-conteiner">
-            <button class="button" onclick="modificarDatos()">Modificar datos personales</button>
+            <a href="/paciente/modificar" type="button" class="button" onclick="modificarDatos()">Modificar datos personales</a>
             <button class="button" onclick="sacarTurno()">Sacar turno con el médico</button>
             <button class="button" onclick="verTurnos()">Ver turnos</button>
         </div>
