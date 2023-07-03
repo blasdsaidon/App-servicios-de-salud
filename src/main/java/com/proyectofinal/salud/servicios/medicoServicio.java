@@ -159,6 +159,16 @@ public class medicoServicio implements UserDetailsService {
         return ListaEspecialidades;
     }
 
+    public List<String> listadoMedicosPorEspecialidad(especialidad especialidad) {
+        
+        List<String> medicos = new ArrayList();
+        List<medico> profesionales = medicoRepo.buscarNombresPorEspecialidad(especialidad);
+        for (medico profesional : profesionales) {
+            medicos.add(profesional.getNombre() + " " + profesional.getApellido());
+        }
+        return medicos;
+    }
+
     public medico buscarMedicoPorEmail(String email) {
 
         medico medico = medicoRepo.buscarPorEmail(email);

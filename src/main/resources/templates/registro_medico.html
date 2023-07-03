@@ -60,7 +60,7 @@
                         <label for="especialidad" class="form-label">Especialidad:</label> 
                         <select required class="form-select" name="especialidad">
                             <option>Selecione Especialidad: </option>
-                            <option selected="especialidad" 
+                            <option
                                     th:each="especialidad:${ListaEspecialidades}"
                                     th:value="${especialidad}"
                                     th:text="${especialidad}"/>

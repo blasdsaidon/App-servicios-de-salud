@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,5 +54,23 @@ public class medicoControlador {
 
             return "registro_medico.html";
         }
+    }
+
+    @GetMapping("/especialidadesDisponibles")
+    public String especialidadesDisponibles(ModelMap modelo) {
+        
+        List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
+        modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
+        
+        List<String> ginecologos = medicoServicio.listadoMedicosPorEspecialidad(especialidad.GINECOLOGIA);
+        modelo.addAttribute("ListaMedicosGinecologos", ginecologos);
+        List<String> clinicos = medicoServicio.listadoMedicosPorEspecialidad(especialidad.CLINICA);
+        modelo.addAttribute("ListaMedicosClinicos", clinicos);
+        List<String> cardiologos = medicoServicio.listadoMedicosPorEspecialidad(especialidad.CARDIOLOGIA);
+        modelo.addAttribute("ListaMedicosCardiologos", cardiologos);
+        List<String> pediatras = medicoServicio.listadoMedicosPorEspecialidad(especialidad.PEDIATRIA);
+        modelo.addAttribute("ListaMedicosPediatras", pediatras);
+        
+        return "profesionales.html";
     }
 }
