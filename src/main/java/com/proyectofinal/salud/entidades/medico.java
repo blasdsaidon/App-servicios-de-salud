@@ -23,16 +23,14 @@ public class medico extends persona {
     private especialidad especialidad;
     @ElementCollection(targetClass = obraSocial.class)
     @Enumerated(EnumType.STRING)
-    
     private Collection<obraSocial> obraSocialRecibida;
     @OneToMany
-
     private Collection<turno> horariosDisponibles;
     private Integer valorConsulta;
     private Integer calificacionServicio;
     @OneToMany
     private Collection<fichaMedica> historialConsultas;
-    @OneToMany(mappedBy="medico")
+    @OneToMany
     private Collection<turno> turnos;
     private Boolean alta;
     
