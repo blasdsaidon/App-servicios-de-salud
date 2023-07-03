@@ -116,6 +116,15 @@ public class medicoServicio implements UserDetailsService {
             /* imagen imagen = imagenServicio.guardar(archivo);
             paciente.setImagen(imagen);*/
 
+            String idImagen = null;
+            
+            if (medico.getImagen() != null) {
+                idImagen = medico.getImagen().getIdImagen();
+            }
+            
+            imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+            
+            medico.setImagen(imagen);
             medicoRepo.save(medico);
         }
         return medico;
