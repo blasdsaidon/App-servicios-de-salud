@@ -30,7 +30,7 @@
                 <form th:action="@{/medico/perfil/__${medico.idPersona}__}" method="POST" enctype="multipart/form-data">
                     <input hidden th:value="${medico.idPersona}" name="idPersona">
                     <div class="form-group my-3">
-                        <h3 class="card-title">Registro de profesionales médicos</h3>
+                        <h3 class="card-title">Actualice su perfil</h3>
                     </div>
                     <div class="mb-3">
                         <label for="Nombre" class="form-label">Nombre:</label>
@@ -78,16 +78,7 @@
     <label th:for="${obraSocial}" th:text="${obraSocial}"></label>
     <input type="checkbox" th:id="${obraSocial}" th:name="obraSocialRecibida" th:value="${obraSocial}" th:checked="${oSRecibidas.contains(obraSocial)}"/>
 </div> 
-                        <!-- <div th:each="obraSocial : ${ListaOS}">
-                            <label th:for="'obraSocial-' + ${obraSocial}"
-                                   th:text="${obraSocial}"></label>
-                            <input type="checkbox"
-                                   th:id="'obraSocial-' + ${obraSocial}"
-                                   th:name="obraSocialRecibida"
-                                   th:value="${obraSocial}"
-                                   th:checked="${oSRecibidas.contains(obraSocial.value())}" />
-         
-                        </div>-->
+                        
                                 
                     </div> 
                    
@@ -125,10 +116,9 @@
                     </div>
 
                     <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
                         <div class="d-flex align-items-center"> 
-                        <p style="padding-right: 10px ; margin: 0px;">Ya tiene cuenta?</p>
-                        <a href="/login" class="btn btn-outline-primary">Ingrese</a> 
+                        
                         </div>
                 </form>
             </div>
