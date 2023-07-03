@@ -15,10 +15,10 @@
             <!-- Formulario registro -->
 
             <div>
-                <h1>    Registro de Administradores </h1>
+                <h1>    Registro de Paciente </h1>
             </div>
             <div class="form-registro">
-                <form th:action="@{/paciente/registroPaciente}" method="POST" enctype="multipart/form-data">
+                <form th:action="@{/admin/registroAdmin}" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="Nombre" class="form-label">Nombre:</label>
                         <input required type="text" th:value="${nombre}" name="nombre" class="form-control" id="nombre" aria-describedby="nombreHelp" placeholder="Juan">

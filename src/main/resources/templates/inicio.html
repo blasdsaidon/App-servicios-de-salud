@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html
+    lang="es"
+    xmlns:th="http://www.thymeleaf.org"
+    xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head>
+        <meta charset="utf-8"/>
+        <title>Inicio</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link href="/style/style.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div th:replace="/fragments/header :: div"></div>
+        <main>
+            <div th:replace="/fragments/exito :: div"></div>
+
+            <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+
+                <div class="carousel-inner ">
+                    <div class="carousel-item active">
+                        <img src="/slide/slide-1.jpg"/>
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <h1>Las respuestas correctas.</h1>
+                                <p>Confía en nuestros expertos para recibir un diagnóstico preciso y el plan adecuado para ti la primera vez.</p>
+                            </div>
+                        </div>   
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="/slide/slide-2.jpg"/>
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <h1>Innovación con repercusión.</h1>
+                                <p>La atención médica que damos a nuestros pacientes, la educación y la investigación están orientadas a hacer descubrimientos que puedan ayudar a que te recuperes.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <img src="/slide/slide-3.jpg"/>
+                        <div class="container">
+                            <div class="carousel-caption " >
+                                <h1>Tú eres la prioridad.</h1>
+                                <p>El tratamiento en #### es una experiencia verdaderamente humana. Antes que nada, te brindamos el cuidado que merece una persona.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev " type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+
+                <button class="carousel-control-next " type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>     
+            </div>
+
+            <!-- Marketing messaging and featurettes
+            ================================================== -->
+            <!-- Wrap the rest of the page in another container to center all the content. -->
+
+            <h1 style="text-align: center; padding-bottom: 50px; color: black">Nuestras especialidades</h1>
+
+            <div class="container marketing">
+                <!-- Three columns of text below the carousel -->
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class=" bg-img bd-placeholder-img rounded-circle" style="background-image: url(/Otra-imagen/cardiologia.jpg);">
+                        </div>
+                        <h2>Cardiología</h2>
+                    </div><!-- /.col-lg-4 -->
+
+                    <div class="col-lg-3">
+                        <div class=" bg-img bd-placeholder-img rounded-circle" style="background-image: url(/Otra-imagen/clinica.jpg);">
+                        </div>
+                        <h2>Clínica</h2>
+                    </div><!-- /.col-lg-4 -->
+
+                    <div class="col-lg-3">
+                        <div class=" bg-img bd-placeholder-img rounded-circle" style="background-image: url(/Otra-imagen/pediatria.jpg);">
+                        </div>
+                        <h2>Pediatría</h2>
+                    </div><!-- /.col-lg-4 -->
+
+                    <div class="col-lg-3">
+                        <div class=" bg-img bd-placeholder-img rounded-circle" style="background-image: url(/Otra-imagen/Ginecologia-1.jpg);">
+                        </div>
+                        <h2>Ginecología</h2>
+                    </div><!-- /.col-lg-4 -->
+                </div><!-- /.row -->
+            </div>
+
+            <div th:if ="${session.usuariosession != null}" >
+                
+                <a>
+                    <img th:src="@{/imagen/perfil/__${session.usuariosession.idPersona}__}">
+                </a>
+            </div>
+        </main>
+
+        <div th:replace="/fragments/footer :: div"></div>
+        <div th:replace="/fragments/javaScript :: script"></div>
+    </body>
+
+</html>

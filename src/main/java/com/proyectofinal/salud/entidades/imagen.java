@@ -15,11 +15,8 @@ public class imagen {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String idImagen;
-    
     private String mime;
-    
     private String nombre;
-    
     @Lob@Basic(fetch = FetchType.LAZY)
     private byte[] archivo;
 
@@ -32,7 +29,6 @@ public class imagen {
         this.nombre = nombre;
         this.archivo = archivo;
     }
-
    
     public String getIdImagen() {
         return idImagen;
@@ -68,10 +64,9 @@ public class imagen {
 
     @Override
     public String toString() {
-
-        return "imagen{" + "idImagen=" + idImagen + ", mime=" + mime + ", nombre=" + nombre + ", archivo=" + archivo + '}';
-
+        return "Imagen: {" + "Id Imagen = " + idImagen + "}\n"
+                +"{Mime = " + mime + "}\n"
+                +"{Nombre = " + nombre + "}\n"
+                +"{Archivo = " + archivo + '}';
     }
-
- 
 }

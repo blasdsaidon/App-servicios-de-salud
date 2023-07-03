@@ -72,11 +72,13 @@
 
                      <div class="mb-3">
                        
+
                           <p th:text="${oSRecibidas}"></p> 
                         <label for="obraSocialesRecibidas">Obras Sociales:</label><br/>
 <div th:each="obraSocial : ${ListaOS}">
     <label th:for="${obraSocial}" th:text="${obraSocial}"></label>
     <input type="checkbox" th:id="${obraSocial}" th:name="obraSocialRecibida" th:value="${obraSocial}" th:checked="${oSRecibidas.contains(obraSocial)}"/>
+
 </div> 
                         
                                 
