@@ -1,5 +1,6 @@
 package com.proyectofinal.salud.controladores;
 
+import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.entidades.persona;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.servicios.medicoServicio;
@@ -56,6 +57,8 @@ public class portalControlador {
     }*/
     // EL PRE AUTHORIZE GENERA UN ERROR (Asumo que es porque estamos intentando entrar a la vista de login y el preauthoorize
     // pide que ya estemos logueados para acceder _Leo_)
+    
+
 //  @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo, HttpSession session) {
@@ -88,4 +91,5 @@ public class portalControlador {
             return "inicio.html";
         }
     }
+
 }
