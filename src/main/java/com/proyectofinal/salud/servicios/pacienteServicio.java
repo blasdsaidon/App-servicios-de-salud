@@ -87,7 +87,17 @@ public class pacienteServicio implements UserDetailsService {
             paciente.setPassword(new BCryptPasswordEncoder().encode(password));
             /* imagen imagen = imagenServicio.guardar(archivo);
             paciente.setImagen(imagen);*/
+            String idImagen = null;
+            
+            if (paciente.getImagen() != null) {
+                idImagen = paciente.getImagen().getIdImagen();
+            }
+            
+            imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+            
+            paciente.setImagen(imagen);
             paciente.setFechaNacimiento(fechaNacimientoDate);
+            
             pacienteRepo.save(paciente);
         }
         return paciente;
