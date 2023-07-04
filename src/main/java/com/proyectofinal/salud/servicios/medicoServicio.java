@@ -76,16 +76,6 @@ public class medicoServicio implements UserDetailsService {
 //            medicoRepo.save(medico);
 //        }
 //    }
-    @Transactional
-    public void darDeBaja(String idMedico, Boolean alta) {
-
-        Optional<medico> respuesta = medicoRepo.findById(idMedico);
-        medico medico = respuesta.get();
-        if (respuesta.isPresent()) {
-
-            medicoRepo.save(medico);
-        }
-    }
 
     @Transactional
     public medico modificarMedico(String idMedico, String nombre, String apellido, String email, String telefono,
@@ -153,6 +143,7 @@ public class medicoServicio implements UserDetailsService {
 
     @Transactional
     public Collection OsRecibidas(String idPersona){
+        
        medico medico = medicoRepo.getById(idPersona);
        Collection<obraSocial> os = medico.getObraSocialRecibida();
         
@@ -260,7 +251,6 @@ public class medicoServicio implements UserDetailsService {
         }
         if (telefono.isEmpty() || telefono == null) {
             throw new MiException("El número télefono ingresado no puede ser nulo o estar vacío.");
-
         } else if (telefono.length() != 10) {
             throw new MiException("El número de teléfono ingresado debe contener 10 caracteres.");
         } else if (esNuevoUsuario == true) {

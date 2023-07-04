@@ -33,9 +33,7 @@ public class personaServicio implements UserDetailsService {
         persona persona = null;   
        if (medicoServicio.buscarMedicoPorEmail(email)!= null ) {
             persona = medicoServicio.buscarMedicoPorEmail(email);
-
        }else if (pacienteServicio.buscarPacientePorEmail(email)!=null) {
-
             persona = pacienteServicio.buscarPacientePorEmail(email);   
        } else if (adminServicio.buscarAdminPorEmail(email)!=null){
             persona = adminServicio.buscarAdminPorEmail(email);

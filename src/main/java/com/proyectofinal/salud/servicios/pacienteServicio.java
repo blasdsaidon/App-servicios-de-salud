@@ -69,13 +69,12 @@ public class pacienteServicio implements UserDetailsService {
         validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2, false);
 
         Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
-
+        
         Optional<paciente> respuesta = pacienteRepo.findById(idPersona);
         paciente paciente = new paciente();
         if (respuesta.isPresent()) {
             paciente = respuesta.get();
             System.out.println(paciente.toString());
-
             paciente.setApellido(apellido);
             paciente.setNombre(nombre);
             paciente.setEmail(email);

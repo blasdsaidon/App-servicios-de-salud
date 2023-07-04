@@ -24,7 +24,7 @@
                         <th style="width: 15%">Apellido</th>
                         <th style="width: 25%">Especialidad</th>
                         <th style="width: 25%">Horarios disponibles</th>
-                        <th sec:authorize="hasRole('ROLE_ADMIN')" style="width: 5%">Estado</th>
+                        <th style="width: 5%">Estado</th>
                     </tr>
                 </thead>
 
@@ -51,21 +51,6 @@
                         <td>
                             <div class="container">
                                 <h5 th:text="${profesional.horariosDisponibles}"></h5>
-                            </div>
-                        </td>
-
-                        <td sec:authorize="hasRole('ROLE_ADMIN')">
-                            <div>
-                                <a th:if="${profesional.alta == true}"
-                                   type="button"
-                                   class="btn btn-success"
-                                   th:href="@{/admin/estado/__${medico.idPersona}__}"
-                                   >Activo</a>
-                                <a th:if="${profesional.alta == false}"
-                                   type="button"
-                                   class="btn btn-danger"
-                                   th:href="@{/admin/estado/__${medico.idPersona}__}"
-                                   >Inactivo</a>
                             </div>
                         </td>
                     </tr>

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html
+    lang="es"
+    xmlns:th="http://www.thymeleaf.org">
 
     <head>
         <meta charset="utf-8"/>
-        <title>Inicio</title>
+        <title>Registro Admins</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <link href="/style/style.css" rel="stylesheet">
     </head>
@@ -13,62 +15,74 @@
         <main>
             <div th:replace="/fragments/error :: div"></div>
             <!-- Formulario registro -->
-
-            <div>
-                <h1>    Registro de Paciente </h1>
-            </div>
             <div class="form-registro">
                 <form th:action="@{/admin/registroAdmin}" method="POST" enctype="multipart/form-data">
+                    <div class="form-group my-3">
+                        <h3 class="card-title">Registro de admins:</h3>
+                    </div>
+
                     <div class="mb-3">
                         <label for="Nombre" class="form-label">Nombre:</label>
-                        <input required type="text" th:value="${nombre}" name="nombre" class="form-control" id="nombre" aria-describedby="nombreHelp" placeholder="Juan">
+                        <input required type="text" th:value="${nombre}" name="nombre" class="form-control" id="nombre"
+                               aria-describedby="nombreHelp" placeholder="Juan">
                     </div>
+
                     <div class="mb-3">
                         <label for="Apellido" class="form-label">Apellido:</label>
-                        <input required type="text" th:value="${apellido}" name="apellido" class="form-control" id="apellido" aria-describedby="nombreHelp" placeholder=" Perez">
+                        <input required type="text" th:value="${apellido}" name="apellido" class="form-control" id="apellido"
+                               aria-describedby="nombreHelp" placeholder=" Perez">
                     </div>
 
                     <div class="mb-3">
                         <label for="Telefono" class="form-label">Teléfono:</label>
-                        <input required type="number" th:value="${telefono}" name="telefono" class="form-control" id="Telefono" aria-describedby="telefonoHelp" placeholder="12345678910">
-                        <div id="emailHelp" class="form-text">No compartiremos esta información con nadie</div>
+                        <input required type="number" th:value="${telefono}" name="telefono" class="form-control" id="Telefono"
+                               aria-describedby="telefonoHelp" placeholder="0123456789">
+                        <div id="emailHelp" class="form-text">No compartiremos esta información con nadie.</div>
                     </div>
+
                     <div class="mb-3">
                         <label for="Email1" class="form-label">Email address:</label>
-                        <input required type="email" th:value="${email}" name="email" class="form-control" id="Email1" aria-describedby="emailHelp" placeholder="123@ejemplo.com">
-                        <div id="emailHelp" class="form-text">No compartiremos esta información con nadie</div>
+                        <input required type="email" th:value="${email}" name="email" class="form-control" id="Email1"
+                               aria-describedby="emailHelp" placeholder="123@ejemplo.com">
+                        <div id="emailHelp" class="form-text">No compartiremos esta información con nadie.</div>
                     </div>
+
                     <div class="mb-3">
                         <label for="GENERO" class="form-label">Género:</label>
                         <select required class="form-select" name="genero">
-                            <option>Seleccione Género: </option>
-                            <option selected="genero" 
-                                    th:each="genero:${ListaGenero}"
-                                    th:value="${genero}"
-                                    th:text="${genero}"/>
+                            <option>Seleccione Género:</option>
+                            <option
+                                th:each="genero:${ListaGenero}"
+                                th:value="${genero}"
+                                th:text="${genero}"/>
                         </select>
                     </div>
+
                     <div class="mb-3">
                         <label for="fecha-nacimiento" class="form-label">Fecha de nacimiento:</label>
                         <input required type="date" th:value="${fechaNacimiento}" name="fechaNacimiento" class="form-control" id="fechaNac" >
                     </div>
 
-                    
                     <div class="mb-3">
                         <label for="imagen" class="form-label">Imagen de perfil:</label>
                         <input type="file"  name="archivo" class="form-control" id="imagen" placeholder="Añada una imagen de perfil">
                     </div>
+
                     <div class="mb-3">
                         <label for="txtPassword" class="form-label">Password:</label>
-                        <input required type="password" th:value="${password}" name="password" class="form-control" id="txtPassword" placeholder="Ingrese su contraseña">
+                        <input required type="password" th:value="${password}" name="password" class="form-control" id="txtPassword"
+                               placeholder="Ingrese su contraseña">
                     </div>
+
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="mostrar" onclick="mostrarPassword()">
                         <label class="form-check-label" for="mostrar">Mostrar contraseña</label>
                     </div>
+
                     <div class="mb-3">
-                        <label for="Password" class="form-label">Password:</label>
-                        <input required type="password" th:value="${password2}" name="password2" class="form-control" id="Password" placeholder="Repita su contraseña">
+                        <label for="Password" class="form-label">Repetir password:</label>
+                        <input required type="password" th:value="${password2}" name="password2" class="form-control" id="Password"
+                               placeholder="Repita su contraseña">
                     </div>
                     <button type="submit" class="btn btn-primary">Registrarse</button>
                 </form>

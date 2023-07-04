@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +37,7 @@ public class medicoControlador {
     
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
+        
        List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
        modelo.addAttribute("ListaOS", ListaOS); 
         List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
@@ -81,18 +83,37 @@ public class medicoControlador {
         
         List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
         modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
-
-        String idPersona = medico.getIdPersona();
-        Collection<obraSocial> os = medicoServicio.OsRecibidas(idPersona);
-
-       modelo.addAttribute("oSRecibidas", os);
-       return "perfil_medico.html";
-    }  
+        
+        List<String> ginecologos = medicoServicio.listadoMedicosPorEspecialidad(especialidad.GINECOLOGIA);
+        modelo.addAttribute("ListaMedicosGinecologos", ginecologos);
+        List<String> clinicos = medicoServicio.listadoMedicosPorEspecialidad(especialidad.CLINICA);
+        modelo.addAttribute("ListaMedicosClinicos", clinicos);
+        List<String> cardiologos = medicoServicio.listadoMedicosPorEspecialidad(especialidad.CARDIOLOGIA);
+        modelo.addAttribute("ListaMedicosCardiologos", cardiologos);
+        List<String> pediatras = medicoServicio.listadoMedicosPorEspecialidad(especialidad.PEDIATRIA);
+        modelo.addAttribute("ListaMedicosPediatras", pediatras);
+        
+        return "turnos.html";
+    }
+    
+//    @GetMapping("/sacarTurno")
+//    public String sacarTurno(ModelMap modelo) {
+//        
+//        List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
+//        modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
+//
+//        String idPersona = medico.getIdPersona();
+//        Collection<obraSocial> os = medicoServicio.OsRecibidas(idPersona);
+//
+//       modelo.addAttribute("oSRecibidas", os);
+//       
+//       return "perfil_medico.html";
+//    }  
     
       @GetMapping("/modificar")
-    public String modificar(ModelMap modelo,HttpSession session){
+    public String modificar(ModelMap modelo,HttpSession session) {
+        
        medico medico = (medico) session.getAttribute("usuariosession");
-       
        modelo.put("medico", medico);
        List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
        modelo.addAttribute("ListaOS", ListaOS); 
@@ -102,6 +123,7 @@ public class medicoControlador {
         Collection<obraSocial> os = medicoServicio.OsRecibidas(idPersona);
        
        modelo.addAttribute("oSRecibidas", os);
+       
        return "modificar_medico.html";
     }  
     
@@ -111,7 +133,6 @@ public class medicoControlador {
             @RequestParam String email,@RequestParam  String telefono, Integer valorConsulta,
             especialidad especialidad,@RequestParam String password,
             @RequestParam String password2, MultipartFile archivo, @RequestParam Collection<obraSocial> obraSocialRecibida, ModelMap modelo, RedirectAttributes redireccion, HttpSession session) {
-        
 
         try{
     
@@ -120,6 +141,7 @@ public class medicoControlador {
             modelo.put("exito", "Medico actualizado correctamente!");
         
             return "inicio.html";
+            
         } catch (Exception ex) {
 
             medico medico = (medico) session.getAttribute("usuariosession");
@@ -138,7 +160,6 @@ public class medicoControlador {
             modelo.put("telefono", telefono);
             modelo.put("email", email);
             modelo.put("valorConsulta", valorConsulta);
-            
             
             return "modificar_medico.html";
         }
