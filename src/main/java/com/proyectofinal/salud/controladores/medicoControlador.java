@@ -9,12 +9,6 @@ import com.proyectofinal.salud.servicios.pacienteServicio;
 import java.util.Collection;
 import java.util.List;
 import javax.servlet.http.HttpSession;
-<<<<<<< HEAD
-=======
-
-import org.hibernate.Hibernate;
-
->>>>>>> 137cb17c157b9b8e92c3ef94d77a00c6875c8a21
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
