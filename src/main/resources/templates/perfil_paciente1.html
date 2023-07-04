@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +7,8 @@
     
         
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-        <link href="/style/vistaPaciente.css" rel="stylesheet">
-        <link href="/style/style.css" rel ="stylesheet">
+        <link href="../static/style/vistaPaciente.css" rel="stylesheet">
+        <link href="../static/style/styles.css" rel ="stylesheet">
     <title>Document</title>
 </head>
 <body>
@@ -32,6 +31,7 @@
 
     <div class="container">
         <h1>Perfil del Paciente</h1>
+<<<<<<< HEAD:src/main/resources/templates/perfil_paciente1.html
         <img th:if="${paciente.imagen != null}" class="profile-image" th:src="@{/imagen/perfil/__${paciente.idPersona}__}" width="100 px" height="100 px">  
         <p><strong>Nombre: <span th:text="${paciente.nombre}"/></strong></p>
         <p><strong>Apellido: <span th:text="${paciente.apellido}"/></strong></p>
@@ -40,20 +40,54 @@
         <p><strong>Genero: <span th:text="${paciente.genero}"/></strong></p>
         <p><strong>E-mail: <span th:text="${paciente.email}"/></strong></p>
         <p><strong>Fecha de nacimiento: <span th:text="${paciente.fechaNacimiento}"/></strong></p>
+=======
+        <img class="profile-image" src="../static/Otra-imagen/icono-de-linea-de-perfil-de-paciente-masculino-con-forma-de-circulo-2pk87gh.jpg" alt="Imagen de perfil">
+        <p><strong>Nombre:</strong>"${nombre}"</p>
+        <p><strong>Apellido:</strong>"${apellido}"</p>
+        <p><strong>Telefono:</strong>"${telefono}"</p>
+        <p><strong>Obra Social:</strong>"${obra Social}"</p>
+        <p><strong>Genero:</strong>"${genero}"</p>
+        <p><strong>E-mail:</strong>"${email}"</p>
+        <p><strong>Fecha de nacimiento</strong>"${Fecha}"</p>
+>>>>>>> 137cb17c157b9b8e92c3ef94d77a00c6875c8a21:src/main/resources/templates/perfil_paciente.html
         <div class="button-conteiner">
             <a href="/paciente/modificar" type="button" class="button" onclick="modificarDatos()">Modificar datos personales</a>
             <button class="button" onclick="sacarTurno()">Sacar turno con el médico</button>
             <button class="button" onclick="verTurnos()">Ver turnos</button>
         </div>
     </div>
-
     <div class="d-flex justify-content-between">                
       <a th:href="@{/}" class="btn btn-secondary">Volver</a> 
   </div>
+<<<<<<< HEAD:src/main/resources/templates/perfil_paciente1.html
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 <script src="/js/vistaPaciente.js"></script>
 <div th:replace="/fragments/footer :: div"></div>
 <div th:replace="/fragments/javaScriptPass :: script"></div>
 
+=======
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+<div class="col-md-4 d-flex align-items-center">
+<a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(23, 226, 39, 1);transform: ;msFilter:;"><path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path></svg>
+</a>
+<span class="mb-3 mb-md-0 text-body-secondary">&copy; 2023 Salud Egg, Inc</span>
+</div>
+
+<ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+<li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
+<li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
+<li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
+</ul> 
+</div>
+>>>>>>> 137cb17c157b9b8e92c3ef94d77a00c6875c8a21:src/main/resources/templates/perfil_paciente.html
 </body>
+
+   
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script src="../static/static.js/script.js"></script>
+
+
 </html>
