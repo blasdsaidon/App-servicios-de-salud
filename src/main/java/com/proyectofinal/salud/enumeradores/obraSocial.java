@@ -8,5 +8,5 @@ public enum obraSocial {
     SANCOR,
     MEDICUS,
     OMINT,
-    NOTIENE;
+    NINGUNA;
 }
