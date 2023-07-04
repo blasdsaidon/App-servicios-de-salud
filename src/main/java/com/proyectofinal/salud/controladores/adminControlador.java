@@ -72,12 +72,12 @@ public class adminControlador {
     @PostMapping("/perfil/{idPersona}")
     public String actualizar(@PathVariable String idPersona,@RequestParam  String nombre,@RequestParam String apellido,
             @RequestParam String email,@RequestParam  String telefono, @RequestParam String password,
-            @RequestParam String password2, MultipartFile archivo, ModelMap modelo, RedirectAttributes redireccion, HttpSession session) {
+            @RequestParam String password2,  MultipartFile archivo, ModelMap modelo, RedirectAttributes redireccion, HttpSession session) {
         
         try{
             admin adminModificado = adminServicio.modificarAdmin(idPersona, nombre, apellido, email, telefono, archivo, password, password2);
             session.setAttribute("usuariosession", adminModificado);
-            modelo.put("exito", "Medico actualizado correctamente!");
+            modelo.put("exito", "Admin actualizado correctamente!");
         
             return "inicio.html";
             

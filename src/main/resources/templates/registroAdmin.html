@@ -16,8 +16,13 @@
         <main>
             <div th:replace="/fragments/error :: div"></div>
 
+
             <!-- Formulario registro -->
+
             <div class="form-registro">
+                <div>
+                    <h1>    Registro de Admin </h1>
+                </div>
                 <form th:action="@{/admin/registroAdmin}" method="POST" enctype="multipart/form-data">
                     <div class="form-group my-3">
                         <h3 class="card-title">Registro de admins</h3>
@@ -45,6 +50,7 @@
                         <div id="emailHelp" class="form-text">No compartiremos esta información con nadie.</div>
                     </div>
                     
+
                     <div class="mb-3">
                         <label for="GENERO" class="form-label">Género:</label>
                         <select required class="form-select" name="genero">
@@ -60,6 +66,7 @@
                         <label for="fecha-nacimiento" class="form-label">Fecha de nacimiento:</label>
                         <input required type="date" th:value="${fechaNacimiento}" name="fechaNacimiento" class="form-control" id="fechaNac" >
                     </div>
+
 
                     <div class="mb-3">
                         <label for="imagen" class="form-label">Imagen de perfil:</label>
