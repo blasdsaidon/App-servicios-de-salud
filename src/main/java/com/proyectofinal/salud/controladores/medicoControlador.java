@@ -1,23 +1,20 @@
 package com.proyectofinal.salud.controladores;
 
 import com.proyectofinal.salud.entidades.medico;
-import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
-import com.proyectofinal.salud.enumeradores.sexo;
 import com.proyectofinal.salud.repositorios.medicoRepositorio;
 import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import javax.servlet.http.HttpSession;
+<<<<<<< HEAD
+=======
 
 import org.hibernate.Hibernate;
 
+>>>>>>> 137cb17c157b9b8e92c3ef94d77a00c6875c8a21
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -91,6 +88,22 @@ public class medicoControlador {
         String idPersona = medico.getIdPersona();
         Collection<obraSocial> os = medicoServicio.OsRecibidas(idPersona);
 
+       modelo.addAttribute("oSRecibidas", os);
+       return "perfil_medico.html";
+    }  
+    
+      @GetMapping("/modificar")
+    public String modificar(ModelMap modelo,HttpSession session){
+       medico medico = (medico) session.getAttribute("usuariosession");
+       
+       modelo.put("medico", medico);
+       List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
+       modelo.addAttribute("ListaOS", ListaOS); 
+        List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
+        modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
+        String idPersona = medico.getIdPersona();
+        Collection<obraSocial> os = medicoServicio.OsRecibidas(idPersona);
+       
        modelo.addAttribute("oSRecibidas", os);
        return "modificar_medico.html";
     }  

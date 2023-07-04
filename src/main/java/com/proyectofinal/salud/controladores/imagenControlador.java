@@ -27,9 +27,9 @@ public class imagenControlador {
         medicoServicio medicoServicio;
 
         @GetMapping("/perfil/{idPersona}")
-        public ResponseEntity<byte[]> imagenPaciente(@PathVariable String id) {
-            paciente paciente = pacienteServicio.getOne(id);
-
+        public ResponseEntity<byte[]> imagenPaciente(@PathVariable String idPersona) {
+            paciente paciente = pacienteServicio.getOne(idPersona);
+            
             byte[] imagen = paciente.getImagen().getArchivo();
 
             HttpHeaders headers = new HttpHeaders();
@@ -39,17 +39,17 @@ public class imagenControlador {
             return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
         }
         
-//        @GetMapping("/perfilMedico/{id}")
-//        public ResponseEntity<byte[]> imagenMedico(@PathVariable String id) {
-//            medico medico = medicoServicio.getOne(id);
-//
-//            byte[] imagen = medico.getImagen().getArchivo();
-//
-//            HttpHeaders headers = new HttpHeaders();
-//
-//            headers.setContentType(MediaType.IMAGE_JPEG);
-//
-//            return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
-//        }
+        @GetMapping("/perfilMedico/{id}")
+        public ResponseEntity<byte[]> imagenMedico(@PathVariable String id) {
+            medico medico = medicoServicio.getOne(id);
+
+            byte[] imagen = medico.getImagen().getArchivo();
+
+            HttpHeaders headers = new HttpHeaders();
+
+            headers.setContentType(MediaType.IMAGE_JPEG);
+
+            return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
+        }
     }
 }

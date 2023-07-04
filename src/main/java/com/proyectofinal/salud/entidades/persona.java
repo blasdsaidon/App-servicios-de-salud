@@ -10,7 +10,6 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
-//Solucion Atributos clase abstracta para que sean heredados a las hijas
 @MappedSuperclass
 public abstract class persona {
     

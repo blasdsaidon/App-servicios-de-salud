@@ -31,6 +31,16 @@
 
     <div class="container">
         <h1>Perfil del Paciente</h1>
+<<<<<<< HEAD:src/main/resources/templates/perfil_paciente1.html
+        <img th:if="${paciente.imagen != null}" class="profile-image" th:src="@{/imagen/perfil/__${paciente.idPersona}__}" width="100 px" height="100 px">  
+        <p><strong>Nombre: <span th:text="${paciente.nombre}"/></strong></p>
+        <p><strong>Apellido: <span th:text="${paciente.apellido}"/></strong></p>
+        <p><strong>Telefono: <span th:text="${paciente.telefono}"/></strong></p>
+        <p><strong>Obra Social: <span th:text="${paciente.obraSocial}"/></strong></p>
+        <p><strong>Genero: <span th:text="${paciente.genero}"/></strong></p>
+        <p><strong>E-mail: <span th:text="${paciente.email}"/></strong></p>
+        <p><strong>Fecha de nacimiento: <span th:text="${paciente.fechaNacimiento}"/></strong></p>
+=======
         <img class="profile-image" src="../static/Otra-imagen/icono-de-linea-de-perfil-de-paciente-masculino-con-forma-de-circulo-2pk87gh.jpg" alt="Imagen de perfil">
         <p><strong>Nombre:</strong>"${nombre}"</p>
         <p><strong>Apellido:</strong>"${apellido}"</p>
@@ -39,8 +49,9 @@
         <p><strong>Genero:</strong>"${genero}"</p>
         <p><strong>E-mail:</strong>"${email}"</p>
         <p><strong>Fecha de nacimiento</strong>"${Fecha}"</p>
+>>>>>>> 137cb17c157b9b8e92c3ef94d77a00c6875c8a21:src/main/resources/templates/perfil_paciente.html
         <div class="button-conteiner">
-            <button class="button" onclick="modificarDatos()">Modificar datos personales</button>
+            <a href="/paciente/modificar" type="button" class="button" onclick="modificarDatos()">Modificar datos personales</a>
             <button class="button" onclick="sacarTurno()">Sacar turno con el médico</button>
             <button class="button" onclick="verTurnos()">Ver turnos</button>
         </div>
@@ -48,6 +59,13 @@
     <div class="d-flex justify-content-between">                
       <a th:href="@{/}" class="btn btn-secondary">Volver</a> 
   </div>
+<<<<<<< HEAD:src/main/resources/templates/perfil_paciente1.html
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script src="/js/vistaPaciente.js"></script>
+<div th:replace="/fragments/footer :: div"></div>
+<div th:replace="/fragments/javaScriptPass :: script"></div>
+
+=======
 <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
 <div class="col-md-4 d-flex align-items-center">
 <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
@@ -62,6 +80,7 @@
 <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
 </ul> 
 </div>
+>>>>>>> 137cb17c157b9b8e92c3ef94d77a00c6875c8a21:src/main/resources/templates/perfil_paciente.html
 </body>
 
    
