@@ -36,7 +36,7 @@ public class adminServicio implements UserDetailsService {
             String telefono, MultipartFile archivo, String password, String password2) throws MiException {
 
         admin admin = new admin();
-        validar(nombre, apellido, email, telefono, password, password2);
+        validar(nombre, apellido, email, telefono, password, password2, true);
 
         admin.setNombre(nombre);
         admin.setApellido(apellido);
@@ -50,14 +50,15 @@ public class adminServicio implements UserDetailsService {
     }
 
     @Transactional
-    public admin modificarAdmin(String idAdmin, String nombre, String apellido, String email,
+    public admin modificarAdmin(String idPersona, String nombre, String apellido, String email,
             String telefono, MultipartFile archivo, String password, String password2) throws MiException {
 
         admin admin = new admin();
-        validar(nombre, apellido, email, telefono, password, password2);
-        Optional<admin> respuesta = adminRepo.findById(idAdmin);
+        validar(nombre, apellido, email, telefono, password, password2, false);
+        Optional<admin> respuesta = adminRepo.findById(idPersona);
 
         if (respuesta.isPresent()) {
+            admin = respuesta.get();
             admin.setNombre(nombre);
             admin.setApellido(apellido);
             admin.setEmail(email);
@@ -86,7 +87,7 @@ public class adminServicio implements UserDetailsService {
     }
     
     public void validar(String nombre, String apellido, String email, String telefono,
-            String password, String password2) throws MiException {
+            String password, String password2, boolean esNuevoUsuario) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
             throw new MiException("El nombre ingresado no puede ser nulo o estar vacío.");
@@ -95,17 +96,23 @@ public class adminServicio implements UserDetailsService {
             throw new MiException("El apellido ingresado no puede ser nulo o estar vacío.");
         } 
         if (email.isEmpty() || email == null) {
-            throw new MiException("El email no puede ser nulo o estar vacío.");
-        } else if (buscarAdminPorEmail(email) != null) {
+            throw new MiException("El email ingresado no puede ser nulo o estar vacío.");
+        } else if (esNuevoUsuario==true){
+            
+          if (buscarAdminPorEmail(email) != null) {
             throw new MiException("El email ingresado ya se encuentra registrado.");
+          }
         }
         if (telefono.isEmpty() || telefono == null) {
-            throw new MiException("El número de teléfono no puede ser nulo o estar vacío.");
-        } else if (buscarAdminPorTelefono(telefono) != null) {
-            throw new MiException("El número de teléfono ingresado ya se encuentra registrado.");
+            throw new MiException("El número télefono ingresado no puede ser nulo o estar vacío.");
+        
         } else if (telefono.length() != 10) {
             throw new MiException("El número de teléfono ingresado debe contener 10 caracteres.");
-        }
+        }   else if (esNuevoUsuario==true){
+              if (buscarAdminPorTelefono(telefono) != null) {
+            throw new MiException("El número de teléfono ingresado ya se encuentra registrado.");
+              }
+          }
         if (password.isEmpty() || password == null) {
             throw new MiException("La contraseña no puede ser nula o estar vacía.");
         } else if (password.length() < 5) {
