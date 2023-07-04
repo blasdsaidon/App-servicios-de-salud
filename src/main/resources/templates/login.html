@@ -4,6 +4,7 @@
     xmlns:th="http://www.thymeleaf.org"
     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
+
         <title>Ingreso</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
         <main>
             <div th:replace="/fragments/error :: div"></div>
             <div th:replace="/fragments/exito :: div"></div>
+
             <!-- Formulario Logeo -->
             <div class="form-registro">
                 <form th:action="@{/logincheck}" method="POST">
@@ -26,8 +28,9 @@
                     <div class="mb-3">
                         <label class="form-label" for="email">Ingrese su email:</label>
                         <input  required class="form-control" type="email" th:value="${email}" name="email" 
-                               id="Email1" aria-describedby="emailHelp" placeholder="123@ejemplo.com"/>
+                                id="Email1" aria-describedby="emailHelp" placeholder="123@ejemplo.com"/>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label" for="password">Ingrese su contraseña:</label>
                         <input required   type="password" th:value="${password}" name="password" class="form-control"
@@ -36,14 +39,10 @@
 
                     <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-primary">Ingresar</button>
-
                         <a th:href="@{/}" class="btn btn-secondary">Volver</a> 
                     </div>
-
                 </form>
-            </div>
-
-               
+            </div>     
         </main>
 
         <div th:replace="/fragments/footer :: div"></div>

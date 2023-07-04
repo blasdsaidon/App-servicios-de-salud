@@ -27,8 +27,10 @@ public class medicoControlador {
 
     @Autowired
     private medicoServicio medicoServicio;
+    
     @Autowired
     private pacienteServicio pacienteServicio;
+    
     @Autowired
     private medicoRepositorio medicoRepo;
     
@@ -41,6 +43,7 @@ public class medicoControlador {
 
         return "registro_medico.html";
     }
+    
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/registroMedico")
     public String registroMedico(@RequestParam String nombre, @RequestParam String apellido,
@@ -52,7 +55,8 @@ public class medicoControlador {
         try {
             medicoServicio.crearMedico(nombre, apellido, email, telefono, valorConsulta, especialidad, password, password2, archivo, obraSocialRecibida);
             redireccion.addAttribute("exito", "El profesional se registró exitosamente!");
-            return "redirect:/";// queda sujeto a cambio de front. 
+            
+            return "redirect:/";
 
         } catch (Exception ex) {
             List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
@@ -69,6 +73,7 @@ public class medicoControlador {
             return "registro_medico.html";
         }
     }
+    
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo,HttpSession session){
        medico medico = (medico) session.getAttribute("usuariosession");
@@ -78,11 +83,10 @@ public class medicoControlador {
        modelo.addAttribute("ListaOS", ListaOS); 
         List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
         modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
-
         String idPersona = medico.getIdPersona();
         Collection<obraSocial> os = medicoServicio.OsRecibidas(idPersona);
-
        modelo.addAttribute("oSRecibidas", os);
+       
        return "perfil_medico.html";
     }  
     
@@ -97,8 +101,8 @@ public class medicoControlador {
         modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
         String idPersona = medico.getIdPersona();
         Collection<obraSocial> os = medicoServicio.OsRecibidas(idPersona);
-       
        modelo.addAttribute("oSRecibidas", os);
+       
        return "modificar_medico.html";
     }  
     
@@ -109,18 +113,15 @@ public class medicoControlador {
             especialidad especialidad,@RequestParam String password,
             @RequestParam String password2, MultipartFile archivo, @RequestParam Collection<obraSocial> obraSocialRecibida, ModelMap modelo, RedirectAttributes redireccion, HttpSession session) {
         
-
         try{
-    
             medico medicoModificado = medicoServicio.modificarMedico(idPersona, nombre, apellido, email, telefono, valorConsulta, especialidad, password, password2, archivo, obraSocialRecibida);
             session.setAttribute("usuariosession", medicoModificado);
             modelo.put("exito", "Medico actualizado correctamente!");
         
             return "inicio.html";
+            
         } catch (Exception ex) {
-
             medico medico = (medico) session.getAttribute("usuariosession");
-
             List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
             modelo.addAttribute("ListaOS", ListaOS);
             List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
@@ -135,7 +136,6 @@ public class medicoControlador {
             modelo.put("telefono", telefono);
             modelo.put("email", email);
             modelo.put("valorConsulta", valorConsulta);
-            
             
             return "modificar_medico.html";
         }

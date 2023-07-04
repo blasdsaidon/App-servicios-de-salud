@@ -14,24 +14,18 @@
     </head>
 
     <body>
-        
-                <header>
-                    <div class="banner d-flex justify-content-center align-items-center">
-                       <a href="/"> <img src="/Otra-imagen/logo.png" height="100PX" alt="banner"></a>
-                            </div>
-                        </header>
-
+        <div th:replace="/fragments/header_banner :: div"></div>
         <main>
             <div th:replace="/fragments/error :: div"></div>
-            
+
             <!-- Formulario registro profesionales-->
             <div class="form-registro">
-                
                 <form th:action="@{/medico/perfil/__${medico.idPersona}__}" method="POST" enctype="multipart/form-data">
                     <input hidden th:value="${medico.idPersona}" name="idPersona">
                     <div class="form-group my-3">
-                        <h3 class="card-title">Actualice su perfil</h3>
+                        <h3 class="card-title">Actualizar Perfil</h3>
                     </div>
+
                     <div class="mb-3">
                         <label for="Nombre" class="form-label">Nombre:</label>
                         <input required type="text" th:value="${medico.nombre}" name="nombre" class="form-control text-capitalize" id="nombre"
@@ -48,46 +42,35 @@
                         <label for="Telefono" class="form-label">Teléfono:</label>
                         <input required type="number" th:value="${medico.telefono}" name="telefono" class="form-control" id="Telefono"
                                aria-describedby="telefonoHelp" placeholder="0123456789">
-                        <div id="emailHelp" class="form-text">No compartiremos esta información con nadie</div>
+                        <div id="emailHelp" class="form-text">No compartiremos esta información con nadie.</div>
                     </div>
 
                     <div class="mb-3">
                         <label for="Email1" class="form-label">Email address:</label>
                         <input required type="email" th:value="${medico.email}" name="email" class="form-control" id="Email1"
                                aria-describedby="emailHelp" placeholder="123@ejemplo.com">
-                        <div id="emailHelp" class="form-text">No compartiremos esta información con nadie</div>
+                        <div id="emailHelp" class="form-text">No compartiremos esta información con nadie.</div>
                     </div>
 
                     <div class="mb-3">
                         <label for="especialidad" class="form-label">Especialidad:</label> 
                         <select required class="form-select" name="especialidad">
-
-                            <option selected="especialidad" 
-                                    th:each="especialidad:${ListaEspecialidades}"
-                                    th:value="${especialidad}"
-                                    th:text="${especialidad}"
-                                    th:selected="${medico.especialidad==especialidad}"/>
+                            <option
+                                th:each="especialidad:${ListaEspecialidades}"
+                                th:value="${especialidad}"
+                                th:text="${especialidad}"
+                                th:selected="${medico.especialidad==especialidad}"/>
                         </select>
-                     </div>
+                    </div>
 
-                     <div class="mb-3">
-                       
-
-                          <p th:text="${oSRecibidas}"></p> 
+                    <div class="mb-3">
+                        <p th:text="${oSRecibidas}"></p> 
                         <label for="obraSocialesRecibidas">Obras Sociales:</label><br/>
-<div th:each="obraSocial : ${ListaOS}">
-    <label th:for="${obraSocial}" th:text="${obraSocial}"></label>
-    <input type="checkbox" th:id="${obraSocial}" th:name="obraSocialRecibida" th:value="${obraSocial}" th:checked="${oSRecibidas.contains(obraSocial)}"/>
-
-</div> 
-                        
-                                
+                        <div th:each="obraSocial : ${ListaOS}">
+                            <label th:for="${obraSocial}" th:text="${obraSocial}"></label>
+                            <input type="checkbox" th:id="${obraSocial}" th:name="obraSocialRecibida" th:value="${obraSocial}" th:checked="${oSRecibidas.contains(obraSocial)}"/>
+                        </div> 
                     </div> 
-                   
-        
-                    
-
-                    
 
                     <div class="mb-3">
                         <label for="Valor-consulta" class="form-label">Valor de consulta:</label>
@@ -113,15 +96,15 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="Password" class="form-label">Password:</label>
+                        <label for="Password" class="form-label">Repetir password:</label>
                         <input required type="password" th:value="${password2}" name="password2" class="form-control" id="Password" placeholder="Repita su contraseña">
                     </div>
 
                     <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-primary">Actualizar</button>
                         <div class="d-flex align-items-center"> 
-                        
                         </div>
+                    </div>
                 </form>
             </div>
         </main>
