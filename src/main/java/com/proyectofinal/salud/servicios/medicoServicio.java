@@ -111,6 +111,17 @@ public class medicoServicio implements UserDetailsService {
             /* imagen imagen = imagenServicio.guardar(archivo);
             paciente.setImagen(imagen);*/
 
+
+            String idImagen = null;
+            
+            if (medico.getImagen() != null) {
+                idImagen = medico.getImagen().getIdImagen();
+            }
+            
+            imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+            
+            medico.setImagen(imagen);
+
             medicoRepo.save(medico);
         }
         return medico;
@@ -138,6 +149,14 @@ public class medicoServicio implements UserDetailsService {
     public medico getOne(String idMedico) {
 
         return medicoRepo.getOne(idMedico);
+    }
+
+    @Transactional
+    public Collection OsRecibidas(String idPersona){
+       medico medico = medicoRepo.getById(idPersona);
+       Collection<obraSocial> os = medico.getObraSocialRecibida();
+        
+       return os; 
     }
 
     public List listadoObrasSocial() {

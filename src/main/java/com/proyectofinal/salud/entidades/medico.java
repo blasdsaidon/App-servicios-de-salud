@@ -3,17 +3,11 @@ package com.proyectofinal.salud.entidades;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import java.util.Collection;
-import java.util.Set;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 
 
 @Entity
@@ -23,16 +17,14 @@ public class medico extends persona {
     private especialidad especialidad;
     @ElementCollection(targetClass = obraSocial.class)
     @Enumerated(EnumType.STRING)
-    
     private Collection<obraSocial> obraSocialRecibida;
     @OneToMany
-
     private Collection<turno> horariosDisponibles;
     private Integer valorConsulta;
     private Integer calificacionServicio;
     @OneToMany
     private Collection<fichaMedica> historialConsultas;
-    @OneToMany(mappedBy="medico")
+    @OneToMany
     private Collection<turno> turnos;
     private Boolean alta;
     

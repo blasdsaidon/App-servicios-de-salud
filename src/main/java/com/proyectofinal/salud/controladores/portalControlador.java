@@ -75,13 +75,6 @@ public class portalControlador {
                         return "redirect:/";
                 }
             }
-            /*if (logueado != null && logueado.getRol().toString().equals("USER")) {
-            return "redirect:/paciente/perfil";
-        }else if (logueado != null && logueado.getRol().toString().equals("ADMIN")){
-            return "redirect:/admin/perfil";
-        }else if(logueado != null && logueado.getRol().toString().equals("PROFESIONAL")){
-            return "redirect:/medico/perfil";
-        }*/
             if (error != null) {
                 modelo.put("error", "Usuario o Contraseña invalidos.");
             }

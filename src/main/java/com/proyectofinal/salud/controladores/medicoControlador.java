@@ -1,5 +1,6 @@
 package com.proyectofinal.salud.controladores;
 
+import com.proyectofinal.salud.entidades.medico;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.repositorios.medicoRepositorio;
@@ -7,6 +8,8 @@ import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import java.util.Collection;
 import java.util.List;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -78,16 +81,66 @@ public class medicoControlador {
         
         List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
         modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
+
+        String idPersona = medico.getIdPersona();
+        Collection<obraSocial> os = medicoServicio.OsRecibidas(idPersona);
+
+       modelo.addAttribute("oSRecibidas", os);
+       return "perfil_medico.html";
+    }  
+    
+      @GetMapping("/modificar")
+    public String modificar(ModelMap modelo,HttpSession session){
+       medico medico = (medico) session.getAttribute("usuariosession");
+       
+       modelo.put("medico", medico);
+       List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
+       modelo.addAttribute("ListaOS", ListaOS); 
+        List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
+        modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
+        String idPersona = medico.getIdPersona();
+        Collection<obraSocial> os = medicoServicio.OsRecibidas(idPersona);
+       
+       modelo.addAttribute("oSRecibidas", os);
+       return "modificar_medico.html";
+    }  
+    
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
+    @PostMapping("/perfil/{idPersona}")
+    public String actualizar(@PathVariable String idPersona,@RequestParam  String nombre,@RequestParam String apellido,
+            @RequestParam String email,@RequestParam  String telefono, Integer valorConsulta,
+            especialidad especialidad,@RequestParam String password,
+            @RequestParam String password2, MultipartFile archivo, @RequestParam Collection<obraSocial> obraSocialRecibida, ModelMap modelo, RedirectAttributes redireccion, HttpSession session) {
         
-        List<String> ginecologos = medicoServicio.listadoMedicosPorEspecialidad(especialidad.GINECOLOGIA);
-        modelo.addAttribute("ListaMedicosGinecologos", ginecologos);
-        List<String> clinicos = medicoServicio.listadoMedicosPorEspecialidad(especialidad.CLINICA);
-        modelo.addAttribute("ListaMedicosClinicos", clinicos);
-        List<String> cardiologos = medicoServicio.listadoMedicosPorEspecialidad(especialidad.CARDIOLOGIA);
-        modelo.addAttribute("ListaMedicosCardiologos", cardiologos);
-        List<String> pediatras = medicoServicio.listadoMedicosPorEspecialidad(especialidad.PEDIATRIA);
-        modelo.addAttribute("ListaMedicosPediatras", pediatras);
+
+        try{
+    
+            medico medicoModificado = medicoServicio.modificarMedico(idPersona, nombre, apellido, email, telefono, valorConsulta, especialidad, password, password2, archivo, obraSocialRecibida);
+            session.setAttribute("usuariosession", medicoModificado);
+            modelo.put("exito", "Medico actualizado correctamente!");
         
-        return "turnos.html";
+            return "inicio.html";
+        } catch (Exception ex) {
+
+            medico medico = (medico) session.getAttribute("usuariosession");
+
+            List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
+            modelo.addAttribute("ListaOS", ListaOS);
+            List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
+            modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
+
+             Collection<obraSocial> os = medico.getObraSocialRecibida();
+             modelo.addAttribute("oSRecibidas", os);
+
+            modelo.put("error", ex.getMessage());
+            modelo.put("nombre", nombre);
+            modelo.put("apellido", apellido);
+            modelo.put("telefono", telefono);
+            modelo.put("email", email);
+            modelo.put("valorConsulta", valorConsulta);
+            
+            
+            return "modificar_medico.html";
+        }
     }
 }

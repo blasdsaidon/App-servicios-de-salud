@@ -2,7 +2,7 @@ package com.proyectofinal.salud.repositorios;
 
 import com.proyectofinal.salud.entidades.medico;
 import com.proyectofinal.salud.enumeradores.especialidad;
-import java.util.List;
+import java.util.Collection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,5 +24,16 @@ public interface medicoRepositorio extends JpaRepository<medico, String> {
     public medico buscarPorTelefono(@Param("telefono") String telefono);
     
     @Query("SELECT m FROM medico m WHERE m.idPersona = :idPersona")
-    public medico buscarMedicoPorID(@Param("idPersona") String idPersona);  
+    public medico buscarMedicoPorID(@Param("idPersona") String idPersona);
+    
+    @Query("SELECT m FROM medico m WHERE m.especialidad = :especialidad")
+    public Collection<medico> listarMedicosPorEspecialidad(@Param("especialidad") String especialidad);
+    
+
+    
+    /*SELECT turno.fecha, turno.hora, medico.nombre
+FROM turnos AS turno
+JOIN medicos AS medico ON turno.medico_id = medico.id
+JOIN especialidades AS especialidad ON medico.especialidad_id = especialidad.id
+WHERE especialidad.nombre = 'nombre_especialidad'*/
 }

@@ -9,6 +9,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class paciente extends persona {
@@ -17,11 +18,9 @@ public class paciente extends persona {
     private obraSocial obraSocial;
     @OneToMany
     private Collection<fichaMedica> historialMedico;
-//    @Temporal(TemporalType.TIMESTAMP)
-//    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaNacimiento;
-//    private String fechaNacimiento;
     @Enumerated(EnumType.STRING)
     private sexo genero;
     @OneToMany
