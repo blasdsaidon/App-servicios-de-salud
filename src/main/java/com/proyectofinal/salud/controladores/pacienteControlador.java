@@ -72,17 +72,8 @@ public class pacienteControlador {
     @GetMapping("/sacarTurno")
     public String sacarTurno(ModelMap modelo) {
 
-<<<<<<< HEAD
-       return "perfil_paciente.html";
-    }  
-    @GetMapping("/modificar")
-    public String modificar(ModelMap modelo,HttpSession session){
-       paciente paciente = (paciente) session.getAttribute("usuariosession");
-=======
         List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
         modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
->>>>>>> e36b4b70beb8ad6eed19c1cde13c4e8c6556d1e3
-
         List<String> ginecologos = medicoServicio.listadoMedicosPorEspecialidad(especialidad.GINECOLOGIA);
         modelo.addAttribute("ListaMedicosGinecologos", ginecologos);
         List<String> clinicos = medicoServicio.listadoMedicosPorEspecialidad(especialidad.CLINICA);
