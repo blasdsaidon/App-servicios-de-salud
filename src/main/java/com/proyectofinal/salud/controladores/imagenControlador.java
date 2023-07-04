@@ -28,6 +28,7 @@ public class imagenControlador {
 
         @GetMapping("/perfil/{idPersona}")
         public ResponseEntity<byte[]> imagenPaciente(@PathVariable String idPersona) {
+            
             paciente paciente = pacienteServicio.getOne(idPersona);
             
             byte[] imagen = paciente.getImagen().getArchivo();
@@ -41,6 +42,7 @@ public class imagenControlador {
         
         @GetMapping("/perfilMedico/{id}")
         public ResponseEntity<byte[]> imagenMedico(@PathVariable String id) {
+            
             medico medico = medicoServicio.getOne(id);
 
             byte[] imagen = medico.getImagen().getArchivo();

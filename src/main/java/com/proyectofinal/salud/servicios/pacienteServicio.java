@@ -65,8 +65,6 @@ public class pacienteServicio implements UserDetailsService {
             obraSocial obraSocial, sexo genero, String fechaNacimiento, String password, String password2,
             MultipartFile archivo) throws MiException, ParseException {
 
-
-        
         validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2, false);
         
         Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);

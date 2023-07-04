@@ -38,10 +38,10 @@ public class adminControlador {
         try {
             adminServicio.crearAdmin(nombre, apellido, email, telefono, archivo, password, password2);
             redireccion.addAttribute("exito", "El admin se registró exitosamente!");
-            return "redirect:/";// queda sujeto a cambio de front. 
+            
+            return "redirect:/";
 
         } catch (Exception ex) {
-            // modelo a cambiar por front.
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("email", email);
@@ -51,7 +51,8 @@ public class adminControlador {
     }
     
     @GetMapping("/perfil")
-    public String perfil(ModelMap modelo,HttpSession session){
+    public String perfil(ModelMap modelo,HttpSession session) {
+        
        admin admin = (admin) session.getAttribute("usuariosession");
        modelo.put("admin", admin);
 
@@ -59,9 +60,11 @@ public class adminControlador {
     }  
     
       @GetMapping("/modificar")
-    public String modificar(ModelMap modelo,HttpSession session){
+    public String modificar(ModelMap modelo,HttpSession session) {
+        
        admin admin = (admin) session.getAttribute("usuariosession");
        modelo.put("admin", admin);
+       
        return "modificar_admin.html";
     }  
     
@@ -71,24 +74,20 @@ public class adminControlador {
             @RequestParam String email,@RequestParam  String telefono, @RequestParam String password,
             @RequestParam String password2, MultipartFile archivo, ModelMap modelo, RedirectAttributes redireccion, HttpSession session) {
         
-
         try{
-    
             admin adminModificado = adminServicio.modificarAdmin(idPersona, nombre, apellido, email, telefono, archivo, password, password2);
             session.setAttribute("usuariosession", adminModificado);
             modelo.put("exito", "Medico actualizado correctamente!");
         
             return "inicio.html";
+            
         } catch (Exception ex) {
-
             admin admin = (admin) session.getAttribute("usuariosession");
-
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("apellido", apellido);
             modelo.put("telefono", telefono);
             modelo.put("email", email);
-            
             
             return "modificar_admin.html";
         }

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html
+    lang="es"
+    xmlns:th="http://www.thymeleaf.org"
+    xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head>
+        <title>Listado Profesionales</title>
+        <meta charset="UTF-8" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"/>
+        <link href="/style/style.css" rel="stylesheet"/>
+    </head>
+
+    <body>
+        <div th:replace="/fragments/header :: div"></div>
+        <main>
+            <div class="table-responsive custom-table-responsive">
+                <table class="table custom-table" border="5px" style="width: 100%; font-size: 20px; text-align: center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="width: 15%">Nombre</th>
+                            <th style="width: 15%">Apellido</th>
+                            <th style="width: 25%">Especialidad</th>
+                            <th style="width: 25%">Horarios disponibles</th>
+                            <th style="width: 5%" sec:authorize="hasRole('ROLE_PROFESIONAL')">Estado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody th:each="profesional : ${listadoProfesionales}">
+                        <tr>
+                            <th scope="row">
+                                <div class="container">
+                                    <h5 th:text="${profesional.nombre}"></h5>
+                                </div>
+                            </th>
+
+                            <th scope="row">
+                                <div class="container">
+                                    <h5 th:text="${profesional.apellido}"></h5>
+                                </div>
+                            </th>
+
+                            <td>
+                                <div class="container">
+                                    <h5 th:text="${profesional.especialidad}"></h5>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="container">
+                                    <h5 th:text="${profesional.horariosDisponibles}"></h5>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <div th:replace="/fragments/footer :: div"></div>
+    </body>
+
+</html>
