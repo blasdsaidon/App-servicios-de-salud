@@ -84,7 +84,7 @@ public class pacienteControlador {
     }  
     @GetMapping("/modificar")
     public String modificar(ModelMap modelo,HttpSession session){
-         paciente paciente = (paciente) session.getAttribute("usuariosession");
+       paciente paciente = (paciente) session.getAttribute("usuariosession");
 
        modelo.put("paciente", paciente);
 

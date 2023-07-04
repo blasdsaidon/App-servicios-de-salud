@@ -34,7 +34,11 @@
 
     <div class="container">
         <h1>Perfil del Paciente</h1>
-        <img th:if="${paciente.imagen != null}" class="profile-image" th:src="@{/imagen/perfil/__${paciente.idPersona}__}" width="100 px" height="100 px">  
+        <img th:if="${paciente.imagen != null}" class="profile-image" 
+             th:src="@{/imagen/perfil/__${paciente.idPersona}__}" 
+             onerror="this.onerror=null; 
+            this.src='/Otra-imagen/icono-de-linea-de-perfil-de-paciente-masculino-con-forma-de-circulo-2pk87gh.jpg'"
+             width="100 px" height="100 px">  
         <p><strong>Nombre: </strong><span th:text="${paciente.nombre}"/></p>
         <p><strong>Apellido:</strong> <span th:text="${paciente.apellido}"/></p>
         <p><strong>Telefono: </strong><span th:text="${paciente.telefono}"/></p>
