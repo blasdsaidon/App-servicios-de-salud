@@ -34,7 +34,6 @@
 
     <div class="container">
         <h1>Perfil del Paciente</h1>
-
         <img th:if="${paciente.imagen != null}" class="profile-image" th:src="@{/imagen/perfil/__${paciente.idPersona}__}" width="100 px" height="100 px">  
         <p><strong>Nombre: </strong><span th:text="${paciente.nombre}"/></p>
         <p><strong>Apellido:</strong> <span th:text="${paciente.apellido}"/></p>
@@ -43,22 +42,17 @@
         <p><strong>Genero:</strong> <span th:text="${paciente.genero}"/></p>
         <p><strong>E-mail:</strong> <span th:text="${paciente.email}"/></p>
         <p><strong>Fecha de nacimiento:</strong> <span th:text="${paciente.fechaNacimiento}"/></p>
-
         <div class="button-conteiner">
             <a href="/paciente/modificar" type="button" class="button" onclick="modificarDatos()">Modificar datos personales</a>
             <button class="button" onclick="sacarTurno()">Sacar turno con el médico</button>
             <button class="button" onclick="verTurnos()">Ver turnos</button>
                             
               <a th:href="@{/}" class="btn btn-secondary">Volver</a> 
-        </div>
-    
+        </div> 
       </main>
 
 <div th:replace="/fragments/footer :: div"></div>
 <div th:replace="/fragments/javaScriptPass :: script"></div>
-
-
-
 
 </body>
 
