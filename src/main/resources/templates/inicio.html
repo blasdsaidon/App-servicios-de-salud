@@ -50,7 +50,7 @@
                         <div class="container">
                             <div class="carousel-caption " >
                                 <h1>Tú eres la prioridad.</h1>
-                                <p>El tratamiento en #### es una experiencia verdaderamente humana. Antes que nada, te brindamos el cuidado que merece una persona.</p>
+                                <p>El tratamiento en Salud EGG es una experiencia verdaderamente humana. Antes que nada, te brindamos el cuidado que merece una persona.</p>
                             </div>
                         </div>
                     </div>
@@ -100,6 +100,13 @@
                         <h2>Ginecología</h2>
                     </div><!-- /.col-lg-4 -->
                 </div><!-- /.row -->
+            </div>
+
+            <div th:if ="${session.usuariosession != null}" >
+                
+                <a>
+                    <img th:src="@{/imagen/perfil/__${session.usuariosession.idPersona}__}">
+                </a>
             </div>
         </main>
 

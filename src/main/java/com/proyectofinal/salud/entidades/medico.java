@@ -3,32 +3,35 @@ package com.proyectofinal.salud.entidades;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import java.util.Collection;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
+
 
 @Entity
 public class medico extends persona {
 
     @Enumerated(EnumType.STRING)
     private especialidad especialidad;
+    @ElementCollection(targetClass = obraSocial.class)
     @Enumerated(EnumType.STRING)
-    private obraSocial obraSocialRecibida;
-    @OneToMany(mappedBy="medico")
+    private Collection<obraSocial> obraSocialRecibida;
+    @OneToMany
     private Collection<turno> horariosDisponibles;
     private Integer valorConsulta;
     private Integer calificacionServicio;
     @OneToMany
     private Collection<fichaMedica> historialConsultas;
-    @OneToMany(mappedBy="medico")
+    @OneToMany
     private Collection<turno> turnos;
     private Boolean alta;
     
     public medico() {
     }
 
-    public medico( especialidad especialidad,obraSocial obraSocialRecibida, Collection<turno> horariosDisponibles, Integer valorConsulta, Integer calificacionServicio, Collection<fichaMedica> historialConsultas, Collection<turno> turnos, Boolean alta, String idPersona, String nombre, String apellido, String email, String telefono, com.proyectofinal.salud.entidades.imagen imagen, String password, com.proyectofinal.salud.enumeradores.rol rol) {
+    public medico( especialidad especialidad, Collection<obraSocial> obraSocialRecibida, Collection<turno> horariosDisponibles, Integer valorConsulta, Integer calificacionServicio, Collection<fichaMedica> historialConsultas, Collection<turno> turnos, Boolean alta, String idPersona, String nombre, String apellido, String email, String telefono, com.proyectofinal.salud.entidades.imagen imagen, String password, com.proyectofinal.salud.enumeradores.rol rol) {
         super(idPersona, nombre, apellido, email, telefono, imagen, password, rol);
         this.especialidad = especialidad;
         this.obraSocialRecibida = obraSocialRecibida;
@@ -48,11 +51,11 @@ public class medico extends persona {
         this.especialidad = especialidad;
     }
 
-    public obraSocial getObraSocialRecibida() {
+    public Collection<obraSocial> getObraSocialRecibida() {
         return obraSocialRecibida;
     }
 
-    public void setObraSocialRecibida(obraSocial obraSocialRecibida) {
+    public void setObraSocialRecibida(Collection<obraSocial> obraSocialRecibida) {
         this.obraSocialRecibida = obraSocialRecibida;
     }
 

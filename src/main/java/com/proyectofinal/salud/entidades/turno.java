@@ -18,13 +18,10 @@ public class turno {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String idTurno;
-
     @ManyToOne
     private paciente paciente;
-    
     @ManyToOne
     private medico medico;
-    
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     private Boolean reservado;

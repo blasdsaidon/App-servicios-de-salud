@@ -2,6 +2,7 @@ package com.proyectofinal.salud.controladores;
 
 import com.proyectofinal.salud.entidades.persona;
 import com.proyectofinal.salud.enumeradores.obraSocial;
+import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -19,33 +20,20 @@ public class portalControlador {
     @Autowired
     private pacienteServicio pacienteServicio;
 
+    @Autowired
+    private medicoServicio medicoServicio;
+
     @GetMapping("/")
     public String inicio(ModelMap modelo, String exito) {
+
         List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
         modelo.addAttribute("ListaOS", ListaOS);
         modelo.put("exito", exito);
+        
         return "inicio.html";
     }
 
-    //ESTA FUNCIONA PERO NO DIFERENCIA ROLES
-    /* @GetMapping("/login")
-    public String login(@RequestParam(required = false) String error, ModelMap modelo, HttpSession session) {
-
-        paciente logueado = (paciente) session.getAttribute("usuariosession");
-        if (logueado != null) {
-            return "redirect:/";
-        }
-        if (error != null) {
-            modelo.put("error", "Usuario o Contraseña invalidos.");
-        }
-        return "login.html";
-    }*/
-    
-    
-    // EL PRE AUTHORIZE GENERA UN ERROR (Asumo que es porque estamos intentando entrar a la vista de login y el preauthoorize
-    // pide que ya estemos logueados para acceder _Leo_)
-    
-//  @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
+    /*Funciona definitivamente con el la nueva redireccion por el header*/
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo, HttpSession session) {
 
@@ -62,20 +50,26 @@ public class portalControlador {
                         return "redirect:/medico/perfil";
                 }
             }
-            /*if (logueado != null && logueado.getRol().toString().equals("USER")) {
-            return "redirect:/paciente/perfil";
-        }else if (logueado != null && logueado.getRol().toString().equals("ADMIN")){
-            return "redirect:/admin/perfil";
-        }else if(logueado != null && logueado.getRol().toString().equals("PROFESIONAL")){
-            return "redirect:/medico/perfil";
-        }*/
+            
             if (error != null) {
                 modelo.put("error", "Usuario o Contraseña invalidos.");
             }
+            
             return "login.html";
+            
         } catch (Exception e) {
+            
             return "inicio.html";
         }
+    }
 
+    @GetMapping("/listadoProfesionales")
+    public String listadoProfesionales(ModelMap modelo, HttpSession session) {
+        
+        persona logueado = (persona) session.getAttribute("usuariosession");
+        modelo.put("listadoProfesionales", medicoServicio.listarMedicos());
+        modelo.put("session", logueado);
+
+        return "listado_profesionales";
     }
 }
