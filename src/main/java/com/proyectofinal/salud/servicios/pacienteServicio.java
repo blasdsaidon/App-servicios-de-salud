@@ -66,14 +66,12 @@ public class pacienteServicio implements UserDetailsService {
             obraSocial obraSocial, sexo genero, String fechaNacimiento, String password, String password2,
             MultipartFile archivo) throws MiException, ParseException {
 
-
-        
         validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2, false);
-        
+
         Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
-        
+
         Optional<paciente> respuesta = pacienteRepo.findById(idPersona);
-        paciente paciente=new paciente();
+        paciente paciente = new paciente();
         if (respuesta.isPresent()) {
             paciente = respuesta.get();
             System.out.println(paciente.toString());
@@ -114,6 +112,7 @@ public class pacienteServicio implements UserDetailsService {
 
     @Transactional(readOnly = true)
     public paciente getOne(String idPaciente) {
+        
         return pacienteRepo.getOne(idPaciente);
     }
 
@@ -160,23 +159,21 @@ public class pacienteServicio implements UserDetailsService {
         }
         if (email.isEmpty() || email == null) {
             throw new MiException("El email ingresado no puede ser nulo o estar vacío.");
-        } else if (esNuevoUsuario==true){
-            
-          if (buscarPacientePorEmail(email) != null) {
-            throw new MiException("El email ingresado ya se encuentra registrado.");
-          }
+        } else if (esNuevoUsuario == true) {
+
+            if (buscarPacientePorEmail(email) != null) {
+                throw new MiException("El email ingresado ya se encuentra registrado.");
+            }
         }
         if (telefono.isEmpty() || telefono == null) {
             throw new MiException("El número télefono ingresado no puede ser nulo o estar vacío.");
-        
         } else if (telefono.length() != 10) {
             throw new MiException("El número de teléfono ingresado debe contener 10 caracteres.");
-        }   else if (esNuevoUsuario==true){
-              if (buscarPacientePorTelefono(telefono) != null) {
-            throw new MiException("El número de teléfono ingresado ya se encuentra registrado.");
-              }
-          }
-        
+        } else if (esNuevoUsuario == true) {
+            if (buscarPacientePorTelefono(telefono) != null) {
+                throw new MiException("El número de teléfono ingresado ya se encuentra registrado.");
+            }
+        }
         if (fechaNacimiento.isEmpty()) {
             throw new MiException("La fecha de nacimiento ingresada no puede ser nula o estar vacía.");
         }

@@ -46,7 +46,7 @@ public class pacienteControlador {
         try {
             pacienteServicio.crearPaciente(nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2, archivo);
             redireccion.addAttribute("exito", "El usuario se registró exitosamente!");
-            
+
             return "redirect:/";
 
         } catch (Exception ex) {
@@ -62,42 +62,39 @@ public class pacienteControlador {
             modelo.put("fechaNacimiento", fechaNacimiento);
 
             return "registro.html";
-        }  
+        }
     }
-   /*Se añade controlador para modificar pacientes*/ 
 
-    
-@GetMapping("/perfil")
-    public String perfil(ModelMap modelo,HttpSession session){
-        
-       paciente paciente = (paciente) session.getAttribute("usuariosession");
-       modelo.put("paciente", paciente);
+    @GetMapping("/perfil")
+    public String perfil(ModelMap modelo, HttpSession session) {
 
-       List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
-       modelo.addAttribute("ListaOS", ListaOS); 
-       List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
-       modelo.addAttribute("ListaGenero", ListaGenero);
-       
-       
+        paciente paciente = (paciente) session.getAttribute("usuariosession");
+        modelo.put("paciente", paciente);
 
-       return "modificar_paciente.html";
-    }  
+        List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
+        modelo.addAttribute("ListaOS", ListaOS);
+        List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
+        modelo.addAttribute("ListaGenero", ListaGenero);
+
+        return "modificar_paciente.html";
+    }
+
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
     @PostMapping("/perfil/{idPersona}")
-    public String actualizar(@PathVariable String idPersona,@RequestParam  String nombre,@RequestParam String apellido,
-
-            @RequestParam String email,@RequestParam  String telefono, obraSocial obraSocial,
-            sexo genero, String fechaNacimiento,@RequestParam String password,
+    public String actualizar(@PathVariable String idPersona, @RequestParam String nombre, @RequestParam String apellido,
+            @RequestParam String email, @RequestParam String telefono, obraSocial obraSocial,
+            sexo genero, String fechaNacimiento, @RequestParam String password,
             @RequestParam String password2, MultipartFile archivo, ModelMap modelo, RedirectAttributes redireccion, HttpSession session) {
 
         try {
-           
             paciente pacienteModificado = pacienteServicio.modificarPaciente(idPersona, nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2, archivo);
             session.setAttribute("usuariosession", pacienteModificado);
             modelo.put("exito", "Paciente actualizado correctamente!");
 
             return "inicio.html";
+
         } catch (Exception ex) {
+            
             List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
             modelo.addAttribute("ListaOS", ListaOS);
             List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
@@ -108,6 +105,7 @@ public class pacienteControlador {
             modelo.put("telefono", telefono);
             modelo.put("email", email);
             modelo.put("fechaNacimiento", fechaNacimiento);
+
             return "modificar_paciente.html";
         }
     }

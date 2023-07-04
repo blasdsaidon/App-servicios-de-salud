@@ -7,7 +7,7 @@
     
     <head>
         <meta charset="utf-8" />
-        <title>Profesionales</title>
+        <title>Turnos</title>
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -27,10 +27,10 @@
             <div class="mb-3">
                 <label class="form-label" for="profesional" >Especialidad:</label>
                 <select onchange="listasProfesionales()" required id="profesionales" class="form-select" name="profesionales">
-                    <option>Selecione Especialidad:</option>
-                    <option th:value="${ListaMedicosGinecologos}"th:text="ginecologo"></option>
-                    <option th:value="${ListaMedicosClinicos}" th:text="clinico"></option>
-                    <option th:value="${ListaMedicosCardiologos}"th:text="cardiologo"></option>
+                    <option>Seleccione Especialidad:</option>
+                    <option th:value="${ListaMedicosGinecologos}"th:text="Ginecólogo"></option>
+                    <option th:value="${ListaMedicosClinicos}" th:text="Clínico"></option>
+                    <option th:value="${ListaMedicosCardiologos}"th:text="Cardiólogo"></option>
                     <option th:value="${ListaMedicosPediatras}" th:text="Pediatra"></option>
                 </select>
             </div>
@@ -49,7 +49,7 @@
                 var profesionalesSelect = document.getElementById("profesionales");
                 var especialistasSelect = document.getElementById("especialistas");
 
-                especialistasSelect.innerHTML = "<option>Selecione Profesional:</option>";
+                especialistasSelect.innerHTML = "<option>Seleccione Profesional:</option>";
 
                 var selectedProfesional = profesionalesSelect.value
                 .replace(/\[|\]/g, "")

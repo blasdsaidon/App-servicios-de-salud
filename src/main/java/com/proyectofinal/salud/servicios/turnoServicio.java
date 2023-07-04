@@ -140,12 +140,13 @@ public class turnoServicio {
                 }
             }*/
             pacienteRepo.save(paciente);
-        }
-        
+        }   
     }
 
     public Collection<turno> accederTurnosPorMedico(String idMedico) {
+        
         medico medico = medicoServicio.buscarMedicoPorID(idMedico);
+        
         return medico.getTurnos();
     }
 }

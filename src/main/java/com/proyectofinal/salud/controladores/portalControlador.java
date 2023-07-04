@@ -1,6 +1,5 @@
 package com.proyectofinal.salud.controladores;
 
-import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.entidades.persona;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.servicios.medicoServicio;
@@ -69,11 +68,11 @@ public class portalControlador {
 
                 switch (logueado.getRol().toString()) {
                     case "USER":
-                        return "redirect:/paciente/perfil";
+                        return "redirect:/";
                     case "ADMIN":
-                        return "redirect:/admin/perfil";
+                        return "redirect:/";
                     case "PROFESIONAL":
-                        return "redirect:/medico/perfil";
+                        return "redirect:/";
                 }
             }
             /*if (logueado != null && logueado.getRol().toString().equals("USER")) {
@@ -91,5 +90,4 @@ public class portalControlador {
             return "inicio.html";
         }
     }
-
 }

@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -50,7 +49,7 @@ public class medicoServicio implements UserDetailsService {
 
         medico medico = new medico();
         validar(nombre, apellido, email, telefono, valorConsulta, especialidad, password, password2, obraSocialRecibida, true);
-        
+
         medico.setObraSocialRecibida(obraSocialRecibida);
         medico.setApellido(apellido);
         medico.setNombre(nombre);
@@ -77,7 +76,6 @@ public class medicoServicio implements UserDetailsService {
 //            medicoRepo.save(medico);
 //        }
 //    }
-
     @Transactional
     public void darDeBaja(String idMedico, Boolean alta) {
 
@@ -170,12 +168,13 @@ public class medicoServicio implements UserDetailsService {
     }
 
     public List<String> listadoMedicosPorEspecialidad(especialidad especialidad) {
-        
+
         List<String> medicos = new ArrayList();
         List<medico> profesionales = medicoRepo.buscarNombresPorEspecialidad(especialidad);
         for (medico profesional : profesionales) {
             medicos.add(profesional.getNombre() + " " + profesional.getApellido());
         }
+
         return medicos;
     }
 
@@ -200,6 +199,29 @@ public class medicoServicio implements UserDetailsService {
         return medico;
     }
 
+    private void validarID(String idPersona) throws Exception {
+        if (idPersona.isEmpty() || idPersona == null || idPersona.equalsIgnoreCase(" ")) {
+            throw new Exception("El ID del Usuario no puede ser nulo o estar vacio.");
+        }
+    }
+
+    @Transactional
+    public void estado(String idPersona) throws Exception {
+        validarID(idPersona);
+
+        Optional<medico> respuesta = medicoRepo.findById(idPersona);
+
+        if (respuesta.isPresent()) {
+            medico medico = respuesta.get();
+            if (medico.getAlta() == true) {
+                medico.setAlta(false);
+            } else {
+                medico.setAlta(true);
+            }
+            medicoRepo.save(medico);
+        }
+    }
+
     public void validar(String nombre, String apellido, String email, String telefono,
             Integer valorConsulta, especialidad especialidad, String password, String password2, Collection<obraSocial> obraSocialRecibida, boolean esNuevoUsuario) throws MiException {
 
@@ -209,24 +231,24 @@ public class medicoServicio implements UserDetailsService {
         if (apellido.isEmpty() || apellido == null) {
             throw new MiException("El apellido ingresado no puede ser nulo o estar vacío.");
         }
-       if (email.isEmpty() || email == null) {
+        if (email.isEmpty() || email == null) {
             throw new MiException("El email ingresado no puede ser nulo o estar vacío.");
-        } else if (esNuevoUsuario==true){
-            
-          if (buscarMedicoPorEmail(email) != null) {
-            throw new MiException("El email ingresado ya se encuentra registrado.");
-          }
+        } else if (esNuevoUsuario == true) {
+
+            if (buscarMedicoPorEmail(email) != null) {
+                throw new MiException("El email ingresado ya se encuentra registrado.");
+            }
         }
         if (telefono.isEmpty() || telefono == null) {
             throw new MiException("El número télefono ingresado no puede ser nulo o estar vacío.");
-        
+
         } else if (telefono.length() != 10) {
             throw new MiException("El número de teléfono ingresado debe contener 10 caracteres.");
-        }   else if (esNuevoUsuario==true){
-              if (buscarMedicoPorTelefono(telefono) != null) {
-            throw new MiException("El número de teléfono ingresado ya se encuentra registrado.");
-              }
-          }
+        } else if (esNuevoUsuario == true) {
+            if (buscarMedicoPorTelefono(telefono) != null) {
+                throw new MiException("El número de teléfono ingresado ya se encuentra registrado.");
+            }
+        }
         if (valorConsulta == null) {
             throw new MiException("El valor de consulta ingresado no puede ser nulo o estar vacío.");
         } else if (valorConsulta < 0) {
@@ -243,8 +265,8 @@ public class medicoServicio implements UserDetailsService {
         if (!password.equals(password2)) {
             throw new MiException("Las contraseñas ingresadas deben ser iguales.");
         }
-        if (obraSocialRecibida.isEmpty()){
-            throw new MiException("Si no acepta obras sociales seleccione " + "NINGUNA"); 
+        if (obraSocialRecibida.isEmpty()) {
+            throw new MiException("Si no acepta obras sociales seleccione " + "NINGUNA");
         }
     }
 

@@ -14,12 +14,7 @@
     </head>
 
     <body>
-        <header>
-            <div class="banner d-flex justify-content-center align-items-center">
-                <a href="/"> <img src="/Otra-imagen/logo.png" height="100PX" alt="banner"></a>
-            </div>
-        </header>
-
+        <div th:replace="/fragments/headerBanner :: div"></div>
         <main>
             <div th:replace="/fragments/error :: div"></div>
 
@@ -27,7 +22,7 @@
             <div class="form-registro">
                 <form th:action="@{/medico/registroMedico}" method="POST" enctype="multipart/form-data">
                     <div class="form-group my-3">
-                        <h3 class="card-title">Registro de profesionales médicos</h3>
+                        <h3 class="card-title">Registro de profesionales médicos:</h3>
                     </div>
 
                     <div class="mb-3">
@@ -73,11 +68,7 @@
                                    th:name="obraSocialRecibida"
                                    th:value="${obraSocial}"/>
                         </div>
-                   
-        
                     </div>
-
-                    
 
                     <div class="mb-3">
                         <label for="Valor-consulta" class="form-label">Valor de consulta:</label>
@@ -103,7 +94,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="Password" class="form-label">Password:</label>
+                        <label for="Password" class="form-label">Repetir password:</label>
                         <input required type="password" th:value="${password2}" name="password2" class="form-control" id="Password" placeholder="Repita su contraseña">
                     </div>
 
@@ -113,8 +104,8 @@
                             <p style="padding-right: 10px ; margin: 0px;">Ya tiene cuenta?</p>
                             <a href="/login" class="btn btn-outline-primary">Ingrese</a> 
                         </div>
+                    </div>
                 </form>
-            </div>
         </main>
 
         <div th:replace="/fragments/footer :: div"></div>
