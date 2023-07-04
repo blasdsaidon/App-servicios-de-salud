@@ -14,10 +14,11 @@
             <div th:replace="/fragments/error :: div"></div>
             <!-- Formulario registro -->
 
-            <div>
-                <h1>    Registro de Paciente </h1>
-            </div>
+            
             <div class="form-registro">
+                <div>
+                    <h1>    Registro de Admin </h1>
+                </div>
                 <form th:action="@{/admin/registroAdmin}" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="Nombre" class="form-label">Nombre:</label>
@@ -38,20 +39,8 @@
                         <input required type="email" th:value="${email}" name="email" class="form-control" id="Email1" aria-describedby="emailHelp" placeholder="123@ejemplo.com">
                         <div id="emailHelp" class="form-text">No compartiremos esta información con nadie</div>
                     </div>
-                    <div class="mb-3">
-                        <label for="GENERO" class="form-label">Género:</label>
-                        <select required class="form-select" name="genero">
-                            <option>Seleccione Género: </option>
-                            <option selected="genero" 
-                                    th:each="genero:${ListaGenero}"
-                                    th:value="${genero}"
-                                    th:text="${genero}"/>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="fecha-nacimiento" class="form-label">Fecha de nacimiento:</label>
-                        <input required type="date" th:value="${fechaNacimiento}" name="fechaNacimiento" class="form-control" id="fechaNac" >
-                    </div>
+                    
+                    
 
                     
                     <div class="mb-3">
