@@ -29,6 +29,7 @@ public class portalControlador {
         List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
         modelo.addAttribute("ListaOS", ListaOS);
         modelo.put("exito", exito);
+        
         return "inicio.html";
     }
 
@@ -49,11 +50,15 @@ public class portalControlador {
                         return "redirect:/medico/perfil";
                 }
             }
+            
             if (error != null) {
                 modelo.put("error", "Usuario o Contraseña invalidos.");
             }
+            
             return "login.html";
+            
         } catch (Exception e) {
+            
             return "inicio.html";
         }
     }

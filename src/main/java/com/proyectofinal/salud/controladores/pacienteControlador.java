@@ -4,10 +4,7 @@ import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.sexo;
-import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.servicios.medicoServicio;
-import com.proyectofinal.salud.servicios.pacienteServicio;
-import java.text.ParseException;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -87,14 +84,14 @@ public class pacienteControlador {
         List<String> pediatras = medicoServicio.listadoMedicosPorEspecialidad(especialidad.PEDIATRIA);
         modelo.addAttribute("ListaMedicosPediatras", pediatras);
 
-        return "turnos.html";
+        return "sacar_turno.html";
     }
 
     @GetMapping("/perfil")
     public String perfil(MultipartFile archivo, ModelMap modelo, HttpSession session) {
+        
         paciente paciente = (paciente) session.getAttribute("usuariosession");
         modelo.put("paciente", paciente);
-
         List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
         modelo.addAttribute("ListaOS", ListaOS);
         List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
@@ -106,8 +103,8 @@ public class pacienteControlador {
 
     @GetMapping("/modificar")
     public String modificar(ModelMap modelo, HttpSession session) {
+        
         paciente paciente = (paciente) session.getAttribute("usuariosession");
-
         modelo.put("paciente", paciente);
         List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
         modelo.addAttribute("ListaOS", ListaOS);
@@ -168,12 +165,12 @@ public class pacienteControlador {
             @RequestParam String password2, MultipartFile archivo, ModelMap modelo, RedirectAttributes redireccion, HttpSession session) {
 
         try {
-
             paciente pacienteModificado = pacienteServicio.modificarPaciente(idPersona, nombre, apellido, email, telefono, obraSocial, genero, fechaNacimiento, password, password2, archivo);
             session.setAttribute("usuariosession", pacienteModificado);
             modelo.put("exito", "Paciente actualizado correctamente!");
 
             return "redirect:/";
+            
         } catch (Exception ex) {
             List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
             modelo.addAttribute("ListaOS", ListaOS);
@@ -185,7 +182,8 @@ public class pacienteControlador {
             modelo.put("telefono", telefono);
             modelo.put("email", email);
             modelo.put("fechaNacimiento", fechaNacimiento);
-            return "modificar_paciente1.html";
+            
+            return "modificar_paciente.html";
         }
     }
 }

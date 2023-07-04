@@ -2,9 +2,8 @@
 <html
     lang="es"
     xmlns:th="http://www.thymeleaf.org"
-    xlmns:sec="http://www.thymeleaf.org/extras/spring-security"
-    >
-    
+    xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
+
     <head>
         <meta charset="utf-8" />
         <title>Turnos</title>
@@ -22,7 +21,7 @@
             <div class="form-group my-3">
                 <h3 class="card-title">Turnos</h3>
             </div>
-            
+
             <div class="mb-3">
                 <label class="form-label" for="profesional" >Especialidad:</label>
                 <select onchange="listasProfesionales()" required id="profesionales" class="form-select" name="profesionales">
@@ -65,4 +64,5 @@
         <div th:replace="/fragments/footer :: div"></div>
         <div th:replace="/fragments/javaScript :: script"></div>
     </body>
+    
 </html>
