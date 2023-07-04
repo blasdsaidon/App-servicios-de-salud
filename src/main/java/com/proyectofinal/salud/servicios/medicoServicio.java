@@ -2,7 +2,6 @@ package com.proyectofinal.salud.servicios;
 
 import com.proyectofinal.salud.entidades.imagen;
 import com.proyectofinal.salud.entidades.medico;
-import com.proyectofinal.salud.entidades.turno;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.rol;
@@ -11,10 +10,8 @@ import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.repositorios.medicoRepositorio;
 import com.proyectofinal.salud.repositorios.turnoRepositorio;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,10 +27,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 @Service
 public class medicoServicio implements UserDetailsService {
@@ -53,7 +48,7 @@ public class medicoServicio implements UserDetailsService {
 
         medico medico = new medico();
         validar(nombre, apellido, email, telefono, valorConsulta, especialidad, password, password2, obraSocialRecibida, true);
-        
+
         medico.setObraSocialRecibida(obraSocialRecibida);
         medico.setApellido(apellido);
         medico.setNombre(nombre);
@@ -80,7 +75,6 @@ public class medicoServicio implements UserDetailsService {
 //            medicoRepo.save(medico);
 //        }
 //    }
-
     @Transactional
     public void darDeBaja(String idMedico, Boolean alta) {
 
@@ -116,15 +110,14 @@ public class medicoServicio implements UserDetailsService {
             /* imagen imagen = imagenServicio.guardar(archivo);
             paciente.setImagen(imagen);*/
 
-
             String idImagen = null;
-            
+
             if (medico.getImagen() != null) {
                 idImagen = medico.getImagen().getIdImagen();
             }
-            
+
             imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-            
+
             medico.setImagen(imagen);
 
             medicoRepo.save(medico);
@@ -157,11 +150,11 @@ public class medicoServicio implements UserDetailsService {
     }
 
     @Transactional
-    public Collection OsRecibidas(String idPersona){
-       medico medico = medicoRepo.getById(idPersona);
-       Collection<obraSocial> os = medico.getObraSocialRecibida();
-        
-       return os; 
+    public Collection OsRecibidas(String idPersona) {
+        medico medico = medicoRepo.getById(idPersona);
+        Collection<obraSocial> os = medico.getObraSocialRecibida();
+
+        return os;
     }
 
     public List listadoObrasSocial() {
@@ -189,6 +182,17 @@ public class medicoServicio implements UserDetailsService {
         ListaEspecialidades.addAll(Arrays.asList(vectorEspecialidades));
 
         return ListaEspecialidades;
+    }
+
+    public List<String> listadoMedicosPorEspecialidad(especialidad especialidad) {
+
+        List<String> medicos = new ArrayList();
+        List<medico> profesionales = medicoRepo.buscarNombresPorEspecialidad(especialidad);
+        for (medico profesional : profesionales) {
+            medicos.add(profesional.getNombre() + " " + profesional.getApellido());
+        }
+
+        return medicos;
     }
 
     public medico buscarMedicoPorEmail(String email) {
@@ -221,24 +225,24 @@ public class medicoServicio implements UserDetailsService {
         if (apellido.isEmpty() || apellido == null) {
             throw new MiException("El apellido ingresado no puede ser nulo o estar vacío.");
         }
-       if (email.isEmpty() || email == null) {
+        if (email.isEmpty() || email == null) {
             throw new MiException("El email ingresado no puede ser nulo o estar vacío.");
-        } else if (esNuevoUsuario==true){
-            
-          if (buscarMedicoPorEmail(email) != null) {
-            throw new MiException("El email ingresado ya se encuentra registrado.");
-          }
+        } else if (esNuevoUsuario == true) {
+
+            if (buscarMedicoPorEmail(email) != null) {
+                throw new MiException("El email ingresado ya se encuentra registrado.");
+            }
         }
         if (telefono.isEmpty() || telefono == null) {
             throw new MiException("El número télefono ingresado no puede ser nulo o estar vacío.");
-        
+
         } else if (telefono.length() != 10) {
             throw new MiException("El número de teléfono ingresado debe contener 10 caracteres.");
-        }   else if (esNuevoUsuario==true){
-              if (buscarMedicoPorTelefono(telefono) != null) {
-            throw new MiException("El número de teléfono ingresado ya se encuentra registrado.");
-              }
-          }
+        } else if (esNuevoUsuario == true) {
+            if (buscarMedicoPorTelefono(telefono) != null) {
+                throw new MiException("El número de teléfono ingresado ya se encuentra registrado.");
+            }
+        }
         if (valorConsulta == null) {
             throw new MiException("El valor de consulta ingresado no puede ser nulo o estar vacío.");
         } else if (valorConsulta < 0) {
@@ -255,8 +259,8 @@ public class medicoServicio implements UserDetailsService {
         if (!password.equals(password2)) {
             throw new MiException("Las contraseñas ingresadas deben ser iguales.");
         }
-        if (obraSocialRecibida.isEmpty()){
-            throw new MiException("Si no acepta obras sociales seleccione " + "NINGUNA"); 
+        if (obraSocialRecibida.isEmpty()) {
+            throw new MiException("Si no acepta obras sociales seleccione " + "NINGUNA");
         }
     }
 

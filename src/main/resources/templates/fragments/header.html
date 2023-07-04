@@ -8,7 +8,7 @@
 
         <ul class="nav col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="/" class="nav-link px-2 link-secondary">Inicio</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">Profesionales</a></li>
+            <li><a href="/listadoProfesionales" class="nav-link px-2 link-dark">Profesionales</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">Obras Sociales</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">Sobre Nosotros</a></li>
         </ul>
@@ -17,13 +17,13 @@
             <a href="paciente/registrar" type="button"  class="btn btn-outline-primary me-2">Registro</a>
             <a href="/login" type="button" class="btn btn-primary">Ingrese</a>
         </div>
-        
+
         <div class="col-md-3 text-end d-flex justify-content-between align-items-center " th:if="${session.usuariosession != null}">
-            <p style="margin: 0px; font-weight: bold;">Hola, <span th:text="${session.usuariosession.nombre}"></span></p>
+            <p style="margin: 0px; font-weight: bold;">Hola <span th:text="${session.usuariosession.nombre}"></span>!</p>
             <div>
-            <a href="/login" type="button"  class="btn btn-outline-primary me-2">Perfil</a>
-            <a href="/logout" type="button" class="btn btn-primary">LogOut</a>
-        </div>
+                <a href="/login" type="button"  class="btn btn-outline-primary me-2">Perfil</a>
+                <a href="/logout" type="button" class="btn btn-primary">LogOut</a>
+            </div>
         </div>
     </header>
 </div>
