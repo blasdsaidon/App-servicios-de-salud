@@ -50,7 +50,7 @@ public class adminServicio implements UserDetailsService {
     }
 
     @Transactional
-    public void modificarAdmin(String idAdmin, String nombre, String apellido, String email,
+    public admin modificarAdmin(String idAdmin, String nombre, String apellido, String email,
             String telefono, MultipartFile archivo, String password, String password2) throws MiException {
 
         admin admin = new admin();
@@ -68,6 +68,7 @@ public class adminServicio implements UserDetailsService {
             admin.setPassword(new BCryptPasswordEncoder().encode(password));
             adminRepo.save(admin);
         }
+        return admin;
     }
 
     public admin buscarAdminPorEmail(String email) {

@@ -4,12 +4,11 @@ import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.sexo;
-
 import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import java.text.ParseException;
-
+import com.proyectofinal.salud.servicios.pacienteServicio;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class pacienteControlador {
 
     @Autowired
     private pacienteServicio pacienteServicio;
-    
+
     @Autowired
     private medicoServicio medicoServicio;
 
@@ -102,22 +101,22 @@ public class pacienteControlador {
         modelo.addAttribute("ListaGenero", ListaGenero);
         modelo.addAttribute("archivo", archivo);
 
-        return "perfil_paciente1.html";
+        return "perfil_paciente.html";
     }
 
     @GetMapping("/modificar")
     public String modificar(ModelMap modelo, HttpSession session) {
         paciente paciente = (paciente) session.getAttribute("usuariosession");
-        modelo.put("paciente", paciente);
 
+        modelo.put("paciente", paciente);
         List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
         modelo.addAttribute("ListaOS", ListaOS);
         List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
         modelo.addAttribute("ListaGenero", ListaGenero);
-
+        
         return "modificar_paciente.html";
-
     }
+
 //    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
 //    @PostMapping("/perfil/{idPersona}")
 //    public String actualizar(MultipartFile archivo,@PathVariable String idPersona, @RequestParam String nombre,@RequestParam String email, 
@@ -145,7 +144,6 @@ public class pacienteControlador {
 //    }
 
     /*Se añade controlador para modificar pacientes*/
-
 //@GetMapping("/perfil")
 //    public String perfil(ModelMap modelo,HttpSession session){
 //
