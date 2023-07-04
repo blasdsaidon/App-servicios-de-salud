@@ -1,6 +1,8 @@
 package com.proyectofinal.salud.repositorios;
 
 import com.proyectofinal.salud.entidades.medico;
+import com.proyectofinal.salud.enumeradores.especialidad;
+import java.util.Collection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,6 +24,10 @@ public interface medicoRepositorio extends JpaRepository<medico, String> {
 
     @Query("SELECT m FROM medico m WHERE m.idPersona = :idPersona")
     public medico buscarMedicoPorID(@Param("idPersona") String idPersona);
+    
+    @Query("SELECT m FROM medico m WHERE m.especialidad = :especialidad")
+    public Collection<medico> listarMedicosPorEspecialidad(@Param("especialidad") String especialidad);
+    
 
     
     /*SELECT turno.fecha, turno.hora, medico.nombre

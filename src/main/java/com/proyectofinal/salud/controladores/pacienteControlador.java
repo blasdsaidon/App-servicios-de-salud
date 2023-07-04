@@ -3,10 +3,7 @@ package com.proyectofinal.salud.controladores;
 import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.sexo;
-import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.servicios.pacienteServicio;
-import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,45 +64,9 @@ public class pacienteControlador {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
+    
     @GetMapping("/perfil")
-    public String perfil(ModelMap modelo, HttpSession session) {
-        paciente paciente = (paciente) session.getAttribute("usuariosession");
-        modelo.put("paciente", paciente);
-        return "registro.html";
-        
-        //inicio.html
-    }
-    
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
-    @PostMapping("/perfil/{idPersona}")
-    public String actualizar(MultipartFile archivo,@PathVariable String id, @RequestParam String nombre,@RequestParam String email, 
-            @RequestParam String password,@RequestParam String password2, ModelMap modelo) throws ParseException {
-
-        try {
-            pacienteServicio.modificarPaciente(password, nombre, email, email, password, obraSocial.OSEP, sexo.OTRO, email, password, password2, archivo);
-            
-//            actualizar(archivo, id, nombre, email, password, password2)
-
-            modelo.put("exito", "Paciente actualizado correctamente!");
-
-            return "inicio.html";
-            
-        } catch (MiException ex) {
-
-            modelo.put("error", ex.getMessage());
-            modelo.put("nombre", nombre);
-            modelo.put("email", email);
-
-            return "registro.html";
-        }
-
-    }
-   /*Se añade controlador para modificar pacientes*/ 
-
-    
-@GetMapping("/perfil")
-    public String perfil(ModelMap modelo,HttpSession session){
+    public String perfil(MultipartFile archivo, ModelMap modelo,HttpSession session){
        paciente paciente = (paciente) session.getAttribute("usuariosession");
        modelo.put("paciente", paciente);
 
@@ -113,10 +74,10 @@ public class pacienteControlador {
        modelo.addAttribute("ListaOS", ListaOS); 
        List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
        modelo.addAttribute("ListaGenero", ListaGenero);
-       
+       modelo.addAttribute("archivo",archivo);
        
 
-       return "perfil_paciente.html";
+       return "perfil_paciente1.html";
     }  
     
     @GetMapping("/modificar")
@@ -148,7 +109,7 @@ public class pacienteControlador {
             session.setAttribute("usuariosession", pacienteModificado);
             modelo.put("exito", "Paciente actualizado correctamente!");
 
-            return "inicio.html";
+            return "redirect:/";
         } catch (Exception ex) {
             List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
             modelo.addAttribute("ListaOS", ListaOS);

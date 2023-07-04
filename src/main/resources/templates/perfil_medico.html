@@ -37,7 +37,7 @@
         <div class="card mb-3" style="max-width: 540px; margin: auto; margin-top: 5%" >
             <div class="row g-0">
                 <div class="col-md-4">
-                    <img src="..." class="img-fluid rounded-start" alt="...">
+                    <img th:if="${medico.imagen != null}" class="profile-image" th:src="@{/imagen/perfilMedico/__${medico.idPersona}__}" width="100 px" height="100 px">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
