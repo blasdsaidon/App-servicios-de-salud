@@ -3,19 +3,7 @@ package com.proyectofinal.salud.controladores;
 import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.sexo;
-<<<<<<< HEAD
-import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.servicios.pacienteServicio;
-import java.text.ParseException;
-=======
-
-
-import com.proyectofinal.salud.excepciones.MiException;
-import com.proyectofinal.salud.servicios.pacienteServicio;
-import java.text.ParseException;
-
-
->>>>>>> b12d75d5a3e56dfc373786c512c6abd830f8500e
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,8 +68,6 @@ public class pacienteControlador {
             return "registro.html";
         }
     }
-
-    
     @GetMapping("/perfil")
     public String perfil(MultipartFile archivo, ModelMap modelo,HttpSession session){
        paciente paciente = (paciente) session.getAttribute("usuariosession");
@@ -96,17 +82,10 @@ public class pacienteControlador {
 
        return "perfil_paciente.html";
     }  
-    
-<<<<<<< HEAD
-    @GetMapping("/modificar")
-    public String modificar(ModelMap modelo,HttpSession session){
-       paciente paciente = (paciente) session.getAttribute("usuariosession");
-=======
-
     @GetMapping("/modificar")
     public String modificar(ModelMap modelo,HttpSession session){
          paciente paciente = (paciente) session.getAttribute("usuariosession");
->>>>>>> b12d75d5a3e56dfc373786c512c6abd830f8500e
+
        modelo.put("paciente", paciente);
 
        List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
@@ -118,50 +97,6 @@ public class pacienteControlador {
        return "modificar_paciente.html";
         
     }
-//    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
-//    @PostMapping("/perfil/{idPersona}")
-//    public String actualizar(MultipartFile archivo,@PathVariable String idPersona, @RequestParam String nombre,@RequestParam String email, 
-//            @RequestParam String password,@RequestParam String password2, ModelMap modelo) throws ParseException {
-//
-//        try {
-//            pacienteServicio.modificarPaciente(password, nombre, email, email, password, obraSocial.OSEP, sexo.OTRO, email, password, password2, archivo);
-//            
-////            actualizar(archivo, id, nombre, email, password, password2)
-//
-//            modelo.put("exito", "Paciente actualizado correctamente!");
-//
-//            return "inicio.html";
-//            
-//        } catch (MiException ex) {
-//
-//            modelo.put("error", ex.getMessage());
-//            modelo.put("nombre", nombre);
-//            modelo.put("email", email);
-//
-//            return "registro.html";
-//        }
-//
-//
-//    }
-   /*Se añade controlador para modificar pacientes*/ 
-
-    
-//@GetMapping("/perfil")
-//    public String perfil(ModelMap modelo,HttpSession session){
-//
-//       paciente paciente = (paciente) session.getAttribute("usuariosession");
-//       modelo.put("paciente", paciente);
-//
-//       List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
-//       modelo.addAttribute("ListaOS", ListaOS); 
-//       List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
-//       modelo.addAttribute("ListaGenero", ListaGenero);
-//       
-//       
-//
-//       return "modificar_paciente.html";
-//    }  
-//    
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
     @PostMapping("/perfil/{idPersona}")
     public String actualizar(@PathVariable String idPersona,@RequestParam  String nombre,@RequestParam String apellido,
