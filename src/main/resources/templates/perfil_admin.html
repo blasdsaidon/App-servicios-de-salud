@@ -35,7 +35,8 @@
     <div class="container">
         <h1>Perfil del Admin</h1>
 
-        <img th:if="${admin.imagen != null}" class="profile-image" th:src="@{/imagen/perfil/__${admin.idPersona}__}" width="100 px" height="100 px">  
+        <img th:if="${admin.imagen != null}" class="profile-image" th:src="@{/imagen/perfil/__${admin.idPersona}__}" onerror="this.onerror=null; 
+        this.src='/Otra-imagen/icono-de-linea-de-perfil-de-paciente-masculino-con-forma-de-circulo-2pk87gh.jpg'" width="100 px" height="100 px">  
         <p><strong>Nombre: </strong><span th:text="${admin.nombre}"/></p>
         <p><strong>Apellido:</strong> <span th:text="${admin.apellido}"/></p>
         <p><strong>Telefono: </strong><span th:text="${admin.telefono}"/></p>
