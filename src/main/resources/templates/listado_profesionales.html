@@ -23,7 +23,7 @@
                             <th style="width: 15%">Apellido</th>
                             <th style="width: 25%">Especialidad</th>
                             <th style="width: 25%">Horarios disponibles</th>
-                            <th style="width: 5%" sec:authorize="hasRole('ROLE_PROFESIONAL')">Estado</th>
+                            <th style="width: 5%" th:if="${session.usuariosession != null}" sec:authorize="hasAuthority('ADMIN')">Estado</th>
                         </tr>
                     </thead>
 

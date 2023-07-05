@@ -74,7 +74,6 @@ public class pacienteControlador {
 
         List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
         modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
-
         List<String> ginecologos = medicoServicio.listadoMedicosPorEspecialidad(especialidad.GINECOLOGIA);
         modelo.addAttribute("ListaMedicosGinecologos", ginecologos);
         List<String> clinicos = medicoServicio.listadoMedicosPorEspecialidad(especialidad.CLINICA);

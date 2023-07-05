@@ -44,7 +44,7 @@ public class medicoControlador {
         return "registro_medico.html";
     }
     
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    /*@PreAuthorize("hasRole('ROLE_ADMIN')")*/
     @PostMapping("/registroMedico")
     public String registroMedico(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String email, @RequestParam String telefono, @RequestParam especialidad especialidad,
@@ -81,10 +81,10 @@ public class medicoControlador {
        modelo.put("medico", medico);
        List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
        modelo.addAttribute("ListaOS", ListaOS); 
-        List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
-        modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
-        String idPersona = medico.getIdPersona();
-        Collection<obraSocial> os = medicoServicio.OsRecibidas(idPersona);
+       List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
+       modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
+       String idPersona = medico.getIdPersona();
+       Collection<obraSocial> os = medicoServicio.OsRecibidas(idPersona);
        modelo.addAttribute("oSRecibidas", os);
        
        return "perfil_medico.html";
