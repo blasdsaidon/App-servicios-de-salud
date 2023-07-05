@@ -15,25 +15,8 @@
         <main>
             <div class="container">
                 <h1>Perfil del Profesional</h1>
-
-<<<<<<< HEAD
-        <img th:if="${medico.imagen != null}" class="profile-image" 
-             th:src="@{/imagen/perfil/__${medico.idPersona}__}" 
-              onerror="this.onerror=null; 
-            this.src='/Otra-imagen/icono-de-linea-de-perfil-de-paciente-masculino-con-forma-de-circulo-2pk87gh.jpg'"
-             width="100 px" height="100 px">  
-        <p><strong>Nombre: </strong><span th:text="${medico.nombre}"/></p>
-        <p><strong>Apellido:</strong> <span th:text="${medico.apellido}"/></p>
-        <p><strong>Telefono: </strong><span th:text="${medico.telefono}"/></p>
-        
-        
-        <p><strong>E-mail:</strong> <span th:text="${medico.email}"/></p>
-        <p><strong>Especialidad:</strong> <span th:text="${medico.especialidad}"/></p>
-        <p><strong>Obras sociales aceptadas:</strong> <span th:text="${oSRecibidas}"/></p>
-        <p><strong>Valor de la consulta:</strong> <span th:text="${medico.valorConsulta}"/></p>
-=======
                 <img th:if="${medico.imagen != null}" class="profile-image" th:src="@{/imagen/perfil/__${medico.idPersona}__}" onerror="this.onerror=null; 
-                     this.src='/Otra-imagen/icono-de-linea-de-perfil-de-paciente-masculino-con-forma-de-circulo-2pk87gh.jpg'" width="100 px" height="100 px">  
+                     this.src='/Otra-imagen/icono-de-linea-de-perfil-de-paciente-masculino-con-forma-de-circulo-2pk87gh.jpg'" width="150 px" height="150 px">  
                 <p><strong>Nombre: </strong><span th:text="${medico.nombre}"/></p>
                 <p><strong>Apellido:</strong> <span th:text="${medico.apellido}"/></p>
                 <p><strong>Telefono: </strong><span th:text="${medico.telefono}"/></p>
@@ -41,7 +24,6 @@
                 <p><strong>Especialidad: </strong> <span th:text="${medico.especialidad}"/></p>
                 <p><strong>Obras sociales aceptadas: </strong> <span th:text="${oSRecibidas}"/></p>
                 <p><strong>Valor de la consulta: $</strong><span th:text="${medico.valorConsulta}"/></p>
->>>>>>> e36b4b70beb8ad6eed19c1cde13c4e8c6556d1e3
 
                 <div class="button-conteiner">
                     <a href="/medico/modificar" type="button" class="button" onclick="modificarDatos()">Modificar datos personales</a>
