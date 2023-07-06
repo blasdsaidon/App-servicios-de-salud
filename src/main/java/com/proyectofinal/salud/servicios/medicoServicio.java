@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
-public class medicoServicio implements UserDetailsService {
+public class medicoServicio /*implements UserDetailsService */{
 
     @Autowired
     private medicoRepositorio medicoRepo;
@@ -76,12 +76,15 @@ public class medicoServicio implements UserDetailsService {
 //        }
 //    }
     @Transactional
-    public void darDeBaja(String idMedico, Boolean alta) {
+    public void darDeBajaYAlta(String idMedico) {
 
         Optional<medico> respuesta = medicoRepo.findById(idMedico);
         medico medico = respuesta.get();
-        if (respuesta.isPresent()) {
-
+        if (medico.getAlta()) {
+            medico.setAlta(Boolean.FALSE);
+            medicoRepo.save(medico);
+        }else{
+            medico.setAlta(Boolean.TRUE);
             medicoRepo.save(medico);
         }
     }
@@ -263,7 +266,7 @@ public class medicoServicio implements UserDetailsService {
             throw new MiException("Si no acepta obras sociales seleccione " + "NINGUNA");
         }
     }
-
+/*
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
@@ -287,5 +290,5 @@ public class medicoServicio implements UserDetailsService {
         } else {
             return null;
         }
-    }
+    }*/
 }
