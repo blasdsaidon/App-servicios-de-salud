@@ -1,6 +1,7 @@
 package com.proyectofinal.salud.controladores;
 
 import com.proyectofinal.salud.entidades.paciente;
+import com.proyectofinal.salud.entidades.persona;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.sexo;
@@ -89,7 +90,9 @@ public class pacienteControlador {
     @GetMapping("/perfil")
     public String perfil(MultipartFile archivo, ModelMap modelo, HttpSession session) {
         
-        paciente paciente = (paciente) session.getAttribute("usuariosession");
+        persona persona = (persona) session.getAttribute("usuariosession");
+        paciente paciente = pacienteServicio.getOne(persona.getIdPersona());
+        
         modelo.put("paciente", paciente);
         List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
         modelo.addAttribute("ListaOS", ListaOS);
@@ -102,8 +105,8 @@ public class pacienteControlador {
 
     @GetMapping("/modificar")
     public String modificar(ModelMap modelo, HttpSession session) {
-        
-        paciente paciente = (paciente) session.getAttribute("usuariosession");
+        persona persona = (persona) session.getAttribute("usuariosession");
+        paciente paciente = pacienteServicio.getOne(persona.getIdPersona());
         modelo.put("paciente", paciente);
         List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
         modelo.addAttribute("ListaOS", ListaOS);

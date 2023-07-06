@@ -6,6 +6,7 @@ import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.repositorios.medicoRepositorio;
 import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
+import com.proyectofinal.salud.servicios.turnoServicio;
 import java.util.Collection;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -33,6 +34,9 @@ public class medicoControlador {
     
     @Autowired
     private medicoRepositorio medicoRepo;
+    
+    @Autowired
+    private turnoServicio turnoServicio;
     
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
@@ -92,6 +96,7 @@ public class medicoControlador {
     
       @GetMapping("/modificar")
     public String modificar(ModelMap modelo,HttpSession session){
+       
        medico medico = (medico) session.getAttribute("usuariosession");
        
        modelo.put("medico", medico);
@@ -106,7 +111,7 @@ public class medicoControlador {
        return "modificar_medico.html";
     }  
     
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @PostMapping("/perfil/{idPersona}")
     public String actualizar(@PathVariable String idPersona,@RequestParam  String nombre,@RequestParam String apellido,
             @RequestParam String email,@RequestParam  String telefono, Integer valorConsulta,
@@ -139,5 +144,27 @@ public class medicoControlador {
             
             return "modificar_medico.html";
         }
+    }
+    
+    @GetMapping("/horarios")
+    public String cargaTurnos(ModelMap modelo,HttpSession session){
+       medico medico = (medico) session.getAttribute("usuariosession");
+       modelo.put("medico", medico);
+       return "horarios_Medicos.html";
+
+    }
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+    @PostMapping("/horarios/{idPersona}")
+    public String carga(@PathVariable String idPersona,@RequestParam String fechaInicio,@RequestParam String fechaFin,@RequestParam String horaInicio,@RequestParam String horaFin,ModelMap modelo){
+        
+        try {
+            turnoServicio.crearTurnosDisponibles(idPersona, fechaInicio, fechaFin, horaInicio, horaFin);
+            modelo.put("exito", "Horarios cargados exitosamente!");
+            return "inicio.html";
+        }catch(Exception ex){
+             modelo.put("error", ex.getMessage());
+             return "redirect:/perfil";
+        }
+            
     }
 }

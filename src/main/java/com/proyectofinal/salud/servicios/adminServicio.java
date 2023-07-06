@@ -24,7 +24,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class adminServicio implements UserDetailsService {
+public class adminServicio /*implements UserDetailsService*/ {
 
     @Autowired
     private adminRepositorio adminRepo;
@@ -122,7 +122,7 @@ public class adminServicio implements UserDetailsService {
             throw new MiException("Las contraseñas ingresadas deben ser iguales.");
         }
     }
-
+/*
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
@@ -146,5 +146,5 @@ public class adminServicio implements UserDetailsService {
         } else {
             return null;
         }
-    }
+    }*/
 }
