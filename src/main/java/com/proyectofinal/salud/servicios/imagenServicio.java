@@ -32,7 +32,7 @@ public class imagenServicio {
     }
 
     public imagen actualizar(MultipartFile archivo, String idImagen) throws MiException {
-        if (archivo != null) {
+        if (archivo.getContentType().contains("image")) {
             try {
 
                 imagen imagen = new imagen();

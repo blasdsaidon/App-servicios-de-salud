@@ -9,7 +9,12 @@
             console.log('Solicitar turno con el médico');
         }
 
-        function verTurnos() {
+        function Horarios() {
             // Lógica para ver los turnos del paciente
             console.log('Ver turnos');
         }
+        
+//        function modificarEstadoAlta() {
+//            // Lógica para modificar estado de alta del medico
+//            console.log('Alta modificada');
+//        }
