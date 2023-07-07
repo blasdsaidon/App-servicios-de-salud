@@ -1,7 +1,11 @@
 package com.proyectofinal.salud.controladores;
 
 import com.proyectofinal.salud.entidades.admin;
+import com.proyectofinal.salud.enumeradores.sexo;
 import com.proyectofinal.salud.servicios.adminServicio;
+import com.proyectofinal.salud.servicios.medicoServicio;
+import com.proyectofinal.salud.servicios.pacienteServicio;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,13 +26,23 @@ public class adminControlador {
     @Autowired
     private adminServicio adminServicio;
 
+    @Autowired
+    
+    private  pacienteServicio pacienteServicio;
+    
+    @Autowired
+    
+    private  medicoServicio medicoServicio;
+    
+    
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
-
+         List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
+         modelo.addAttribute("ListaGenero", ListaGenero);
         return "registroAdmin.html";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    
     @PostMapping("/registroAdmin")
     public String registroAdmin(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String email, @RequestParam String telefono, @RequestParam String password,
@@ -49,7 +63,6 @@ public class adminControlador {
             return "registroAdmin.html";
         }
     }
-    
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo,HttpSession session) {
         
@@ -59,7 +72,7 @@ public class adminControlador {
        return "perfil_admin.html";
     }  
     
-      @GetMapping("/modificar")
+    @GetMapping("/modificar")
     public String modificar(ModelMap modelo,HttpSession session) {
         
        admin admin = (admin) session.getAttribute("usuariosession");
@@ -68,7 +81,7 @@ public class adminControlador {
        return "modificar_admin.html";
     }  
     
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/perfil/{idPersona}")
     public String actualizar(@PathVariable String idPersona,@RequestParam  String nombre,@RequestParam String apellido,
             @RequestParam String email,@RequestParam  String telefono, @RequestParam String password,
@@ -92,4 +105,20 @@ public class adminControlador {
             return "modificar_admin.html";
         }
     }
+    
+ /*   @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/altaMedico")
+    public String altaModificar(String idPersona,ModelMap modelo){
+        
+        try {
+            
+            medicoServicio.darDeBajaYAlta(idPersona);
+    
+            return "listado_profesionales.html";
+        }catch (Exception ex){
+            modelo.put("error", ex.getMessage());
+        return "inicio.html";
+    }
+}*/
+
 }

@@ -5,12 +5,10 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil del Paciente</title>
-    
-        
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-        <link href="/style/vistaPaciente.css" rel="stylesheet">
-        <link href="/style/styles.css" rel ="stylesheet">
+    <title>Perfil del Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="/style/vistaPaciente.css" rel="stylesheet">
+    <link href="/style/styles.css" rel ="stylesheet">
     <title>Document</title>
 </head>
 <body>
@@ -45,9 +43,7 @@
 
         <div class="button-conteiner">
             <a href="/admin/modificar" type="button" class="button" onclick="modificarDatos()">Modificar datos personales</a>
-            <button class="button" onclick="sacarTurno()">Sacar turno con el médico</button>
-            <button class="button" onclick="verTurnos()">Ver turnos</button>
-                            
+            <a href="/medico/registrar" type="button" class="button" onclick="registrarProfesional()">Registrar un Profesional</a>                
               <a th:href="@{/}" class="btn btn-secondary">Volver</a> 
         </div>
     

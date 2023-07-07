@@ -30,7 +30,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class pacienteServicio implements UserDetailsService {
+public class pacienteServicio /*implements UserDetailsService */{
 
     @Autowired
     private pacienteRepositorio pacienteRepo;
@@ -196,7 +196,7 @@ public class pacienteServicio implements UserDetailsService {
             throw new MiException("Las contraseñas ingresadas deben ser iguales.");
         }
     }
-
+/*
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
@@ -220,5 +220,6 @@ public class pacienteServicio implements UserDetailsService {
         } else {
             return null;
         }
-    }
+    }*/
+    
 }

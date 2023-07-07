@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-public class imagenControlador {
-
     @Controller
     @RequestMapping("/imagen")
-    public class ImagenControlador {
+    public class imagenControlador {
 
         @Autowired
         pacienteServicio pacienteServicio;
@@ -54,4 +52,3 @@ public class imagenControlador {
             return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
         }
     }
-}
