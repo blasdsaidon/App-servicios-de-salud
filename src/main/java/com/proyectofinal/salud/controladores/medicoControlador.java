@@ -12,6 +12,8 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -167,4 +169,13 @@ public class medicoControlador {
         }
             
     }
+    
+    @GetMapping("/pacientes-con-turno")
+    public String mostrarPacientesConTurno(ModelMap modelo, HttpSession session) {
+    String medicoId = (String) session.getAttribute("medicoId"); // Obtener el ID del médico logueado de la sesión
+    List<String> nombresPacientes = turnoServicio.obtenerNombresPacientesConTurnoPorMedico(medicoId);
+    modelo.put("nombresPacientes", nombresPacientes);
+    return "lista_pacientes_con_turno.html";
+
+}
 }

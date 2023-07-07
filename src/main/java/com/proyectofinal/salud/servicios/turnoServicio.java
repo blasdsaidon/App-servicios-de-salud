@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,15 @@ public class turnoServicio {
 
     @Autowired
     private medicoServicio medicoServicio;
+    
+    
+
+    
+
+    public List<String> obtenerNombresPacientesConTurnoPorMedico(String medicoId) {
+        List<String> nombresPacientes = turnoRepo.obtenerNombresPacientesConTurnoPorMedico(medicoId);
+        return nombresPacientes;
+    }
 
     
     @Transactional
