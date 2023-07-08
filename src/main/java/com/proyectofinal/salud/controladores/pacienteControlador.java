@@ -158,7 +158,7 @@ public class pacienteControlador {
 //
 //       return "modificar_paciente.html";
 //    }  
-//    
+   
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
     @PostMapping("/perfil/{idPersona}")
     public String actualizar(@PathVariable String idPersona, @RequestParam String nombre, @RequestParam String apellido,

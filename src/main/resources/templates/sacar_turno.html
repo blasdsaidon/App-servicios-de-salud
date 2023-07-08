@@ -17,6 +17,7 @@
     </head>
 
     <body>
+        <div th:replace="/fragments/header_banner :: div"></div>
         <div class="form-registro">
             <div class="form-group my-3">
                 <h3 class="card-title">Turnos</h3>
@@ -38,8 +39,12 @@
                 <select required id="especialistas" class="form-select"></select>
             </div>
 
+            <div>
+
+            </div>
+
             <div class="d-flex justify-content-between">
-                <a th:href="@{/}" class="btn btn-secondary">Volver</a> 
+                <a th:href="@{/paciente/perfil}" class="btn btn-secondary">Volver</a> 
             </div>
 
             <script>
@@ -64,5 +69,5 @@
         <div th:replace="/fragments/footer :: div"></div>
         <div th:replace="/fragments/javaScript :: script"></div>
     </body>
-    
+
 </html>

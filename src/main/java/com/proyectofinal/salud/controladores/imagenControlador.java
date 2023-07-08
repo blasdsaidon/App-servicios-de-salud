@@ -1,10 +1,7 @@
 package com.proyectofinal.salud.controladores;
 
-import com.proyectofinal.salud.entidades.medico;
-import com.proyectofinal.salud.entidades.paciente;
-import com.proyectofinal.salud.servicios.medicoServicio;
-import com.proyectofinal.salud.servicios.pacienteServicio;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.proyectofinal.salud.entidades.persona;
+import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,41 +11,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-    @Controller
-    @RequestMapping("/imagen")
-    public class imagenControlador {
+@Controller
+@RequestMapping("/imagen")
+public class imagenControlador {
 
-        @Autowired
-        pacienteServicio pacienteServicio;
-        
-        @Autowired
-        medicoServicio medicoServicio;
+    @GetMapping("/perfil/{idPersona}")
+    public ResponseEntity<byte[]> imagenPaciente(@PathVariable String idPersona, HttpSession session) {
 
-        @GetMapping("/perfil/{idPersona}")
-        public ResponseEntity<byte[]> imagenPaciente(@PathVariable String idPersona) {
-            
-            paciente paciente = pacienteServicio.getOne(idPersona);
-            
-            byte[] imagen = paciente.getImagen().getArchivo();
+        persona persona = (persona) session.getAttribute("usuariosession");
 
-            HttpHeaders headers = new HttpHeaders();
+        byte[] imagen = persona.getImagen().getArchivo();
 
-            headers.setContentType(MediaType.IMAGE_JPEG);
+        HttpHeaders headers = new HttpHeaders();
 
-            return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
-        }
-        
-        @GetMapping("/perfilMedico/{id}")
-        public ResponseEntity<byte[]> imagenMedico(@PathVariable String id) {
-            
-            medico medico = medicoServicio.getOne(id);
+        headers.setContentType(MediaType.IMAGE_JPEG);
 
-            byte[] imagen = medico.getImagen().getArchivo();
-
-            HttpHeaders headers = new HttpHeaders();
-
-            headers.setContentType(MediaType.IMAGE_JPEG);
-
-            return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
     }
+}
