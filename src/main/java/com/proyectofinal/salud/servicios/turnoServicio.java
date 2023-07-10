@@ -58,8 +58,12 @@ public class turnoServicio {
                 Date fechaInicio = formatoFecha.parse(fechaInicioString);
                 Date fechaFin = formatoFecha.parse(fechaFinString);
                 Date horaInicio = formatoFechaHora.parse(fechaInicioString + " " + horaInicioString);
+                horaInicio.setHours((horaInicio.getHours()-3));
                 Date correccionhoraInicio = formatoFechaHora.parse(fechaInicioString + " " + horaInicioString);
+                correccionhoraInicio.setHours((correccionhoraInicio.getHours()-3));
                 Date horaFin = formatoFechaHora.parse(fechaFinString + " " + horaFinString);
+                horaFin.setHours((horaFin.getHours()-3));
+                
                 Date fechaActual = fechaInicio;
                 while (!fechaActual.after(fechaFin)) {
                     int diaSemana = fechaActual.getDay();
@@ -75,6 +79,7 @@ public class turnoServicio {
                     }
                     horaInicio = aumentarFecha(fechaActual, 1);
                     horaInicio.setHours(correccionhoraInicio.getHours());
+                    horaInicio.setMinutes(correccionhoraInicio.getMinutes());
                     fechaActual = aumentarFecha(fechaActual, 1);
                 }
             } catch (ParseException e) {
