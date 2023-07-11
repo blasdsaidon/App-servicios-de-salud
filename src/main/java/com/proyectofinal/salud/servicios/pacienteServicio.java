@@ -2,6 +2,7 @@ package com.proyectofinal.salud.servicios;
 
 import com.proyectofinal.salud.entidades.imagen;
 import com.proyectofinal.salud.entidades.paciente;
+import com.proyectofinal.salud.entidades.turno;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.rol;
 import com.proyectofinal.salud.enumeradores.sexo;
@@ -11,29 +12,22 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class pacienteServicio /*implements UserDetailsService */{
+public class pacienteServicio /*implements UserDetailsService */ {
 
     @Autowired
     private pacienteRepositorio pacienteRepo;
+
     @Autowired
     private imagenServicio imagenServicio;
 
@@ -45,6 +39,7 @@ public class pacienteServicio /*implements UserDetailsService */{
         paciente paciente = new paciente();
         validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2, true);
 
+        Collection<turno> turnos = new ArrayList<>();
         Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
         paciente.setApellido(apellido);
         paciente.setNombre(nombre);
@@ -57,6 +52,7 @@ public class pacienteServicio /*implements UserDetailsService */{
         imagen imagen = imagenServicio.guardar(archivo);
         paciente.setImagen(imagen);
         paciente.setFechaNacimiento(fechaNacimientoDate);
+        paciente.setTurnos(turnos);
         pacienteRepo.save(paciente);
     }
 
@@ -66,11 +62,11 @@ public class pacienteServicio /*implements UserDetailsService */{
             MultipartFile archivo) throws MiException, ParseException {
 
         validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2, false);
-        
+
         Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
-        
+
         Optional<paciente> respuesta = pacienteRepo.findById(idPersona);
-        paciente paciente=new paciente();
+        paciente paciente = new paciente();
         if (respuesta.isPresent()) {
             paciente = respuesta.get();
             System.out.println(paciente.toString());
@@ -83,19 +79,21 @@ public class pacienteServicio /*implements UserDetailsService */{
             paciente.setGenero(genero);
             paciente.setRol(rol.USER);
             paciente.setPassword(new BCryptPasswordEncoder().encode(password));
-            /* imagen imagen = imagenServicio.guardar(archivo);
-            paciente.setImagen(imagen);*/
-            String idImagen = null;
-            
-            if (paciente.getImagen() != null) {
-                idImagen = paciente.getImagen().getIdImagen();
+            paciente.setImagen(respuesta.get().getImagen());
+
+            if (archivo.getContentType().contains("image")) {
+                String idImagen = null;
+                if (paciente.getImagen() != null) {
+                    idImagen = paciente.getImagen().getIdImagen();
+                }
+                imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+                paciente.setImagen(imagen);
+            } else {
+                paciente.setImagen(respuesta.get().getImagen());
             }
-            
-            imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-            
-            paciente.setImagen(imagen);
+
             paciente.setFechaNacimiento(fechaNacimientoDate);
-            
+
             pacienteRepo.save(paciente);
         }
         return paciente;
@@ -167,23 +165,21 @@ public class pacienteServicio /*implements UserDetailsService */{
         }
         if (email.isEmpty() || email == null) {
             throw new MiException("El email ingresado no puede ser nulo o estar vacío.");
-        } else if (esNuevoUsuario==true){
-            
-          if (buscarPacientePorEmail(email) != null) {
-            throw new MiException("El email ingresado ya se encuentra registrado.");
-          }
+        } else if (esNuevoUsuario == true) {
+
+            if (buscarPacientePorEmail(email) != null) {
+                throw new MiException("El email ingresado ya se encuentra registrado.");
+            }
         }
         if (telefono.isEmpty() || telefono == null) {
             throw new MiException("El número télefono ingresado no puede ser nulo o estar vacío.");
-        
         } else if (telefono.length() != 10) {
             throw new MiException("El número de teléfono ingresado debe contener 10 caracteres.");
-        }   else if (esNuevoUsuario==true){
-              if (buscarPacientePorTelefono(telefono) != null) {
-            throw new MiException("El número de teléfono ingresado ya se encuentra registrado.");
-              }
-          }
-        
+        } else if (esNuevoUsuario == true) {
+            if (buscarPacientePorTelefono(telefono) != null) {
+                throw new MiException("El número de teléfono ingresado ya se encuentra registrado.");
+            }
+        }
         if (fechaNacimiento.isEmpty()) {
             throw new MiException("La fecha de nacimiento ingresada no puede ser nula o estar vacía.");
         }
@@ -196,7 +192,7 @@ public class pacienteServicio /*implements UserDetailsService */{
             throw new MiException("Las contraseñas ingresadas deben ser iguales.");
         }
     }
-/*
+    /*
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
@@ -221,5 +217,4 @@ public class pacienteServicio /*implements UserDetailsService */{
             return null;
         }
     }*/
-    
 }

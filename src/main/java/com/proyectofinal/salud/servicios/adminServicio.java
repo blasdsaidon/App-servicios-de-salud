@@ -5,22 +5,11 @@ import com.proyectofinal.salud.entidades.imagen;
 import com.proyectofinal.salud.enumeradores.rol;
 import com.proyectofinal.salud.excepciones.MiException;
 import com.proyectofinal.salud.repositorios.adminRepositorio;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -28,6 +17,7 @@ public class adminServicio /*implements UserDetailsService*/ {
 
     @Autowired
     private adminRepositorio adminRepo;
+    
     @Autowired
     private imagenServicio imagenServicio;
 
@@ -63,10 +53,20 @@ public class adminServicio /*implements UserDetailsService*/ {
             admin.setApellido(apellido);
             admin.setEmail(email);
             admin.setTelefono(telefono);
-            imagen imagen = imagenServicio.guardar(archivo);
             admin.setRol(rol.ADMIN);
-            admin.setImagen(imagen);
             admin.setPassword(new BCryptPasswordEncoder().encode(password));
+            admin.setImagen(respuesta.get().getImagen());
+
+            if (archivo.getContentType().contains("image")) {
+                String idImagen = null;
+                if (admin.getImagen() != null) {
+                    idImagen = admin.getImagen().getIdImagen();
+                }
+                imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+                admin.setImagen(imagen);
+            } else {
+                admin.setImagen(respuesta.get().getImagen());
+            }
             adminRepo.save(admin);
         }
         return admin;

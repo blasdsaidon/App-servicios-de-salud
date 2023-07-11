@@ -10,19 +10,17 @@
             <li><a href="/" class="nav-link px-2 link-secondary">Inicio</a></li>
             <li><a href="/listadoProfesionales" class="nav-link px-2 link-dark">Profesionales</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">Obras Sociales</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">Sobre Nosotros</a></li>
+            <li><a href="/sobreNosotros" class="nav-link px-2 link-dark">Sobre Nosotros</a></li>
         </ul>
 
         <div class="col-md-3 text-end" th:if="${session.usuariosession == null}">
             <a href="paciente/registrar" type="button"  class="btn btn-outline-primary" >Registro</a>
-            <a href="/login" type="button" class="btn btn-primary">Ingrese</a>
+            <a href="/login" type="button" class="btn btn-primary">Ingreso</a>
         </div>
-        
 
         <div class="col-md-3 text-end d-flex justify-content-between align-items-center " th:if="${session.usuariosession != null}">
             <p style="margin: 0px; font-weight: bold;">Hola <span th:text="${session.usuariosession.nombre}"></span>!</p>
             <div>
-                <a class="btn btn-outline-primary" sec:authorize="hasAuthority('ADMIN')" href="medico/registrar" type="button">Registro</a>
                 <a href="/login" type="button"  class="btn btn-outline-primary me-2">Perfil</a>
                 <a href="/logout" type="button" class="btn btn-primary">LogOut</a>
             </div>

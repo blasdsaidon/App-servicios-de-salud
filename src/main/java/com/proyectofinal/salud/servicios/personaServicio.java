@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.proyectofinal.salud.servicios;
 
 import com.proyectofinal.salud.entidades.persona;
@@ -24,29 +20,24 @@ public class personaServicio implements UserDetailsService {
 
     @Autowired
     public medicoServicio medicoServicio;
-    
-    
+
     @Autowired
     public pacienteServicio pacienteServicio;
-    
+
     @Autowired
     public adminServicio adminServicio;
-    
-    
-    
-   @Override
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-    
-        persona persona = null;   
-       if (medicoServicio.buscarMedicoPorEmail(email)!= null ) {
+
+        persona persona = null;
+        if (medicoServicio.buscarMedicoPorEmail(email) != null) {
             persona = medicoServicio.buscarMedicoPorEmail(email);
-       }else if (pacienteServicio.buscarPacientePorEmail(email)!=null) {
-            persona = pacienteServicio.buscarPacientePorEmail(email);   
-       } else if (adminServicio.buscarAdminPorEmail(email)!=null){
+        } else if (pacienteServicio.buscarPacientePorEmail(email) != null) {
+            persona = pacienteServicio.buscarPacientePorEmail(email);
+        } else if (adminServicio.buscarAdminPorEmail(email) != null) {
             persona = adminServicio.buscarAdminPorEmail(email);
-       }
-        
-      
+        }
 
         if (persona != null) {
 
@@ -63,7 +54,9 @@ public class personaServicio implements UserDetailsService {
             session.setAttribute("usuariosession", persona);
 
             return new User(persona.getEmail(), persona.getPassword(), permisos);
+            
         } else {
+            
             return null;
         }
     }

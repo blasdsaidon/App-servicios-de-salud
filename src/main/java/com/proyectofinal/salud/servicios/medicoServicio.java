@@ -2,6 +2,7 @@ package com.proyectofinal.salud.servicios;
 
 import com.proyectofinal.salud.entidades.imagen;
 import com.proyectofinal.salud.entidades.medico;
+import com.proyectofinal.salud.entidades.turno;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.rol;
@@ -12,29 +13,21 @@ import com.proyectofinal.salud.repositorios.turnoRepositorio;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
-public class medicoServicio /*implements UserDetailsService */{
+public class medicoServicio /*implements UserDetailsService */ {
 
     @Autowired
     private medicoRepositorio medicoRepo;
+
     @Autowired
     private imagenServicio imagenServicio;
 
@@ -76,15 +69,17 @@ public class medicoServicio /*implements UserDetailsService */{
 //        }
 //    }
     @Transactional
-    public void darDeBajaYAlta(String idMedico) {
+    public void estado(String idPersona) throws Exception {
 
-        Optional<medico> respuesta = medicoRepo.findById(idMedico);
-        medico medico = respuesta.get();
-        if (medico.getAlta()) {
-            medico.setAlta(Boolean.FALSE);
-            medicoRepo.save(medico);
-        }else{
-            medico.setAlta(Boolean.TRUE);
+        Optional<medico> respuesta = medicoRepo.findById(idPersona);
+
+        if (respuesta.isPresent()) {
+            medico medico = respuesta.get();
+            if (medico.getAlta() == true) {
+                medico.setAlta(Boolean.FALSE);
+            } else {
+                medico.setAlta(Boolean.TRUE);
+            }
             medicoRepo.save(medico);
         }
     }
@@ -110,38 +105,55 @@ public class medicoServicio /*implements UserDetailsService */{
             medico.setRol(rol.PROFESIONAL);
             medico.setObraSocialRecibida(obraSocialRecibida);
             medico.setPassword(new BCryptPasswordEncoder().encode(password));
-            /* imagen imagen = imagenServicio.guardar(archivo);
-            paciente.setImagen(imagen);*/
+            medico.setImagen(respuesta.get().getImagen());
 
-            String idImagen = null;
-
-            if (medico.getImagen() != null) {
-                idImagen = medico.getImagen().getIdImagen();
+            if (archivo.getContentType().contains("image")) {
+                String idImagen = null;
+                if (medico.getImagen() != null) {
+                    idImagen = medico.getImagen().getIdImagen();
+                }
+                imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+                medico.setImagen(imagen);
+            } else {
+                medico.setImagen(respuesta.get().getImagen());
             }
-
-            imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-
-            medico.setImagen(imagen);
 
             medicoRepo.save(medico);
         }
+
         return medico;
     }
 
     @Transactional
-    public void eliminar(String idMedico) throws MiException {
+    public void eliminarMedico(String idPersona) throws MiException {
 
-        medico medico = medicoRepo.getById(idMedico);
+        Optional<medico> respuesta = medicoRepo.findById(idPersona);
 
-        medicoRepo.delete(medico);
+        if (respuesta.isPresent()) {
+            medico medico = respuesta.get();
+
+            medicoRepo.delete(medico);
+        }
+    }
+
+    @Transactional
+    public void vaciarTurnosMedicos(String idPersona) {
+
+        Optional<medico> respuesta = medicoRepo.findById(idPersona);
+
+        if (respuesta.isPresent()) {
+            medico medico = respuesta.get();
+
+            Collection<turno> turno = new ArrayList<>();
+            medico.setTurnos(turno);
+            medicoRepo.save(medico);
+        }
     }
 
     @Transactional(readOnly = true)
     public List<medico> listarMedicos() {
 
-        List<medico> medicos = new ArrayList();
-
-        medicos = medicoRepo.findAll();
+        List<medico> medicos = medicoRepo.findAll();
 
         return medicos;
     }
@@ -187,13 +199,18 @@ public class medicoServicio /*implements UserDetailsService */{
         return ListaEspecialidades;
     }
 
-    public List<String> listadoMedicosPorEspecialidad(especialidad especialidad) {
+    //Este servicio se utiliza para el buscador de la tabla de listado de medicos generales segun su especialidad
+    public List<medico> buscarMedicoPorEspecialidad(especialidad especialidad) {
 
-        List<String> medicos = new ArrayList();
-        List<medico> profesionales = medicoRepo.buscarNombresPorEspecialidad(especialidad);
-        for (medico profesional : profesionales) {
-            medicos.add(profesional.getNombre() + " " + profesional.getApellido());
-        }
+        List<medico> medicos = medicoRepo.buscarNombresPorEspecialidad(especialidad);
+
+        return medicos;
+    }
+
+    //Este servicio se utiliza para el buscador de la tabla de listado de medicos generales segun su nombre
+    public List<medico> buscarMedicoPorNombre(String nombre) {
+
+        List<medico> medicos = medicoRepo.buscarPorNombre(nombre);
 
         return medicos;
     }
@@ -266,7 +283,7 @@ public class medicoServicio /*implements UserDetailsService */{
             throw new MiException("Si no acepta obras sociales seleccione " + "NINGUNA");
         }
     }
-/*
+    /*
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
