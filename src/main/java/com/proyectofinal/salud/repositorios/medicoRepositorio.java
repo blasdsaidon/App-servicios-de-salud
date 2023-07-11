@@ -18,6 +18,9 @@ public interface medicoRepositorio extends JpaRepository<medico, String> {
     @Query("SELECT m FROM medico m WHERE m.especialidad = :especialidad")
     public List<medico> buscarNombresPorEspecialidad(@Param("especialidad") especialidad especialidad);
 
+    @Query("SELECT m FROM medico m WHERE m.nombre = :nombre")
+    public List<medico> buscarPorNombre(@Param("nombre") String nombre);
+
     @Query("SELECT m FROM medico m WHERE m.email = :email")
     public medico buscarPorEmail(@Param("email") String email);
 

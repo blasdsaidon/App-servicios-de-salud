@@ -17,7 +17,6 @@ public class SeguridadWeb extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public personaServicio personaServicio;
-    
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -30,7 +29,7 @@ public class SeguridadWeb extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/admin/*").hasRole("ADMIN")
+                .antMatchers("/admin/*").permitAll()
                 .antMatchers("/css/*", "/js/*", "/img/*", "/**")
                 .permitAll()
                 .and().authorizeRequests()

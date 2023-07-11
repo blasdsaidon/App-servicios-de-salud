@@ -13,7 +13,33 @@
     </head>
 
     <body>
-        <div th:replace="/fragments/header :: div"></div>
+        <div th:replace="/fragments/error :: div"></div>
+        <div th:replace="/fragments/exito:: div"></div>
+
+        <div class="container">
+            <header class="d-flex flex-wrap align-items-center justify-content-between justify-content-md-between py-3 mb-4 border-bottom">
+                <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(23, 226, 39, 1);transform: ;msFilter:;">
+                    <path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path>
+                    </svg>
+                </a>
+
+                <ul class="nav col-md-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="/" class="nav-link px-2 link-secondary">Inicio</a></li>
+                    <li><a href="/listadoProfesionales" class="nav-link px-2 link-dark">Profesionales</a></li>
+                    <li><a href="#" class="nav-link px-2 link-dark">Obras Sociales</a></li>
+                    <li><a href="#" class="nav-link px-2 link-dark">Sobre Nosotros</a></li>
+                </ul>
+
+                <form class="form-inline my-2 my-lg-0" action="/profesionBuscada" method="POST">
+                    <div class="input-group">
+                        <input class="form-control" name="buscar" type="text" placeholder="Buscar" aria-label="Search"/>
+                        <button class="btn btn-primary" type="submit">Buscar</button>
+                    </div>
+                </form>
+            </header>
+        </div>
+
         <main>
             <div class="table-responsive custom-table-responsive">
                 <table class="table custom-table" border="5px" style="width: 100%; font-size: 20px; text-align: center">
@@ -23,7 +49,8 @@
                             <th style="width: 15%">Apellido</th>
                             <th style="width: 25%">Especialidad</th>
                             <th style="width: 25%">Horarios disponibles</th>
-                            <th style="width: 5%" th:if="${session.usuariosession != null}" sec:authorize="hasRole('ADMIN')" >Estado</th>
+                            <th style="width: 5%" sec:authorize="hasRole('ROLE_ADMIN')">Estado</th>
+                            <th style="width: 5%" sec:authorize="hasRole('ROLE_ADMIN')"></th>
                         </tr>
                     </thead>
 
@@ -52,15 +79,34 @@
                                     <h5 th:text="${profesional.horariosDisponibles}"></h5>
                                 </div>
                             </td>
+
+                            <td sec:authorize="hasRole('ROLE_ADMIN')">
+                                <div>
+                                    <a th:if="${profesional.alta == true}"
+                                       type="button"
+                                       class="btn btn-success"
+                                       th:href="@{/admin/estado/__${profesional.idPersona}__}"
+                                       >Activo</a>
+                                    <a th:if="${profesional.alta == false}"
+                                       type="button"
+                                       class="btn btn-danger"
+                                       th:href="@{/admin/estado/__${profesional.idPersona}__}"
+                                       >Inactivo</a>
+                                </div>
+                            </td>
                             
-                            <td sec:authorize="hasRole('ADMIN')">
-                                <div class="container">
-                                    <h5 th:text="${profesional.alta}"></h5>
+                            <td sec:authorize="hasRole('ROLE_ADMIN')">
+                                <div>
+                                    <a
+                                        type="button"
+                                        class="btn btn-warning"
+                                        th:href="@{/admin/eliminarProfesional/__${profesional.idPersona}__}"
+                                        >Eliminar</a>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table>             
             </div>
         </main>
         <div th:replace="/fragments/footer :: div"></div>
