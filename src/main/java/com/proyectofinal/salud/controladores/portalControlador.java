@@ -106,6 +106,12 @@ public class portalControlador {
                 }
             }
         }
+
         return "listado_profesionales.html";
+    }
+
+    @GetMapping("/sobreNosotros")
+    public void sobreNosotros() {
+
     }
 }

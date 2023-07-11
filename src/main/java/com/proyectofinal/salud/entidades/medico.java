@@ -9,7 +9,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 
-
 @Entity
 public class medico extends persona {
 
@@ -27,11 +26,11 @@ public class medico extends persona {
     @OneToMany
     private Collection<turno> turnos;
     private Boolean alta;
-    
+
     public medico() {
     }
 
-    public medico( especialidad especialidad, Collection<obraSocial> obraSocialRecibida, Collection<turno> horariosDisponibles, Integer valorConsulta, Integer calificacionServicio, Collection<fichaMedica> historialConsultas, Collection<turno> turnos, Boolean alta, String idPersona, String nombre, String apellido, String email, String telefono, com.proyectofinal.salud.entidades.imagen imagen, String password, com.proyectofinal.salud.enumeradores.rol rol) {
+    public medico(especialidad especialidad, Collection<obraSocial> obraSocialRecibida, Collection<turno> horariosDisponibles, Integer valorConsulta, Integer calificacionServicio, Collection<fichaMedica> historialConsultas, Collection<turno> turnos, Boolean alta, String idPersona, String nombre, String apellido, String email, String telefono, com.proyectofinal.salud.entidades.imagen imagen, String password, com.proyectofinal.salud.enumeradores.rol rol) {
         super(idPersona, nombre, apellido, email, telefono, imagen, password, rol);
         this.especialidad = especialidad;
         this.obraSocialRecibida = obraSocialRecibida;
@@ -42,7 +41,7 @@ public class medico extends persona {
         this.turnos = turnos;
         this.alta = alta;
     }
-   
+
     public especialidad getEspecialidad() {
         return especialidad;
     }
@@ -122,6 +121,4 @@ public class medico extends persona {
         sb.append('}');
         return sb.toString();
     }
-
-    
 }

@@ -1,4 +1,5 @@
 package com.proyectofinal.salud.entidades;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

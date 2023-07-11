@@ -17,6 +17,7 @@ public class adminServicio /*implements UserDetailsService*/ {
 
     @Autowired
     private adminRepositorio adminRepo;
+    
     @Autowired
     private imagenServicio imagenServicio;
 
@@ -52,10 +53,20 @@ public class adminServicio /*implements UserDetailsService*/ {
             admin.setApellido(apellido);
             admin.setEmail(email);
             admin.setTelefono(telefono);
-            imagen imagen = imagenServicio.guardar(archivo);
             admin.setRol(rol.ADMIN);
-            admin.setImagen(imagen);
             admin.setPassword(new BCryptPasswordEncoder().encode(password));
+            admin.setImagen(respuesta.get().getImagen());
+
+            if (archivo.getContentType().contains("image")) {
+                String idImagen = null;
+                if (admin.getImagen() != null) {
+                    idImagen = admin.getImagen().getIdImagen();
+                }
+                imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+                admin.setImagen(imagen);
+            } else {
+                admin.setImagen(respuesta.get().getImagen());
+            }
             adminRepo.save(admin);
         }
         return admin;
