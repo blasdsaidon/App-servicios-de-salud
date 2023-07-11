@@ -110,9 +110,10 @@ public class medicoServicio /*implements UserDetailsService */{
             medico.setRol(rol.PROFESIONAL);
             medico.setObraSocialRecibida(obraSocialRecibida);
             medico.setPassword(new BCryptPasswordEncoder().encode(password));
+            medico.setImagen(respuesta.get().getImagen());
             /* imagen imagen = imagenServicio.guardar(archivo);
             paciente.setImagen(imagen);*/
-
+            
             String idImagen = null;
 
             if (medico.getImagen() != null) {
