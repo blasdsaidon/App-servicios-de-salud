@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
-public class medicoServicio /*implements UserDetailsService */{
+public class medicoServicio /*implements UserDetailsService */ {
 
     @Autowired
     private medicoRepositorio medicoRepo;
@@ -75,16 +75,19 @@ public class medicoServicio /*implements UserDetailsService */{
 //            medicoRepo.save(medico);
 //        }
 //    }
+    
     @Transactional
-    public void darDeBajaYAlta(String idMedico) {
+    public void estado(String idPersona) throws Exception {
 
-        Optional<medico> respuesta = medicoRepo.findById(idMedico);
-        medico medico = respuesta.get();
-        if (medico.getAlta()) {
-            medico.setAlta(Boolean.FALSE);
-            medicoRepo.save(medico);
-        }else{
-            medico.setAlta(Boolean.TRUE);
+        Optional<medico> respuesta = medicoRepo.findById(idPersona);
+
+        if (respuesta.isPresent()) {
+            medico medico = respuesta.get();
+            if (medico.getAlta() == true) {
+                medico.setAlta(Boolean.FALSE);
+            } else {
+                medico.setAlta(Boolean.TRUE);
+            }
             medicoRepo.save(medico);
         }
     }
@@ -130,19 +133,21 @@ public class medicoServicio /*implements UserDetailsService */{
     }
 
     @Transactional
-    public void eliminar(String idMedico) throws MiException {
+    public void eliminarMedico(String idPersona) throws MiException {
 
-        medico medico = medicoRepo.getById(idMedico);
+        Optional<medico> respuesta = medicoRepo.findById(idPersona);
 
-        medicoRepo.delete(medico);
+        if (respuesta.isPresent()) {
+            medico medico = respuesta.get();
+
+            medicoRepo.delete(medico);
+        }
     }
 
     @Transactional(readOnly = true)
     public List<medico> listarMedicos() {
 
-        List<medico> medicos = new ArrayList();
-
-        medicos = medicoRepo.findAll();
+        List<medico> medicos = medicoRepo.findAll();
 
         return medicos;
     }
@@ -195,6 +200,22 @@ public class medicoServicio /*implements UserDetailsService */{
         for (medico profesional : profesionales) {
             medicos.add(profesional.getNombre() + " " + profesional.getApellido());
         }
+
+        return medicos;
+    }
+
+    //Este servicio se utiliza para el buscador de la tabla de listado de medicos generales segun su especialidad
+    public List<medico> buscarMedicoPorEspecialidad(especialidad especialidad) {
+
+        List<medico> medicos = medicoRepo.buscarNombresPorEspecialidad(especialidad);
+
+        return medicos;
+    }
+
+    //Este servicio se utiliza para el buscador de la tabla de listado de medicos generales segun su nombre
+    public List<medico> buscarMedicoPorNombre(String nombre) {
+
+        List<medico> medicos = medicoRepo.buscarPorNombre(nombre);
 
         return medicos;
     }
@@ -267,7 +288,7 @@ public class medicoServicio /*implements UserDetailsService */{
             throw new MiException("Si no acepta obras sociales seleccione " + "NINGUNA");
         }
     }
-/*
+    /*
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
