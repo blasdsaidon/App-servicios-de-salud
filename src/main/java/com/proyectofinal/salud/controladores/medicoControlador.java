@@ -1,14 +1,19 @@
 package com.proyectofinal.salud.controladores;
 
+import com.proyectofinal.salud.entidades.fichaMedica;
 import com.proyectofinal.salud.entidades.medico;
+import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.repositorios.medicoRepositorio;
+import com.proyectofinal.salud.repositorios.pacienteRepositorio;
+import com.proyectofinal.salud.servicios.fichaMedicaServicio;
 import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import com.proyectofinal.salud.servicios.turnoServicio;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,10 +34,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class medicoControlador {
 
     @Autowired
+    private fichaMedicaServicio fichaMedicaServi;
+    
+    @Autowired
     private medicoServicio medicoServicio;
     
     @Autowired
     private pacienteServicio pacienteServicio;
+    
+    @Autowired
+    private pacienteRepositorio pacienteRepo;
     
     @Autowired
     private medicoRepositorio medicoRepo;
@@ -170,12 +181,32 @@ public class medicoControlador {
             
     }
     
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @GetMapping("/pacientes-con-turno")
     public String mostrarPacientesConTurno(ModelMap modelo, HttpSession session) {
-    String medicoId = (String) session.getAttribute("medicoId"); // Obtener el ID del médico logueado de la sesión
-    List<String> nombresPacientes = turnoServicio.obtenerNombresPacientesConTurnoPorMedico(medicoId);
-    modelo.put("nombresPacientes", nombresPacientes);
+    medico medico = (medico) session.getAttribute("usuariosession"); // Obtener el ID del médico logueado de la sesión
+    String medicoId = medico.getIdPersona();
+    List<paciente> pacientes = turnoServicio.obtenerNombresPacientesConTurnoPorMedico(medicoId);
+    modelo.put("pacientes", pacientes);
     return "lista_pacientes_con_turno.html";
 
 }
+     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+     @PostMapping("/fichaMedica") 
+     public String fichaMedica(@RequestParam String idPersona, ModelMap modelo, HttpSession session ) {
+         System.out.println(idPersona);
+         paciente paciente = pacienteServicio.getOne(idPersona);
+         medico medico = (medico) session.getAttribute("usuariosession");
+         String medicoId = medico.getIdPersona();
+         
+         System.out.println(medicoId);
+         //System.out.println(paciente);
+         
+            
+            fichaMedica ficha = fichaMedicaServi.traerFichaMedica(paciente, medico);
+             
+            modelo.put("ficha",ficha);
+            return "ficha_medica.html";
+         
+    }
 }

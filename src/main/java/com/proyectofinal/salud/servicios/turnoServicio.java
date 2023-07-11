@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,11 +35,22 @@ public class turnoServicio {
 
     
 
-    public List<String> obtenerNombresPacientesConTurnoPorMedico(String medicoId) {
-        List<String> nombresPacientes = turnoRepo.obtenerNombresPacientesConTurnoPorMedico(medicoId);
-        return nombresPacientes;
+    public List<paciente> obtenerNombresPacientesConTurnoPorMedico(String medicoId) {
+        List<paciente> Pacientes = turnoRepo.obtenerNombresPacientesConTurnoPorMedico(medicoId);
+        return Pacientes;
     }
-
+    
+     @Autowired
+    private JavaMailSender javaMailSender;
+    
+    public void enviarCorreoConfirmacionTurno(String destinatario, String asunto, String cuerpo) {
+        SimpleMailMessage mensaje = new SimpleMailMessage();
+        mensaje.setTo(destinatario);
+        mensaje.setSubject(asunto);
+        mensaje.setText(cuerpo);
+        
+        javaMailSender.send(mensaje);
+    }
     
     @Transactional
     public turno crearTurno(medico medico, Date fechaTurno) { //String fechaTurno en lugar de Date ||  throws ParseException

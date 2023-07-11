@@ -1,16 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+    
+    xmlns:th="http://www.thymeleaf.org"
+    xlmns:sec="http://www.thymeleaf.org/extras/spring-security" >
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
-    <form action="/ficha-medica" method="get">
-        <select name="pacienteId">
-            <option th:each="nombrePaciente : ${nombresPacientes}" th:value="${nombrePaciente}" th:text="${nombrePaciente}"></option>
+    
+    <form th:action="@{/medico/fichaMedica}" method="post">
+        <select name="idPersona">
+            <option th:each="paciente : ${pacientes}" th:value="${paciente.idPersona}" th:text="${paciente.nombre}"></option>
         </select>
-        <button type="submit">Buscar</button>
+        <button type="submit">Ver Ficha</button>
+    </form>
     </form>
 </body>
 </html>

@@ -4,6 +4,7 @@
  */
 package com.proyectofinal.salud.repositorios;
 
+import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.entidades.turno;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,8 +17,8 @@ public interface turnoRepositorio extends JpaRepository<turno, String>  {
     
    
 
-    @Query("SELECT DISTINCT t.paciente.nombre FROM turno t WHERE t.medico.idPersona = :medicoId")
-    List<String> obtenerNombresPacientesConTurnoPorMedico(@Param("medicoId") String medicoId);
+    @Query("SELECT DISTINCT t.paciente FROM turno t WHERE t.medico.idPersona = :medicoId")
+    List<paciente> obtenerNombresPacientesConTurnoPorMedico(@Param("medicoId") String medicoId);
 
     // Otras consultas y métodos del repositorio
 }
