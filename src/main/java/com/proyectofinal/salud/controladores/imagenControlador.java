@@ -15,17 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/imagen")
 public class imagenControlador {
 
+
     @GetMapping("/perfil/{idPersona}")
     public ResponseEntity<byte[]> imagenPaciente(@PathVariable String idPersona, HttpSession session) {
 
         persona persona = (persona) session.getAttribute("usuariosession");
-
         byte[] imagen = persona.getImagen().getArchivo();
-
         HttpHeaders headers = new HttpHeaders();
-
         headers.setContentType(MediaType.IMAGE_JPEG);
-
         return new ResponseEntity<>(imagen, headers, HttpStatus.OK);
     }
 }
