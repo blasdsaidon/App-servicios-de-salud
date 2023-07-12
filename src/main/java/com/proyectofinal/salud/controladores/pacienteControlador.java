@@ -9,7 +9,6 @@ import com.proyectofinal.salud.enumeradores.sexo;
 import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import com.proyectofinal.salud.servicios.turnoServicio;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -38,6 +37,7 @@ public class pacienteControlador {
     @Autowired
     private turnoServicio turnoServicio;
 
+    
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
 
@@ -125,11 +125,9 @@ public class pacienteControlador {
 
     @GetMapping("/modificar")
     public String modificar(ModelMap modelo, HttpSession session) {
-
         persona persona = (persona) session.getAttribute("usuariosession");
         paciente paciente = pacienteServicio.getOne(persona.getIdPersona());
         modelo.put("paciente", paciente);
-
         List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
         modelo.addAttribute("ListaOS", ListaOS);
         List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
@@ -138,6 +136,7 @@ public class pacienteControlador {
         return "modificar_paciente.html";
     }
 
+   
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
     @PostMapping("/perfil/{idPersona}")
     public String actualizar(@PathVariable String idPersona, @RequestParam String nombre, @RequestParam String apellido,
@@ -153,7 +152,6 @@ public class pacienteControlador {
             return "redirect:/";
 
         } catch (Exception ex) {
-
             List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
             modelo.addAttribute("ListaOS", ListaOS);
             List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
@@ -168,4 +166,30 @@ public class pacienteControlador {
             return "modificar_paciente.html";
         }
     }
+    
+    @GetMapping("/modificarTurno")
+    public String modificarTurno(ModelMap modelo, HttpSession session){
+        persona persona = (persona) session.getAttribute("usuariosession");
+        paciente paciente = pacienteServicio.getOne(persona.getIdPersona());
+        modelo.put("paciente", paciente);
+        Collection<turno> Turnos = paciente.getTurnos();
+        modelo.put("Turnos", Turnos);
+        
+        return "modificarTurnos_paciente.html";   
+    }
+    
+    @GetMapping("/modificarTurno/{idTurno}")
+    public String eliminarTurno(@PathVariable String idTurno,HttpSession session,RedirectAttributes redireccion,ModelMap modelo){
+        persona persona = (persona) session.getAttribute("usuariosession");
+        paciente paciente = pacienteServicio.getOne(persona.getIdPersona());
+       try {
+        turnoServicio.cancelarTurno(idTurno, paciente.getIdPersona());
+        redireccion.addAttribute("exito", "El Turno fue eliminado con exito!");
+        return "inicio.html";
+       }catch(Exception ex){
+        modelo.put("error", ex.getMessage());
+        return "redirect:/paciente/perfil";
+    }
+    
+}
 }

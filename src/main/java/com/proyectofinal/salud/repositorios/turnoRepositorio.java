@@ -8,8 +8,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface turnoRepositorio extends JpaRepository<turno, String> {
+public interface turnoRepositorio extends JpaRepository<turno, String>  {
+    
+    @Query("SELECT t FROM turno t WHERE t.medico.idPersona = :idPersona")
+    public Collection<turno> buscarTurnoPorMedico(@Param("idPersona") String idPersona/*,@Param("reservado") Boolean reservado*/);
 
-     @Query("SELECT t FROM turno t WHERE t.medico.idPersona = :idPersona ORDER BY t.fecha DESC")
-     public Collection<turno> buscarTurnoPorMedico(@Param("idPersona") String idPersona);
+
+
 }
