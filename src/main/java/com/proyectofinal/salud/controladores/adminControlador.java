@@ -6,6 +6,7 @@ import com.proyectofinal.salud.enumeradores.sexo;
 import com.proyectofinal.salud.servicios.adminServicio;
 import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
+import com.proyectofinal.salud.servicios.turnoServicio;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class adminControlador {
 
     @Autowired
     private medicoServicio medicoServicio;
+
+    @Autowired
+    private turnoServicio turnoServicio;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/registrar")
@@ -94,7 +98,7 @@ public class adminControlador {
         try {
             admin adminModificado = adminServicio.modificarAdmin(idPersona, nombre, apellido, email, telefono, archivo, password, password2);
             session.setAttribute("usuariosession", adminModificado);
-            modelo.put("exito", "Admin actualizado correctamente!");
+            modelo.put("exito", "El admin se ha actualizado correctamente!");
 
             return "inicio.html";
 
@@ -118,7 +122,7 @@ public class adminControlador {
 
         try {
             medicoServicio.estado(idPersona);
-            redireccion.addAttribute("exito", "El estado del medico fue modificado con exito!");
+            redireccion.addAttribute("exito", "El estado del profesional fue modificado con exito!");
 
             return "redirect:/listadoProfesionales";
 
@@ -136,6 +140,8 @@ public class adminControlador {
         modelo.put("medico", medicoServicio.buscarMedicoPorID(idPersona));
 
         try {
+            medicoServicio.vaciarTurnosMedicos(idPersona);
+            turnoServicio.eliminarTurnosTotales(idPersona);
             medicoServicio.eliminarMedico(idPersona);
             redireccion.addAttribute("exito", "El profesional fue eliminado con exito!");
 
@@ -148,18 +154,3 @@ public class adminControlador {
         }
     }
 }
-
-/*   @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @GetMapping("/altaMedico")
-    public String altaModificar(String idPersona,ModelMap modelo){
-        
-        try {
-            
-            medicoServicio.darDeBajaYAlta(idPersona);
-    
-            return "listado_profesionales.html";
-        }catch (Exception ex){
-            modelo.put("error", ex.getMessage());
-        return "inicio.html";
-    }
-}*/
