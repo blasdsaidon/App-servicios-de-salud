@@ -27,8 +27,8 @@
                 <ul class="nav col-md-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="/" class="nav-link px-2 link-secondary">Inicio</a></li>
                     <li><a href="/listadoProfesionales" class="nav-link px-2 link-dark">Profesionales</a></li>
-                    <li><a href="#" class="nav-link px-2 link-dark">Obras Sociales</a></li>
-                    <li><a href="#" class="nav-link px-2 link-dark">Sobre Nosotros</a></li>
+                    <li><a href="/obrasSociales" class="nav-link px-2 link-dark">Obras Sociales</a></li>
+                    <li><a href="/sobreNosotros" class="nav-link px-2 link-dark">Sobre Nosotros</a></li>
                 </ul>
 
                 <form class="form-inline my-2 my-lg-0" action="/profesionBuscada" method="POST">
@@ -48,7 +48,7 @@
                             <th style="width: 15%">Fecha</th>
                             <th style="width: 15%">Medico</th>
                             <th style="width: 15%">Especialidad</th>
-                            <th style="width: 15%">Modificar</th>
+                            <th style="width: 15%">Eliminar Turno</th>
                         </tr>
                     </thead>
 
@@ -62,8 +62,7 @@
 
                             <th scope="row">
                                 <div class="container">
-                                    <h5 th:text="${turno.medico.getNombre()}"></h5>
-                                    <h5 th:text="${turno.medico.getApellido()}"></h5>
+                                    <h5 th:text="${turno.medico.getNombre() + ' ' + turno.medico.getApellido()}"></h5>
                                 </div>
                             </th>
                            
@@ -78,7 +77,7 @@
                                 <div>
                                     <a
                                         type="button"
-                                        class="btn btn-warning"
+                                        class="btn btn-danger"
                                         th:href="@{/paciente/modificarTurno/__${turno.idTurno}__}"
                                         >Eliminar</a>
                                 </div>

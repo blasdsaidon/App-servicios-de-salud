@@ -6,6 +6,7 @@ import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
+import com.proyectofinal.salud.servicios.turnoServicio;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,10 @@ public class portalControlador {
 
     @Autowired
     private pacienteServicio pacienteServicio;
-
+    
+    @Autowired
+    private turnoServicio turnoServicio;
+    
     @Autowired
     private medicoServicio medicoServicio;
 
@@ -35,7 +39,17 @@ public class portalControlador {
 
         return "inicio.html";
     }
-
+    
+    @GetMapping("/mail")
+    public String mail(ModelMap modelo){
+        String destinatario = "blasd.saidon@gmail.com";
+    String asunto = "Confirmación de turno";
+    String cuerpo = "Su turno ha sido confirmado.";
+        turnoServicio.enviarCorreoConfirmacionTurno(destinatario, asunto, cuerpo);
+        
+        return "inicio.html";
+    }
+    
     /*Funciona definitivamente con el la nueva redireccion por el header*/
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo, HttpSession session) {
@@ -74,39 +88,42 @@ public class portalControlador {
         return "listado_profesionales";
     }
     
-    @GetMapping("/obrasSociales")
-    public String obrasSociales(ModelMap modelo, HttpSession session){
-    
-    return "obras_sociales.html";
-    }
-
+ 
 
     @PostMapping("/profesionBuscada")
     public String profesionBuscada(String buscar, ModelMap modelo) {
 
         if (buscar == null || buscar.isEmpty()) {
             modelo.put("listadoProfesionales", medicoServicio.listarMedicos());
+
         } else {
             if (buscar.equalsIgnoreCase("PEDIATRIA") || buscar.equalsIgnoreCase("GINECOLOGIA")
                     || buscar.equalsIgnoreCase("CLINICA") || buscar.equalsIgnoreCase("CARDIOLOGIA")) {
                 especialidad especialidad = null;
+
                 try {
                     especialidad = especialidad.valueOf(buscar.toUpperCase());
                     List<medico> busqueda = medicoServicio.buscarMedicoPorEspecialidad(especialidad);
                     modelo.put("listadoProfesionales", busqueda);
+
                 } catch (Exception e) {
                     modelo.put("error", "La especialidad buscada no existe.");
+
                 } finally {
                     return "listado_profesionales.html";
                 }
+
             } else {
                 String nombre = null;
+
                 try {
                     nombre = nombre.valueOf(buscar.toUpperCase());
                     List<medico> busqueda = medicoServicio.buscarMedicoPorNombre(nombre);
                     modelo.put("listadoProfesionales", busqueda);
+
                 } catch (Exception e) {
                     modelo.put("error", "El nombre del profesional buscado no existe.");
+
                 } finally {
                     return "listado_profesionales.html";
                 }
@@ -116,8 +133,15 @@ public class portalControlador {
         return "listado_profesionales.html";
     }
 
-    @GetMapping("/sobreNosotros")
-    public void sobreNosotros() {
+    @GetMapping("/obrasSociales")
+    public String obrasSociales() {
 
+        return "obras_sociales.html";
+    }
+
+    @GetMapping("/sobreNosotros")
+    public String sobreNosotros() {
+
+        return "sobre_nosotros.html";
     }
 }

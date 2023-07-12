@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ficha paciente</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link href="/style/style.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div th:replace="/fragments/header_banner :: div"></div>
+
+        <div class="container">
+            <div class="form-registro">
+                <h1>Ficha médica</h1>
+                <br>
+                <form th:action="@{/medico/agregarNota}" method="post">
+                    <input type="hidden" th:value="${ficha.idfichaMedica}" name="idFicha">
+                    <div class="mb-3">
+                        <textarea style="width: 670px; height: 400px;" th:text="${ficha.notas}" th:value="${ficha.notas}" name="nota"></textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Cargar</button>
+                        <a th:href="@{/medico/pacientes-con-turno}" class="btn btn-secondary">Volver</a> 
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div th:replace="/fragments/footer :: div"></div>
+    </body>
+
+</html>
