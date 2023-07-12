@@ -36,22 +36,22 @@ public class medicoControlador {
 
     @Autowired
     private fichaMedicaServicio fichaMedicaServi;
-    
+
     @Autowired
     private fichaMedicaRepositorio fichaRepo;
-    
+
     @Autowired
     private medicoServicio medicoServicio;
 
     @Autowired
     private pacienteServicio pacienteServicio;
-   
+
     @Autowired
     private pacienteRepositorio pacienteRepo;
-    
+
     @Autowired
     private medicoRepositorio medicoRepo;
-    
+
     @Autowired
     private turnoServicio turnoServicio;
 
@@ -192,48 +192,49 @@ public class medicoControlador {
             return "redirect:/perfil";
         }
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @GetMapping("/pacientes-con-turno")
     public String mostrarPacientesConTurno(ModelMap modelo, HttpSession session) {
-    medico medico = (medico) session.getAttribute("usuariosession"); // Obtener el ID del médico logueado de la sesión
-    String medicoId = medico.getIdPersona();
-    List<paciente> pacientes = turnoServicio.obtenerNombresPacientesConTurnoPorMedico(medicoId);
-    modelo.put("pacientes", pacientes);
-    return "lista_pacientes_con_turno.html";
 
-}
-     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
-     @PostMapping("/fichaMedica") 
-     public String fichaMedica(@RequestParam String idPersona, ModelMap modelo, HttpSession session ) {
-         System.out.println(idPersona);
-         paciente paciente = pacienteServicio.getOne(idPersona);
-         medico medico = (medico) session.getAttribute("usuariosession");
-         String medicoId = medico.getIdPersona();
-         
-         System.out.println(medicoId);
-         //System.out.println(paciente);
-         
-            
-            fichaMedica ficha = fichaMedicaServi.traerFichaMedica(paciente, medico);
-             
-            modelo.put("ficha",ficha);
-            return "ficha_medica.html";
-         
+        medico medico = (medico) session.getAttribute("usuariosession"); // Obtener el ID del médico logueado de la sesión
+        String medicoId = medico.getIdPersona();
+        List<paciente> pacientes = turnoServicio.obtenerNombresPacientesConTurnoPorMedico(medicoId);
+        modelo.put("pacientes", pacientes);
+
+        return "lista_pacientes_con_turno.html";
     }
-     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
-     @PostMapping("/agregarNota")
-     public String agregarNota(@RequestParam String idFicha, @RequestParam String nota,ModelMap modelo, RedirectAttributes redireccion){
-         
-         try {
-             fichaMedicaServi.agregarNota(idFicha, nota);
-              return "redirect:/";      
-         } catch (Exception ex) {
-             redireccion.addAttribute("error", ex.getMessage()); 
-             return "redirect:/agregarNota";
-         }
- 
-         
-                 
-     }
+
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+    @PostMapping("/fichaMedica")
+    public String fichaMedica(@RequestParam String idPersona, ModelMap modelo, HttpSession session) {
+        
+        System.out.println(idPersona);
+        paciente paciente = pacienteServicio.getOne(idPersona);
+        medico medico = (medico) session.getAttribute("usuariosession");
+        String medicoId = medico.getIdPersona();
+
+        System.out.println(medicoId);
+
+        fichaMedica ficha = fichaMedicaServi.traerFichaMedica(paciente, medico);
+        modelo.put("ficha", ficha);
+        
+        return "ficha_medica.html";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+    @PostMapping("/agregarNota")
+    public String agregarNota(@RequestParam String idFicha, @RequestParam String nota, ModelMap modelo, RedirectAttributes redireccion) {
+
+        try {
+            fichaMedicaServi.agregarNota(idFicha, nota);
+            
+            return "redirect:/medico/perfil";
+            
+        } catch (Exception ex) {
+            redireccion.addAttribute("error", ex.getMessage());
+            
+            return "redirect:/agregarNota";
+        }
+    }
 }
