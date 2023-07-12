@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,20 +21,21 @@ public class turnoServicio {
 
     @Autowired
     private pacienteRepositorio pacienteRepo;
+
     @Autowired
     private medicoRepositorio medicoRepo;
+
     @Autowired
     private turnoRepositorio turnoRepo;
 
     @Autowired
     private medicoServicio medicoServicio;
 
-    
     @Transactional
     public turno crearTurno(medico medico, Date fechaTurno) { //String fechaTurno en lugar de Date ||  throws ParseException
+
         turno turno = new turno();
         //Date turnoDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(fechaTurno); //Sacandolo por ahora ya que el String que se recibe va a estar en la funcion de crearTrunosDisponibles en medicoServicio
-
         turno.setMedico(medico);
         turno.setFecha(fechaTurno); //turnoDate en lugar de fecha turno
         turno.setReservado(Boolean.FALSE);
@@ -41,9 +43,9 @@ public class turnoServicio {
 
         return turno;
     }
-//---------------------------------------------------------------
+
     @Transactional
-    public void crearTurnosDisponibles(String idMedico, String fechaInicioString, 
+    public void crearTurnosDisponibles(String idMedico, String fechaInicioString,
             String fechaFinString, String horaInicioString, String horaFinString) throws ParseException {
 
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
@@ -64,7 +66,7 @@ public class turnoServicio {
                 while (!fechaActual.after(fechaFin)) {
                     int diaSemana = fechaActual.getDay();
                     if (diaSemana >= 1 && diaSemana <= 5) {  // Lunes a Viernes (1-5)
-                        
+
                         Date fechaHoraTurno = horaInicio;
                         while (!fechaHoraTurno.after(horaFin)) {
                             turno turno = crearTurno(medico, fechaHoraTurno);
@@ -80,25 +82,25 @@ public class turnoServicio {
             }
             medico.setTurnos(turnos);
             medicoRepo.save(medico);
-
         }
     }
 
     private Date aumentarFecha(Date fecha, int dias) {
+
         long millis = fecha.getTime();
         millis += dias * 24 * 60 * 60 * 1000;  // Suma dias en milisegundos
+
         return new Date(millis);
     }
 
     private Date aumentarTiempo(Date fechaHora, int minutos) {
+
         long millis = fechaHora.getTime();
         millis += minutos * 60 * 1000;  // Suma minutos en milisegundos
+
         return new Date(millis);
     }
 
-//----------------------------------------------------------------
-    
-    
     @Transactional
     public void asignarTurno(String idPaciente, turno turno) {
 
@@ -140,12 +142,21 @@ public class turnoServicio {
             }*/
             pacienteRepo.save(paciente);
         }
-        
     }
 
     public Collection<turno> accederTurnosPorMedico(String idMedico) {
+
         medico medico = medicoServicio.buscarMedicoPorID(idMedico);
+        
         return medico.getTurnos();
     }
 
+    public void eliminarTurnosTotales(String idPersona) {
+
+        Collection<turno> respuesta = turnoRepo.buscarTurnoPorMedico(idPersona);
+
+        if (respuesta != null) {
+            turnoRepo.deleteAll(respuesta);
+        }
+    }
 }

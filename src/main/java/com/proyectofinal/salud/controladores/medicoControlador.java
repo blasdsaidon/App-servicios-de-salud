@@ -3,7 +3,6 @@ package com.proyectofinal.salud.controladores;
 import com.proyectofinal.salud.entidades.medico;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
-import com.proyectofinal.salud.repositorios.medicoRepositorio;
 import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import com.proyectofinal.salud.servicios.turnoServicio;
@@ -33,9 +32,6 @@ public class medicoControlador {
     private pacienteServicio pacienteServicio;
 
     @Autowired
-    private medicoRepositorio medicoRepo;
-
-    @Autowired
     private turnoServicio turnoServicio;
 
     @GetMapping("/registrar")
@@ -49,7 +45,7 @@ public class medicoControlador {
         return "registro_medico.html";
     }
 
-    /*@PreAuthorize("hasRole('ROLE_ADMIN')")*/
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/registroMedico")
     public String registroMedico(@RequestParam String nombre, @RequestParam String apellido,
             @RequestParam String email, @RequestParam String telefono, @RequestParam especialidad especialidad,
@@ -81,6 +77,7 @@ public class medicoControlador {
 
     @GetMapping("/perfil")
     public String perfil(ModelMap modelo, HttpSession session) {
+
         medico medico = (medico) session.getAttribute("usuariosession");
 
         modelo.put("medico", medico);
@@ -112,19 +109,20 @@ public class medicoControlador {
         return "modificar_medico.html";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+    @PreAuthorize("hasRole('ROLE_PROFESIONAL')")
     @PostMapping("/perfil/{idPersona}")
     public String actualizar(@PathVariable String idPersona, @RequestParam String nombre, @RequestParam String apellido,
-            @RequestParam String email, @RequestParam String telefono, Integer valorConsulta,
-            especialidad especialidad, @RequestParam String password,
-            @RequestParam String password2, MultipartFile archivo, @RequestParam Collection<obraSocial> obraSocialRecibida, ModelMap modelo, RedirectAttributes redireccion, HttpSession session) {
+            @RequestParam String email, @RequestParam String telefono, Integer valorConsulta, especialidad especialidad,
+            @RequestParam String password, @RequestParam String password2, MultipartFile archivo,
+            @RequestParam Collection<obraSocial> obraSocialRecibida, ModelMap modelo, RedirectAttributes redireccion, HttpSession session) {
 
         try {
-            medico medicoModificado = medicoServicio.modificarMedico(idPersona, nombre, apellido, email, telefono, valorConsulta, especialidad, password, password2, archivo, obraSocialRecibida);
+            medico medicoModificado = medicoServicio.modificarMedico(idPersona, nombre, apellido, email, telefono, valorConsulta, especialidad,
+                    password, password2, archivo, obraSocialRecibida);
             session.setAttribute("usuariosession", medicoModificado);
-            modelo.put("exito", "Medico actualizado correctamente!");
+            redireccion.addAttribute("exito", "El profesional se ha actualizado correctamente!");
 
-            return "inicio.html";
+            return "redirect:/";
 
         } catch (Exception ex) {
             medico medico = (medico) session.getAttribute("usuariosession");
@@ -159,16 +157,17 @@ public class medicoControlador {
 
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @PostMapping("/horarios/{idPersona}")
-    public String carga(@PathVariable String idPersona, @RequestParam String fechaInicio, @RequestParam String fechaFin, @RequestParam String horaInicio, @RequestParam String horaFin, ModelMap modelo) {
+    public String carga(@PathVariable String idPersona, @RequestParam String fechaInicio, @RequestParam String fechaFin, @RequestParam String horaInicio,
+            @RequestParam String horaFin, ModelMap modelo, RedirectAttributes redireccion) {
 
         try {
             turnoServicio.crearTurnosDisponibles(idPersona, fechaInicio, fechaFin, horaInicio, horaFin);
-            modelo.put("exito", "Horarios cargados exitosamente!");
+            redireccion.addAttribute("exito", "Horarios cargados exitosamente!");
 
-            return "inicio.html";
+            return "redirect:/";
 
         } catch (Exception ex) {
-            modelo.put("error", ex.getMessage());
+            redireccion.addAttribute("error", ex.getMessage());
 
             return "redirect:/perfil";
         }

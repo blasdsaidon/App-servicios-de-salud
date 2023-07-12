@@ -2,6 +2,7 @@ package com.proyectofinal.salud.servicios;
 
 import com.proyectofinal.salud.entidades.imagen;
 import com.proyectofinal.salud.entidades.medico;
+import com.proyectofinal.salud.entidades.turno;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.rol;
@@ -12,19 +13,10 @@ import com.proyectofinal.salud.repositorios.turnoRepositorio;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -35,6 +27,7 @@ public class medicoServicio /*implements UserDetailsService */ {
 
     @Autowired
     private medicoRepositorio medicoRepo;
+
     @Autowired
     private imagenServicio imagenServicio;
 
@@ -75,7 +68,6 @@ public class medicoServicio /*implements UserDetailsService */ {
 //            medicoRepo.save(medico);
 //        }
 //    }
-    
     @Transactional
     public void estado(String idPersona) throws Exception {
 
@@ -113,21 +105,22 @@ public class medicoServicio /*implements UserDetailsService */ {
             medico.setRol(rol.PROFESIONAL);
             medico.setObraSocialRecibida(obraSocialRecibida);
             medico.setPassword(new BCryptPasswordEncoder().encode(password));
-            /* imagen imagen = imagenServicio.guardar(archivo);
-            paciente.setImagen(imagen);*/
+            medico.setImagen(respuesta.get().getImagen());
 
-            String idImagen = null;
-
-            if (medico.getImagen() != null) {
-                idImagen = medico.getImagen().getIdImagen();
+            if (archivo.getContentType().contains("image")) {
+                String idImagen = null;
+                if (medico.getImagen() != null) {
+                    idImagen = medico.getImagen().getIdImagen();
+                }
+                imagen imagen = imagenServicio.actualizar(archivo, idImagen);
+                medico.setImagen(imagen);
+            } else {
+                medico.setImagen(respuesta.get().getImagen());
             }
-
-            imagen imagen = imagenServicio.actualizar(archivo, idImagen);
-
-            medico.setImagen(imagen);
 
             medicoRepo.save(medico);
         }
+
         return medico;
     }
 
@@ -140,6 +133,20 @@ public class medicoServicio /*implements UserDetailsService */ {
             medico medico = respuesta.get();
 
             medicoRepo.delete(medico);
+        }
+    }
+
+    @Transactional
+    public void vaciarTurnosMedicos(String idPersona) {
+
+        Optional<medico> respuesta = medicoRepo.findById(idPersona);
+
+        if (respuesta.isPresent()) {
+            medico medico = respuesta.get();
+
+            Collection<turno> turno = new ArrayList<>();
+            medico.setTurnos(turno);
+            medicoRepo.save(medico);
         }
     }
 
@@ -190,17 +197,6 @@ public class medicoServicio /*implements UserDetailsService */ {
         ListaEspecialidades.addAll(Arrays.asList(vectorEspecialidades));
 
         return ListaEspecialidades;
-    }
-
-    public List<String> listadoMedicosPorEspecialidad(especialidad especialidad) {
-
-        List<String> medicos = new ArrayList();
-        List<medico> profesionales = medicoRepo.buscarNombresPorEspecialidad(especialidad);
-        for (medico profesional : profesionales) {
-            medicos.add(profesional.getNombre() + " " + profesional.getApellido());
-        }
-
-        return medicos;
     }
 
     //Este servicio se utiliza para el buscador de la tabla de listado de medicos generales segun su especialidad
