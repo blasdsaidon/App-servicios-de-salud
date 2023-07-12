@@ -74,7 +74,6 @@ public class portalControlador {
         return "listado_profesionales";
     }
 
-
     @PostMapping("/profesionBuscada")
     public String profesionBuscada(String buscar, ModelMap modelo) {
 
@@ -111,7 +110,7 @@ public class portalControlador {
     }
 
     @GetMapping("/sobreNosotros")
-    public void sobreNosotros() {
-
+    public String sobreNosotros() {
+        return "sobre_nosotros.html";
     }
 }
