@@ -122,29 +122,4 @@ public class adminServicio /*implements UserDetailsService*/ {
             throw new MiException("Las contraseñas ingresadas deben ser iguales.");
         }
     }
-/*
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-        admin admin = adminRepo.buscarPorEmail(email);
-
-        if (admin != null) {
-
-            List<GrantedAuthority> permisos = new ArrayList();
-
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + admin.getRol().toString());
-
-            permisos.add(p);
-
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-
-            HttpSession session = attr.getRequest().getSession(true);
-
-            session.setAttribute("usuariosession", admin);
-
-            return new User(admin.getEmail(), admin.getPassword(), permisos);
-        } else {
-            return null;
-        }
-    }*/
 }

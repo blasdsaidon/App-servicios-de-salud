@@ -1,6 +1,10 @@
 package com.proyectofinal.salud.controladores;
 
+
 import com.proyectofinal.salud.entidades.fichaMedica;
+
+import com.proyectofinal.salud.entidades.turno;
+
 import com.proyectofinal.salud.entidades.medico;
 import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.enumeradores.especialidad;
@@ -12,6 +16,7 @@ import com.proyectofinal.salud.servicios.fichaMedicaServicio;
 import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import com.proyectofinal.salud.servicios.turnoServicio;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -193,6 +198,7 @@ public class medicoControlador {
         }
     }
 
+
     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
     @GetMapping("/pacientes-con-turno")
     public String mostrarPacientesConTurno(ModelMap modelo, HttpSession session) {
@@ -237,4 +243,20 @@ public class medicoControlador {
             return "redirect:/agregarNota";
         }
     }
+
+    
+    @GetMapping("/verTurno")
+    public String verTurnos(ModelMap modelo, HttpSession session){
+        
+        medico medico = (medico) session.getAttribute("usuariosession");
+        modelo.put("medico", medico);
+        modelo.put("Turnos", medicoServicio.horariosReservados(medico.getIdPersona()));
+        
+        return "verTurnos_medico.html";   
+    }
+    
+
 }
+
+
+

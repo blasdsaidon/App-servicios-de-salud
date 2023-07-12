@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html
+    lang="es"
+    xmlns:th="http://www.thymeleaf.org"
+    xlmns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head>
+        <title>Turnos Medicos Ocupados</title>
+        <meta charset="UTF-8" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"/>
+        <link href="/style/style.css" rel="stylesheet"/>
+    </head>
+
+    <body>
+        <div th:replace="/fragments/error :: div"></div>
+        <div th:replace="/fragments/exito:: div"></div>
+
+        <div class="container">
+            <header class="d-flex flex-wrap align-items-center justify-content-between justify-content-md-between py-3 mb-4 border-bottom">
+                <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(23, 226, 39, 1);transform: ;msFilter:;">
+                    <path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path>
+                    </svg>
+                </a>
+
+                <ul class="nav col-md-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="/" class="nav-link px-2 link-secondary">Inicio</a></li>
+                    <li><a href="/listadoProfesionales" class="nav-link px-2 link-dark">Profesionales</a></li>
+                    <li><a href="/obrasSociales" class="nav-link px-2 link-dark">Obras Sociales</a></li>
+                    <li><a href="#" class="nav-link px-2 link-dark">Sobre Nosotros</a></li>
+                </ul>
+
+                <form class="form-inline my-2 my-lg-0" action="/profesionBuscada" method="POST">
+                    <div class="input-group">
+                        <input class="form-control" name="buscar" type="text" placeholder="Buscar" aria-label="Search"/>
+                        <button class="btn btn-primary" type="submit">Buscar</button>
+                    </div>
+                </form>
+            </header>
+        </div>
+
+        <main>
+            <div class="table-responsive custom-table-responsive">
+                <table class="table custom-table" border="5px" style="width: 100%; font-size: 20px; text-align: center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="width: 15%">Fecha</th>
+                            <th style="width: 15%">Paciente</th>
+                            <th style="width: 15%">Obra Social</th>
+                        </tr>
+                    </thead>
+
+                    <tbody th:each="turno : ${Turnos}">
+                        <tr>
+                            <th scope="row">
+                                <div class="container">
+                                    <h5 th:text="${turno.fecha}"></h5>
+                                </div>
+                            </th>
+
+                            <th scope="row">
+                                <div class="container">
+                                    <h5 th:text="${turno.paciente.getNombre()}"></h5>
+                                    <h5 th:text="${turno.paciente.getApellido()}"></h5>
+                                </div>
+                            </th>
+                            <th scope="row">
+                                <div class="container">
+                                    <h5 th:text="${turno.paciente.getObraSocial()}"></h5>
+                                </div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                  <div class="button-conteiner d-flex flex-wrap align-items-center justify-content-between justify-content-md-between py-3 mb-4">
+                    <a th:href="@{/medico/perfil}" class="btn btn-secondary">Volver</a> 
+                </div>
+            </div>
+        </main>
+        <div th:replace="/fragments/footer :: div"></div>
+    </body>
+
+</html>
