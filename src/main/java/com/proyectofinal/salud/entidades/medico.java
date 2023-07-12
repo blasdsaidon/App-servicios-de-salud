@@ -2,26 +2,23 @@ package com.proyectofinal.salud.entidades;
 
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
-import java.util.Date;
-import java.util.ArrayList;
 import java.util.Collection;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class medico extends persona {
 
-    
     @Enumerated(EnumType.STRING)
     private especialidad especialidad;
+    @ElementCollection(targetClass = obraSocial.class)
     @Enumerated(EnumType.STRING)
-    private obraSocial obraSocialRecibida;
-    private ArrayList<Date> horariosDisponibles;
+    private Collection<obraSocial> obraSocialRecibida;
+    @OneToMany
+    private Collection<turno> horariosDisponibles;
     private Integer valorConsulta;
     private Integer calificacionServicio;
     @OneToMany
@@ -29,12 +26,12 @@ public class medico extends persona {
     @OneToMany
     private Collection<turno> turnos;
     private Boolean alta;
+
     public medico() {
     }
 
-    public medico( especialidad especialidad, obraSocial obraSocialRecibida, ArrayList<Date> horariosDisponibles, Integer valorConsulta, Integer calificacionServicio, Collection<fichaMedica> historialConsultas, Collection<turno> turnos, Boolean alta, String idPersona, String nombre, String apellido, String email, String telefono, com.proyectofinal.salud.entidades.imagen imagen, String password, com.proyectofinal.salud.enumeradores.rol rol) {
+    public medico(especialidad especialidad, Collection<obraSocial> obraSocialRecibida, Collection<turno> horariosDisponibles, Integer valorConsulta, Integer calificacionServicio, Collection<fichaMedica> historialConsultas, Collection<turno> turnos, Boolean alta, String idPersona, String nombre, String apellido, String email, String telefono, com.proyectofinal.salud.entidades.imagen imagen, String password, com.proyectofinal.salud.enumeradores.rol rol) {
         super(idPersona, nombre, apellido, email, telefono, imagen, password, rol);
-
         this.especialidad = especialidad;
         this.obraSocialRecibida = obraSocialRecibida;
         this.horariosDisponibles = horariosDisponibles;
@@ -45,10 +42,6 @@ public class medico extends persona {
         this.alta = alta;
     }
 
- 
-    
-
-   
     public especialidad getEspecialidad() {
         return especialidad;
     }
@@ -57,19 +50,19 @@ public class medico extends persona {
         this.especialidad = especialidad;
     }
 
-    public obraSocial getObraSocialRecibida() {
+    public Collection<obraSocial> getObraSocialRecibida() {
         return obraSocialRecibida;
     }
 
-    public void setObraSocialRecibida(obraSocial obraSocialRecibida) {
+    public void setObraSocialRecibida(Collection<obraSocial> obraSocialRecibida) {
         this.obraSocialRecibida = obraSocialRecibida;
     }
 
-    public ArrayList<Date> getHorariosDisponibles() {
+    public Collection<turno> getHorariosDisponibles() {
         return horariosDisponibles;
     }
 
-    public void setHorariosDisponibles(ArrayList<Date> horariosDisponibles) {
+    public void setHorariosDisponibles(Collection<turno> horariosDisponibles) {
         this.horariosDisponibles = horariosDisponibles;
     }
 
@@ -115,17 +108,17 @@ public class medico extends persona {
 
     @Override
     public String toString() {
-        return "Medico: {" + "Id Medico = " + this.getIdPersona() + "}\n"
-                +"{Especialidad = " + especialidad + "}\n"
-                +"{Obra Social Recibida = " + obraSocialRecibida + "}\n"
-                +"{Horarios Disponibles = " + horariosDisponibles + "}\n"
-                +"{Valor De La Consulta = " + valorConsulta + "}\n"
-                +"{Calificación Del Servicio = " + calificacionServicio + "}\n"
-                +"{Historial De Consultas = " + historialConsultas + "}\n"
-                +"{Turnos = " + turnos + "}\n"
-                +"{Alta = " + alta + '}';
-
+        StringBuilder sb = new StringBuilder();
+        sb.append("medico{");
+        sb.append("especialidad=").append(especialidad);
+        sb.append(", obraSocialRecibida=").append(obraSocialRecibida);
+        sb.append(", horariosDisponibles=").append(horariosDisponibles);
+        sb.append(", valorConsulta=").append(valorConsulta);
+        sb.append(", calificacionServicio=").append(calificacionServicio);
+        sb.append(", historialConsultas=").append(historialConsultas);
+        sb.append(", turnos=").append(turnos);
+        sb.append(", alta=").append(alta);
+        sb.append('}');
+        return sb.toString();
     }
-
-   
 }
