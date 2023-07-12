@@ -2,11 +2,14 @@ package com.proyectofinal.salud.controladores;
 
 import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.entidades.persona;
+import com.proyectofinal.salud.entidades.turno;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.sexo;
 import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
+import com.proyectofinal.salud.servicios.turnoServicio;
+import java.util.Collection;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,9 @@ public class pacienteControlador {
     @Autowired
     private medicoServicio medicoServicio;
 
+    @Autowired
+    private turnoServicio turnoServicio;
+    
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
 
@@ -71,8 +77,8 @@ public class pacienteControlador {
     }
 
     @GetMapping("/sacarTurno")
-    public String sacarTurno(ModelMap modelo) {
-
+    public String sacarTurno(ModelMap modelo, HttpSession session ) {
+        persona persona = (persona) session.getAttribute("usuariosession");
         List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
         modelo.addAttribute("ListaEspecialidades", ListaEspecialidades);
         List<String> ginecologos = medicoServicio.listadoMedicosPorEspecialidad(especialidad.GINECOLOGIA);
@@ -83,10 +89,17 @@ public class pacienteControlador {
         modelo.addAttribute("ListaMedicosCardiologos", cardiologos);
         List<String> pediatras = medicoServicio.listadoMedicosPorEspecialidad(especialidad.PEDIATRIA);
         modelo.addAttribute("ListaMedicosPediatras", pediatras);
-
+        modelo.put("idPersona", persona.getIdPersona());
         return "sacar_turno.html";
     }
-
+    
+    @PostMapping("/sacarTurno/{idPersona}")
+    public String confirmarTurno(@PathVariable String idPersona,String nombre, String apellido){
+    
+        
+        
+        return "inicio.html";
+    }
     @GetMapping("/perfil")
     public String perfil(MultipartFile archivo, ModelMap modelo, HttpSession session) {
         
@@ -116,48 +129,6 @@ public class pacienteControlador {
         return "modificar_paciente.html";
     }
 
-//    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
-//    @PostMapping("/perfil/{idPersona}")
-//    public String actualizar(MultipartFile archivo,@PathVariable String idPersona, @RequestParam String nombre,@RequestParam String email, 
-//            @RequestParam String password,@RequestParam String password2, ModelMap modelo) throws ParseException {
-//
-//        try {
-//            pacienteServicio.modificarPaciente(password, nombre, email, email, password, obraSocial.OSEP, sexo.OTRO, email, password, password2, archivo);
-//            
-////            actualizar(archivo, id, nombre, email, password, password2)
-//
-//            modelo.put("exito", "Paciente actualizado correctamente!");
-//
-//            return "inicio.html";
-//            
-//        } catch (MiException ex) {
-//
-//            modelo.put("error", ex.getMessage());
-//            modelo.put("nombre", nombre);
-//            modelo.put("email", email);
-//
-//            return "registro.html";
-//        }
-//
-//
-//    }
-
-    /*Se añade controlador para modificar pacientes*/
-//@GetMapping("/perfil")
-//    public String perfil(ModelMap modelo,HttpSession session){
-//
-//       paciente paciente = (paciente) session.getAttribute("usuariosession");
-//       modelo.put("paciente", paciente);
-//
-//       List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
-//       modelo.addAttribute("ListaOS", ListaOS); 
-//       List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
-//       modelo.addAttribute("ListaGenero", ListaGenero);
-//       
-//       
-//
-//       return "modificar_paciente.html";
-//    }  
    
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_PROFESIONAL')")
     @PostMapping("/perfil/{idPersona}")
@@ -188,4 +159,30 @@ public class pacienteControlador {
             return "modificar_paciente.html";
         }
     }
+    
+    @GetMapping("/modificarTurno")
+    public String modificarTurno(ModelMap modelo, HttpSession session){
+        persona persona = (persona) session.getAttribute("usuariosession");
+        paciente paciente = pacienteServicio.getOne(persona.getIdPersona());
+        modelo.put("paciente", paciente);
+        Collection<turno> Turnos = paciente.getTurnos();
+        modelo.put("Turnos", Turnos);
+        
+        return "modificarTurnos_paciente.html";   
+    }
+    
+    @GetMapping("/modificarTurno/{idTurno}")
+    public String eliminarTurno(@PathVariable String idTurno,HttpSession session,RedirectAttributes redireccion,ModelMap modelo){
+        persona persona = (persona) session.getAttribute("usuariosession");
+        paciente paciente = pacienteServicio.getOne(persona.getIdPersona());
+       try {
+        turnoServicio.cancelarTurno(idTurno, paciente.getIdPersona());
+        redireccion.addAttribute("exito", "El Turno fue eliminado con exito!");
+        return "inicio.html";
+       }catch(Exception ex){
+        modelo.put("error", ex.getMessage());
+        return "redirect:/paciente/perfil";
+    }
+    
+}
 }
