@@ -68,7 +68,8 @@
                         <label for="obraSocialesRecibidas">Obras Sociales:</label><br/>
                         <div th:each="obraSocial : ${ListaOS}">
                             <label th:for="${obraSocial}" th:text="${obraSocial}"></label>
-                            <input type="checkbox" th:id="${obraSocial}" th:name="obraSocialRecibida" th:value="${obraSocial}" th:checked="${oSRecibidas.contains(obraSocial)}"/>
+                            <input type="checkbox" th:id="${obraSocial}" th:name="obraSocialRecibida" th:value="${obraSocial}"
+                                   th:checked="${oSRecibidas.contains(obraSocial)}"/>
                         </div> 
                     </div> 
 
@@ -80,7 +81,7 @@
 
                     <div class="mb-3">
                         <label for="imagen" class="form-label">Imagen de perfil:</label>
-                        <input type="file"  name="archivo" class="form-control" id="imagen"
+                        <input type="file" th:value="${medico.imagen}" name="archivo" class="form-control" id="imagen"
                                placeholder="Añada una imagen de perfil">
                     </div>
 
@@ -97,7 +98,8 @@
 
                     <div class="mb-3">
                         <label for="Password" class="form-label">Repetir password:</label>
-                        <input required type="password" th:value="${password2}" name="password2" class="form-control" id="Password" placeholder="Repita su contraseña">
+                        <input required type="password" th:value="${password2}" name="password2" class="form-control" id="Password"
+                               placeholder="Repita su contraseña">
                     </div>
 
                     <div class="d-flex justify-content-between">

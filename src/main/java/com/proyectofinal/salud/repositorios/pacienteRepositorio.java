@@ -8,8 +8,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface pacienteRepositorio extends JpaRepository<paciente, String> {
+
     @Query("SELECT p FROM paciente p WHERE p.email = :email")
     public paciente buscarPorEmail(@Param("email") String email);
+
     @Query("SELECT p FROM paciente p WHERE p.telefono = :telefono")
     public paciente buscarPorTelefono(@Param("telefono") String telefono);
 }

@@ -28,7 +28,7 @@
                     <li><a href="/" class="nav-link px-2 link-secondary">Inicio</a></li>
                     <li><a href="/listadoProfesionales" class="nav-link px-2 link-dark">Profesionales</a></li>
                     <li><a href="#" class="nav-link px-2 link-dark">Obras Sociales</a></li>
-                    <li><a href="/sobreNosotros" class="nav-link px-2 link-dark">Sobre Nosotros</a></li>
+                    <li><a href="#" class="nav-link px-2 link-dark">Sobre Nosotros</a></li>
                 </ul>
 
                 <form class="form-inline my-2 my-lg-0" action="/profesionBuscada" method="POST">
@@ -45,82 +45,42 @@
                 <table class="table custom-table" border="5px" style="width: 100%; font-size: 20px; text-align: center">
                     <thead class="thead-dark">
                         <tr>
-                            <th style="width: 15%">Nombre</th>
-                            <th style="width: 15%">Apellido</th>
-                            <th style="width: 20%">Especialidad</th>
-                            <th style="width: 15%" sec:authorize="hasRole('ROLE_ADMIN')">Email</th>
-                            <th style="width: 15%" sec:authorize="hasRole('ROLE_ADMIN')">Teléfono</th>
-                            <th style="width: 10%" sec:authorize="hasRole('ROLE_ADMIN')">Estado</th>
-                            <th style="width: 10%" sec:authorize="hasRole('ROLE_ADMIN')"></th>
-                            <th style="width: 20%" sec:authorize="hasRole('ROLE_USER')">Sacar Turno</th>
+                            <th style="width: 15%">Fecha</th>
+                            <th style="width: 15%">Medico</th>
+                            <th style="width: 15%">Especialidad</th>
+                            <th style="width: 15%">Modificar</th>
                         </tr>
                     </thead>
 
-                    <tbody th:each="profesional : ${listadoProfesionales}">
+                    <tbody th:each="turno : ${Turnos}">
                         <tr>
                             <th scope="row">
                                 <div class="container">
-                                    <h5 th:text="${profesional.nombre}"></h5>
+                                    <h5 th:text="${turno.fecha}"></h5>
                                 </div>
                             </th>
 
                             <th scope="row">
                                 <div class="container">
-                                    <h5 th:text="${profesional.apellido}"></h5>
+                                    <h5 th:text="${turno.medico.getNombre()}"></h5>
+                                    <h5 th:text="${turno.medico.getApellido()}"></h5>
                                 </div>
                             </th>
-
-                            <td >
+                           
+                            <th scope="row">
                                 <div class="container">
-                                    <h5 th:text="${profesional.especialidad}"></h5>
-                                </div>
-                            </td>
-
-                            <th scope="row" sec:authorize="hasRole('ROLE_ADMIN')">
-                                <div class="container">
-                                    <h5 th:text="${profesional.email}"></h5>
+                                    <h5 th:text="${turno.medico.getEspecialidad()}"></h5>
+                                    
                                 </div>
                             </th>
-
-                            <th scope="row" sec:authorize="hasRole('ROLE_ADMIN')">
-                                <div class="container">
-                                    <h5 th:text="${profesional.telefono}"></h5>
-                                </div>
-                            </th>
-
-                            <td sec:authorize="hasRole('ROLE_ADMIN')">
-                                <div>
-                                    <a th:if="${profesional.alta == true}"
-                                       type="button"
-                                       class="btn btn-success"
-                                       th:href="@{/admin/estado/__${profesional.idPersona}__}"
-                                       >Activo</a>
-                                    <a th:if="${profesional.alta == false}"
-                                       type="button"
-                                       class="btn btn-danger"
-                                       th:href="@{/admin/estado/__${profesional.idPersona}__}"
-                                       >Inactivo</a>
-                                </div>
-                            </td>
-
-                            <td sec:authorize="hasRole('ROLE_ADMIN')">
-                                <div>
-                                    <a 
-                                        type="button"
-                                        class="btn btn-warning"
-                                        th:href="@{/admin/eliminarProfesional/__${profesional.idPersona}__}"
-                                        >Eliminar</a>
-                                </div>
-                            </td>
-
-                            <td sec:authorize="hasRole('ROLE_USER')">
+                            
+                            <td scope="row">
                                 <div>
                                     <a
-                                        type="submit"
-                                        class="btn btn-success"
-                                        th:value="@{profesional.idPersona}"
-                                        th:href ="@{/paciente/sacarTurno/__${profesional.idPersona}__}"
-                                        >Abrir</a>
+                                        type="button"
+                                        class="btn btn-warning"
+                                        th:href="@{/paciente/modificarTurno/__${turno.idTurno}__}"
+                                        >Eliminar</a>
                                 </div>
                             </td>
                         </tr>
