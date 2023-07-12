@@ -9,6 +9,11 @@
     <title>Document</title>
 </head>
 <body>
-    <textarea th:value="${ficha.notas}"></textarea>
+    <h3>ficha medica</h3>
+    <form th:action="@{/medico/agregarNota}" method="post">
+    <input type="hidden" th:value="${ficha.idfichaMedica}" name="idFicha">
+    <textarea th:text="${ficha.notas}" th:value="${ficha.notas}" name="nota"></textarea>
+    <button type="submit"></button>
+    </form>
 </body>
 </html>

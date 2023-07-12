@@ -8,9 +8,12 @@ package com.proyectofinal.salud.servicios;
 import com.proyectofinal.salud.entidades.fichaMedica;
 import com.proyectofinal.salud.entidades.medico;
 import com.proyectofinal.salud.entidades.paciente;
+import com.proyectofinal.salud.entidades.turno;
 import com.proyectofinal.salud.repositorios.fichaMedicaRepositorio;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -29,6 +32,23 @@ public class fichaMedicaServicio {
         return fichaMedica;
         
         }
+    
+    
+    public void crearFicha(turno turno){
+        fichaMedica ficha = new fichaMedica();
+        ficha.setTurno(turno);
+        fichaMedicaRepo.save(ficha);
+        
+    }
+    
+    public void agregarNota(String idFicha, String nota){
+        Optional<fichaMedica> respuesta = fichaMedicaRepo.findById(idFicha);
+         fichaMedica ficha = respuesta.get();
+         ficha.setNotas(nota);
+         fichaMedicaRepo.save(ficha);
+    }
+    
+            
     }
     
 

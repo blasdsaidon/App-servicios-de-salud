@@ -26,4 +26,9 @@ public interface fichaMedicaRepositorio extends JpaRepository<fichaMedica, Strin
     
     @Query("SELECT fm FROM fichaMedica fm JOIN fm.turno t WHERE t.paciente.idPersona = :idPaciente AND t.medico.idPersona = :idMedico")
     fichaMedica buscarFichaMedicaPorPacienteYMedico(@Param("idPaciente") String idPaciente, @Param("idMedico") String idMedico);
+
+     
+
 }
+
+

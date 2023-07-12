@@ -1,8 +1,10 @@
 package com.proyectofinal.salud.servicios;
 
+import com.proyectofinal.salud.entidades.fichaMedica;
 import com.proyectofinal.salud.entidades.medico;
 import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.entidades.turno;
+import com.proyectofinal.salud.repositorios.fichaMedicaRepositorio;
 import com.proyectofinal.salud.repositorios.medicoRepositorio;
 import com.proyectofinal.salud.repositorios.pacienteRepositorio;
 import com.proyectofinal.salud.repositorios.turnoRepositorio;
@@ -33,9 +35,14 @@ public class turnoServicio {
     @Autowired
     private medicoServicio medicoServicio;
     
+    @Autowired
+    private fichaMedicaServicio fichaServi;
+    
+    @Autowired
+    private fichaMedicaRepositorio fichaRepo;
     
 
-<<<<<<< HEAD
+
     
 
     public List<paciente> obtenerNombresPacientesConTurnoPorMedico(String medicoId) {
@@ -55,12 +62,11 @@ public class turnoServicio {
         javaMailSender.send(mensaje);
     }
     
-=======
+
     @Autowired
     private pacienteServicio pacienteServicio;
 
->>>>>>> 27d415d1fc31790978d89467e53c92d56099a46e
-    @Transactional
+
     public turno crearTurno(medico medico, Date fechaTurno) { //String fechaTurno en lugar de Date ||  throws ParseException
 
         turno turno = new turno();
@@ -138,15 +144,14 @@ public class turnoServicio {
     }
 
     @Transactional
-    public void asignarTurno(String idPersona, String idTurno) {
+    public void asignarTurno(String idPersona, String idTurno, String idMedico) {
         System.out.println("llegamos");
         
-//        paciente pacientee = pacienteServicio.getOne(idPersona);
+
         Optional<paciente> respuesta = pacienteRepo.findById(idPersona);
         Optional<turno> respuesta2 = turnoRepo.findById(idTurno);
+         
 
-//        System.out.println(pacientee);
-//        System.out.println(respuesta2);
         
         if (respuesta.isPresent()) {
             if (respuesta2.isPresent()) {
@@ -160,6 +165,10 @@ public class turnoServicio {
                 turnosPaciente.add(turno);
                 paciente.setTurnos(turnosPaciente);
                 pacienteRepo.save(paciente);
+                fichaMedica ficha = fichaRepo.buscarFichaMedicaPorPacienteYMedico(idPersona, idMedico);
+                if(ficha==null){
+                    fichaServi.crearFicha(turno);
+                }
             }
         }
     }

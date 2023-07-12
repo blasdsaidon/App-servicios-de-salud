@@ -5,12 +5,10 @@ import com.proyectofinal.salud.entidades.medico;
 import com.proyectofinal.salud.entidades.paciente;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
-<<<<<<< HEAD
+import com.proyectofinal.salud.repositorios.fichaMedicaRepositorio;
 import com.proyectofinal.salud.repositorios.medicoRepositorio;
 import com.proyectofinal.salud.repositorios.pacienteRepositorio;
 import com.proyectofinal.salud.servicios.fichaMedicaServicio;
-=======
->>>>>>> 27d415d1fc31790978d89467e53c92d56099a46e
 import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import com.proyectofinal.salud.servicios.turnoServicio;
@@ -40,27 +38,25 @@ public class medicoControlador {
     private fichaMedicaServicio fichaMedicaServi;
     
     @Autowired
+    private fichaMedicaRepositorio fichaRepo;
+    
+    @Autowired
     private medicoServicio medicoServicio;
 
     @Autowired
     private pacienteServicio pacienteServicio;
-<<<<<<< HEAD
-    
+   
     @Autowired
     private pacienteRepositorio pacienteRepo;
     
     @Autowired
     private medicoRepositorio medicoRepo;
     
-=======
-
->>>>>>> 27d415d1fc31790978d89467e53c92d56099a46e
     @Autowired
     private turnoServicio turnoServicio;
 
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo) {
-
         List<obraSocial> ListaOS = pacienteServicio.listadoObrasSocial();
         modelo.addAttribute("ListaOS", ListaOS);
         List<especialidad> ListaEspecialidades = medicoServicio.listadoEspecialidad();
@@ -225,4 +221,19 @@ public class medicoControlador {
             return "ficha_medica.html";
          
     }
+     @PreAuthorize("hasAnyRole('ROLE_PROFESIONAL')")
+     @PostMapping("/agregarNota")
+     public String agregarNota(@RequestParam String idFicha, @RequestParam String nota,ModelMap modelo, RedirectAttributes redireccion){
+         
+         try {
+             fichaMedicaServi.agregarNota(idFicha, nota);
+              return "redirect:/";      
+         } catch (Exception ex) {
+             redireccion.addAttribute("error", ex.getMessage()); 
+             return "redirect:/agregarNota";
+         }
+ 
+         
+                 
+     }
 }

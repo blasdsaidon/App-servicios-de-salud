@@ -96,9 +96,9 @@ public class pacienteControlador {
         
         persona persona = (persona) session.getAttribute("usuariosession");
         paciente paciente = pacienteServicio.getOne(persona.getIdPersona());
-        System.out.println(idPersona + "  " + idTurno);
+        
         try {
-            turnoServicio.asignarTurno(paciente.getIdPersona(), idTurno);
+            turnoServicio.asignarTurno(paciente.getIdPersona(), idTurno, idPersona);
             redireccion.addAttribute("exito", "El turno se reservo correctamente!");
             return "redirect:/";
         } catch (Exception e) {
