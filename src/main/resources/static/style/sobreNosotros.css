@@ -20,20 +20,21 @@ p {
 
 .image-container {
     display: flex;
+    align-items: center;
+    align-content: center;
     justify-content: center;
     margin-top: 20px;
 }
 
-.image-container .item {
-    display: flex;
-    align-items: center;
-    max-width: 300px;
-    margin: 10px;
-    border-radius: 5px;
+.item {
+
+    margin-right: 20px;
+    
+    
 }
 
-.image-container .item img {
+img {
     width: 600px; /* La imagen ocupará todo el ancho disponible del contenedor */
     height: 300px; /* La altura se ajustará automáticamente para mantener la proporción */
-    border-radius: 50px;
+    border-radius: 20px;
 }

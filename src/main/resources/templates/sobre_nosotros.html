@@ -11,6 +11,7 @@
     </head>
 
     <body>
+        
         <div class="container">
             <header class="d-flex flex-wrap align-items-center justify-content-between justify-content-md-between py-3 mb-4 border-bottom">
                 <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
@@ -27,7 +28,8 @@
                 </ul>
             </header>
         </div>
-
+        <div style="padding: 25px;">
+<div>
         <h2>Salud EGG</h2>
 
         <p>
@@ -41,12 +43,12 @@
             comprometemos a escuchar a nuestros pacientes, responder a sus inquietudes
             y brindarles el apoyo necesario en cada etapa de su atención médica.
         </p>
-
+    </div>
         <div class="image-container">
             <div class="item">
                 <img src="Otra-imagen/medicos-1.jpg" />
             </div>
-            <div class="">
+            <div class="item">
                 <p>
                     En nuestra clínica, entendemos la importancia de tratar a cada persona
                     como un ser humano único. Nos preocupamos no solo por el diagnóstico y
@@ -57,10 +59,8 @@
         </div>
 
         <div class="image-container">
+            
             <div class="item">
-                <img src="Otra-imagen/medicos-2.jpg" />
-            </div>
-            <div class="custom-container">
                 <p>
                     Nuestro equipo de profesionales altamente capacitados y especializados
                     se dedica a brindar servicios médicos de vanguardia, utilizando las
@@ -69,9 +69,12 @@
                     mejor atención posible.
                 </p>
             </div>
+            <div class="item">
+                <img src="Otra-imagen/medicos-2.jpg" />
+            </div>
         </div>
-
-        <p>
+        <div style="padding-top: 20px ;">
+        <p >
             En nuestra clínica, creemos en la importancia de promover la prevención y
             la educación en salud. Trabajamos junto con nuestros pacientes para
             fomentar un estilo de vida saludable y proporcionarles la información
@@ -81,5 +84,8 @@
             Gracias por confiar en nosotros como su proveedor de atención médica.
             Estamos aquí para cuidar de usted y su salud.
         </p>
+    </div>
+    </div>
+    <div th:replace="/fragments/footer :: div"></div>
     </body>
 </html>
