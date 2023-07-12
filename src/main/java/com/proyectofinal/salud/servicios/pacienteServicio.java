@@ -69,8 +69,6 @@ public class pacienteServicio /*implements UserDetailsService */ {
         paciente paciente = new paciente();
         if (respuesta.isPresent()) {
             paciente = respuesta.get();
-            System.out.println(paciente.toString());
-
             paciente.setApellido(apellido);
             paciente.setNombre(nombre);
             paciente.setEmail(email);

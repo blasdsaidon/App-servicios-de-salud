@@ -120,7 +120,7 @@ public class medicoControlador {
 
         try {
             medico medicoModificado = medicoServicio.modificarMedico(idPersona, nombre, apellido, email, telefono, valorConsulta, especialidad,
-                    password, password2, archivo, obraSocialRecibida);
+            password, password2, archivo, obraSocialRecibida);
             session.setAttribute("usuariosession", medicoModificado);
             redireccion.addAttribute("exito", "El profesional se ha actualizado correctamente!");
 

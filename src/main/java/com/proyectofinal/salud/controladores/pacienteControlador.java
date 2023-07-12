@@ -119,7 +119,7 @@ public class pacienteControlador {
         List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
         modelo.addAttribute("ListaGenero", ListaGenero);
         modelo.addAttribute("archivo", archivo);
-
+        
         return "perfil_paciente.html";
     }
 
@@ -132,7 +132,7 @@ public class pacienteControlador {
         modelo.addAttribute("ListaOS", ListaOS);
         List<sexo> ListaGenero = pacienteServicio.listadoGeneros();
         modelo.addAttribute("ListaGenero", ListaGenero);
-
+        
         return "modificar_paciente.html";
     }
 
