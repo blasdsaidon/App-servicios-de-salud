@@ -60,21 +60,28 @@ public class turnoServicio {
                 Date fechaInicio = formatoFecha.parse(fechaInicioString);
                 Date fechaFin = formatoFecha.parse(fechaFinString);
                 Date horaInicio = formatoFechaHora.parse(fechaInicioString + " " + horaInicioString);
+                horaInicio.setHours((horaInicio.getHours()-3));
+                Date correccionhoraInicio = formatoFechaHora.parse(fechaInicioString + " " + horaInicioString);
+                correccionhoraInicio.setHours((correccionhoraInicio.getHours()-3));
                 Date horaFin = formatoFechaHora.parse(fechaFinString + " " + horaFinString);
-
+                horaFin.setHours((horaFin.getHours()-3));
+                
                 Date fechaActual = fechaInicio;
                 while (!fechaActual.after(fechaFin)) {
                     int diaSemana = fechaActual.getDay();
+                        
                     if (diaSemana >= 1 && diaSemana <= 5) {  // Lunes a Viernes (1-5)
 
                         Date fechaHoraTurno = horaInicio;
-                        while (!fechaHoraTurno.after(horaFin)) {
+                        while (!fechaHoraTurno.after(horaFin)&&fechaHoraTurno.getHours()>=horaInicio.getHours()&&fechaHoraTurno.getHours()<=horaFin.getHours()) {
                             turno turno = crearTurno(medico, fechaHoraTurno);
                             turnos.add(turno);
                             fechaHoraTurno = aumentarTiempo(fechaHoraTurno, 30);
                         }
                     }
                     horaInicio = aumentarFecha(fechaActual, 1);
+                    horaInicio.setHours(correccionhoraInicio.getHours());
+                    horaInicio.setMinutes(correccionhoraInicio.getMinutes());
                     fechaActual = aumentarFecha(fechaActual, 1);
                 }
             } catch (ParseException e) {
@@ -102,9 +109,9 @@ public class turnoServicio {
     }
 
     @Transactional
-    public void asignarTurno(String idPaciente, turno turno) {
+    public void asignarTurno(String idPersona, turno turno) {
 
-        Optional<paciente> respuesta = pacienteRepo.findById(idPaciente);
+        Optional<paciente> respuesta = pacienteRepo.findById(idPersona);
 
         if (respuesta.isPresent()) {
             paciente paciente = respuesta.get();
