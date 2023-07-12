@@ -98,7 +98,7 @@ public class pacienteControlador {
         paciente paciente = pacienteServicio.getOne(persona.getIdPersona());
 
         try {
-            turnoServicio.asignarTurno(paciente.getIdPersona(), idTurno);
+            turnoServicio.asignarTurno(paciente.getIdPersona(), idTurno, idPersona);
             redireccion.addAttribute("exito", "El turno se reservo correctamente!");
 
             return "redirect:/";

@@ -16,6 +16,7 @@
         <div th:replace="/fragments/header_banner :: div"></div>
         <main>
             <div th:replace="/fragments/error :: div"></div>
+            
             <!-- Formulario registro -->
             <div class="form-registro">
                 <form th:action="@{/paciente/registroPaciente}" method="POST" enctype="multipart/form-data">
