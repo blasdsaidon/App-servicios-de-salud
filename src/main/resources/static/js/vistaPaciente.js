@@ -16,7 +16,12 @@
 
 
         function Horarios() {
-            // Lógica para ver los turnos del paciente
+            // Lógica para generar turnos del medico
+            console.log('Generar Turnos');
+        }
+        
+        function verTurnos() {
+            // Lógica para ver los turnos asignados
             console.log('Ver turnos');
         }
         

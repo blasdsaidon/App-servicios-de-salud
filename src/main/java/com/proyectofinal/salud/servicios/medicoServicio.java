@@ -236,6 +236,23 @@ public class medicoServicio /*implements UserDetailsService */ {
         return medico;
     }
 
+    public Collection<turno> horariosReservados(String idPersona){
+        
+        medico medico = medicoRepo.buscarMedicoPorID(idPersona);
+        Collection<turno> Turnos = new ArrayList<>();
+        for (turno turno1 : medico.getTurnos()) {
+            if (turno1.getReservado()) {
+                Turnos.add(turno1);
+            }
+            
+        }
+        
+        
+        
+        return Turnos ;
+    }
+    
+    
     public void validar(String nombre, String apellido, String email, String telefono,
             Integer valorConsulta, especialidad especialidad, String password, String password2, Collection<obraSocial> obraSocialRecibida, boolean esNuevoUsuario) throws MiException {
 
@@ -283,29 +300,5 @@ public class medicoServicio /*implements UserDetailsService */ {
             throw new MiException("Si no acepta obras sociales seleccione " + "NINGUNA");
         }
     }
-    /*
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        medico medico = medicoRepo.buscarPorEmail(email);
-
-        if (medico != null) {
-
-            List<GrantedAuthority> permisos = new ArrayList();
-
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + medico.getRol().toString());
-
-            permisos.add(p);
-
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-
-            HttpSession session = attr.getRequest().getSession(true);
-
-            session.setAttribute("usuariosession", medico);
-
-            return new User(medico.getEmail(), medico.getPassword(), permisos);
-        } else {
-            return null;
-        }
-    }*/
 }

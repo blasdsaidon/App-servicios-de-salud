@@ -1,11 +1,13 @@
 package com.proyectofinal.salud.controladores;
 
+import com.proyectofinal.salud.entidades.turno;
 import com.proyectofinal.salud.entidades.medico;
 import com.proyectofinal.salud.enumeradores.especialidad;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.servicios.medicoServicio;
 import com.proyectofinal.salud.servicios.pacienteServicio;
 import com.proyectofinal.salud.servicios.turnoServicio;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -172,4 +174,15 @@ public class medicoControlador {
             return "redirect:/perfil";
         }
     }
+    
+    @GetMapping("/verTurno")
+    public String verTurnos(ModelMap modelo, HttpSession session){
+        
+        medico medico = (medico) session.getAttribute("usuariosession");
+        modelo.put("medico", medico);
+        modelo.put("Turnos", medicoServicio.horariosReservados(medico.getIdPersona()));
+        
+        return "verTurnos_medico.html";   
+    }
+    
 }
