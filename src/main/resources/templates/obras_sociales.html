@@ -1,189 +1,198 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link href="/style/obrasSociales.css" rel ="stylesheet">
-    
-    <title>Obras Sociales</title>
-</head>
-<body>
-    <div th:replace="/fragments/header :: div"></div> 
-    
-  <section class="py-5 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light">Obras Sociales</h1>
-        <p class="lead text-body-secondary">Aqui encontraras las obras sociales que trabajan con nosotros, podras visitar sus sitios web , hacer consultas y adherirte a cualquiera de ellas en caso de no contar con una.</p>
-        
-      </div>
-    </div>
-  </section>
+<html
+    lang="es">
 
-  <div class="album py-5 bg-body-tertiary">
-    <div class="container">
+    <head>
+        <meta charset="UTF-8">
+        <title>Obras Sociales</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link href="/style/obrasSociales.css" rel ="stylesheet">
+        <link href="/style/style.css" rel="stylesheet">
+    </head>
 
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div class="col">
-          <div class="card shadow-sm">
-            <img src="/Otra.imagen/prevencion-salud.jpg" alt="Obra Social 1">
-            
-            <div class="card-body">
-              <p class="card-text"></p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a href="https://www.prevencionsalud.com.ar/" target="_blank">
-                  <button  type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
-                  </a>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card shadow-sm">
-            <img src="/Otra.imagen/osep.jpg" alt="Obra Social 2">
-            <div class="card-body">
-              <p class="card-text"></p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a href="https://osepmendoza.com.ar/web/" target="_blank">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio </button>
+    <body>
+        <div class="container">
+            <header class="d-flex flex-wrap align-items-center justify-content-between justify-content-md-between py-3 mb-4 border-bottom">
+                <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(23, 226, 39, 1);transform: ;msFilter:;">
+                    <path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path>
+                    </svg>
                 </a>
-                </div>
-               
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card shadow-sm">
-            <img src="/Otra.imagen/swissmedical.png" alt="Obra Social 3">
-            <div class="card-body">
-              <p class="card-text"></p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a href="https://www.swissmedical.com.ar/prepagaclientes/" target="_blank">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
-                </a>
-                </div>
-              </div>
-            </div>
-          </div>
+
+                <ul class="nav col-md-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="/" class="nav-link px-2 link-dark">Inicio</a></li>
+                    <li><a href="/listadoProfesionales" class="nav-link px-2 link-dark">Profesionales</a></li>
+                    <li><a href="/obrasSociales" class="nav-link px-2 link-dark">Obras Sociales</a></li>
+                    <li><a href="/sobreNosotros" class="nav-link px-2 link-dark">Sobre Nosotros</a></li>
+                </ul>
+            </header>
         </div>
 
-        <div class="col">
-          <div class="card shadow-sm">
-            <img src="/Otra.imagen/damsu.jpg" alt="Obra Social 4">
-            <div class="card-body">
-              <p class="card-text"></p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a href="https://web.damsusj.com.ar/" target="_blank">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
-                  </a>
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">Obras Sociales</h1>
+                    <p class="lead text-body-secondary">
+                        Aqui encontraras las obras sociales que trabajan con nosotros, visitar sus respectivos sitios web,
+                        hacer consultas y adherirte a cualquiera de ellas en caso de no contar con una.</p>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card shadow-sm">
-            <img src="/Otra.imagen/Logo_OSDE_2020.png" alt="Obra Social 5">
-            <div class="card-body">
-              <p class="card-text"></p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a href="https://www.osde.com.ar/" target="_blank">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card shadow-sm">
-            <img src="/Otra.imagen/medicus.png" alt="Obra Social 6">
-            <div class="card-body">
-              <p class="card-text"></p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a href="https://medicus.com.ar/#/" target="_blank">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </section>
 
-        <div class="col">
-          <div class="card shadow-sm">
-            <img src="/Otra.imagen/omint.png" alt="Obra Social 7">
-            <div class="card-body">
-              <p class="card-text"></p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a href="https://www.omint.com.ar/PlanDeSalud/" target="_blank">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card shadow-sm">
-            <img src="/Otra.imagen/jerarquicos.png" alt="Obra Social 8">
-            <div class="card-body">
-              <p class="card-text"></p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a href="http://www.jerarquicos.com/" target="_blank">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card shadow-sm">
-            <img src="/Otra.imagen/osprera.jpg" alt="Obra Social 9">
-            <div class="card-body">
-              <p class="card-text"></p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a href="https://www.osprera.org.ar/" target="_blank">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        <div class="album py-5 bg-body-tertiary">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-</main>
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="Otra-imagen/prevencion-salud.jpg" alt="Obra Social 1">
+                            <div class="card-body">
+                                <p class="card-text"></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="https://www.prevencionsalud.com.ar/" target="_blank">
+                                            <button  type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="Otra-imagen/osep.jpg" alt="Obra Social 2">
+                            <div class="card-body">
+                                <p class="card-text"></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="https://osepmendoza.com.ar/web/" target="_blank">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="Otra-imagen/swissmedical.png" alt="Obra Social 3">
+                            <div class="card-body">
+                                <p class="card-text"></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="https://www.swissmedical.com.ar/prepagaclientes/" target="_blank">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="Otra-imagen/damsu.jpg" alt="Obra Social 4">
+                            <div class="card-body">
+                                <p class="card-text"></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="https://web.damsusj.com.ar/" target="_blank">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="Otra-imagen/Logo_OSDE_2020.png" alt="Obra Social 5">
+                            <div class="card-body">
+                                <p class="card-text"></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="https://www.osde.com.ar/" target="_blank">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="Otra-imagen/medicus.png" alt="Obra Social 6">
+                            <div class="card-body">
+                                <p class="card-text"></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="https://medicus.com.ar/#/" target="_blank">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="Otra-imagen/omint.jpg" alt="Obra Social 7">
+                            <div class="card-body">
+                                <p class="card-text"></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="https://www.omint.com.ar/PlanDeSalud/" target="_blank">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="Otra-imagen/jerarquicos.png" alt="Obra Social 8">
+                            <div class="card-body">
+                                <p class="card-text"></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="http://www.jerarquicos.com/" target="_blank">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="Otra-imagen/osprera.jpg" alt="Obra Social 9">
+                            <div class="card-body">
+                                <p class="card-text"></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a href="https://www.osprera.org.ar/" target="_blank">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Ir al Sitio</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </body>
-<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <div class="col-md-4 d-flex align-items-center">
-    <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(23, 226, 39, 1);transform: ;msFilter:;"><path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path></svg>
-    </a>
-    <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2023 Salud Egg, Inc</span>
-    </div>
-    
-    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-    <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
-    <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
-    <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
-    </ul> 
-    </div>
-</footer>
+
+    <div th:replace="/fragments/footer :: div"></div>
 </html>

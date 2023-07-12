@@ -12,7 +12,4 @@ public interface turnoRepositorio extends JpaRepository<turno, String>  {
     
     @Query("SELECT t FROM turno t WHERE t.medico.idPersona = :idPersona")
     public Collection<turno> buscarTurnoPorMedico(@Param("idPersona") String idPersona/*,@Param("reservado") Boolean reservado*/);
-
-
-
 }
