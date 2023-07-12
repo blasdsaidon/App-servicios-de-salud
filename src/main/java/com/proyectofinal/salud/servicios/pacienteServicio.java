@@ -2,6 +2,7 @@ package com.proyectofinal.salud.servicios;
 
 import com.proyectofinal.salud.entidades.imagen;
 import com.proyectofinal.salud.entidades.paciente;
+import com.proyectofinal.salud.entidades.turno;
 import com.proyectofinal.salud.enumeradores.obraSocial;
 import com.proyectofinal.salud.enumeradores.rol;
 import com.proyectofinal.salud.enumeradores.sexo;
@@ -11,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +39,7 @@ public class pacienteServicio /*implements UserDetailsService */ {
         paciente paciente = new paciente();
         validar(nombre, apellido, email, telefono, fechaNacimiento, password, password2, true);
 
+        Collection<turno> turnos = new ArrayList<>();
         Date fechaNacimientoDate = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNacimiento);
         paciente.setApellido(apellido);
         paciente.setNombre(nombre);
@@ -49,6 +52,7 @@ public class pacienteServicio /*implements UserDetailsService */ {
         imagen imagen = imagenServicio.guardar(archivo);
         paciente.setImagen(imagen);
         paciente.setFechaNacimiento(fechaNacimientoDate);
+        paciente.setTurnos(turnos);
         pacienteRepo.save(paciente);
     }
 

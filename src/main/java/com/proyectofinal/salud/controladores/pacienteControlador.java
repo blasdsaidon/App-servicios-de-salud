@@ -82,23 +82,29 @@ public class pacienteControlador {
 
         persona persona = (persona) session.getAttribute("usuariosession");
         paciente paciente = pacienteServicio.getOne(persona.getIdPersona());
-        modelo.put("paciente", paciente);
 
         medico medico = medicoServicio.getOne(idPersona);
         Collection<turno> turnos = medico.getTurnos();
 
         modelo.put("turnos", turnos);
-        
+
         return "sacar_turno.html";
     }
 
-    @PostMapping("/sacarTurno/{idPersona}")
-    public String seleccionarTurno(@PathVariable String idPersona, @RequestParam String idMedico, RedirectAttributes redireccion) {
-
+    @PostMapping("/seleccionarTurno/{idPersona}")
+    public String seleccionarTurno(@PathVariable String idPersona, @RequestParam String idTurno, RedirectAttributes redireccion, HttpSession session) {
         
-        
-        redireccion.addAttribute("exito", "El turno se reservo correctamente!");
-        return "redirect:/";
+        persona persona = (persona) session.getAttribute("usuariosession");
+        paciente paciente = pacienteServicio.getOne(persona.getIdPersona());
+        System.out.println(idPersona + "  " + idTurno);
+        try {
+            turnoServicio.asignarTurno(paciente.getIdPersona(), idTurno);
+            redireccion.addAttribute("exito", "El turno se reservo correctamente!");
+            return "redirect:/";
+        } catch (Exception e) {
+            redireccion.addAttribute("error", "El turno no pudo reservarse correctamente!");
+            return "redirect:/";
+        }
     }
 
     @GetMapping("/perfil")

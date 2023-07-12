@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +29,9 @@ public class turnoServicio {
 
     @Autowired
     private medicoServicio medicoServicio;
+
+    @Autowired
+    private pacienteServicio pacienteServicio;
 
     @Transactional
     public turno crearTurno(medico medico, Date fechaTurno) { //String fechaTurno en lugar de Date ||  throws ParseException
@@ -60,20 +62,20 @@ public class turnoServicio {
                 Date fechaInicio = formatoFecha.parse(fechaInicioString);
                 Date fechaFin = formatoFecha.parse(fechaFinString);
                 Date horaInicio = formatoFechaHora.parse(fechaInicioString + " " + horaInicioString);
-                horaInicio.setHours((horaInicio.getHours()-3));
+                horaInicio.setHours((horaInicio.getHours()));//-3
                 Date correccionhoraInicio = formatoFechaHora.parse(fechaInicioString + " " + horaInicioString);
-                correccionhoraInicio.setHours((correccionhoraInicio.getHours()-3));
+                correccionhoraInicio.setHours((correccionhoraInicio.getHours()));//-3
                 Date horaFin = formatoFechaHora.parse(fechaFinString + " " + horaFinString);
-                horaFin.setHours((horaFin.getHours()-3));
-                
+                horaFin.setHours((horaFin.getHours()));//-3
+
                 Date fechaActual = fechaInicio;
                 while (!fechaActual.after(fechaFin)) {
                     int diaSemana = fechaActual.getDay();
-                        
+
                     if (diaSemana >= 1 && diaSemana <= 5) {  // Lunes a Viernes (1-5)
 
                         Date fechaHoraTurno = horaInicio;
-                        while (!fechaHoraTurno.after(horaFin)&&fechaHoraTurno.getHours()>=horaInicio.getHours()&&fechaHoraTurno.getHours()<=horaFin.getHours()) {
+                        while (!fechaHoraTurno.after(horaFin) && fechaHoraTurno.getHours() >= horaInicio.getHours() && fechaHoraTurno.getHours() <= horaFin.getHours()) {
                             turno turno = crearTurno(medico, fechaHoraTurno);
                             turnos.add(turno);
                             fechaHoraTurno = aumentarTiempo(fechaHoraTurno, 30);
@@ -109,19 +111,29 @@ public class turnoServicio {
     }
 
     @Transactional
-    public void asignarTurno(String idPersona, turno turno) {
-
+    public void asignarTurno(String idPersona, String idTurno) {
+        System.out.println("llegamos");
+        
+//        paciente pacientee = pacienteServicio.getOne(idPersona);
         Optional<paciente> respuesta = pacienteRepo.findById(idPersona);
+        Optional<turno> respuesta2 = turnoRepo.findById(idTurno);
 
+//        System.out.println(pacientee);
+//        System.out.println(respuesta2);
+        
         if (respuesta.isPresent()) {
-            paciente paciente = respuesta.get();
-            turno.setPaciente(paciente);
-            turno.setReservado(Boolean.TRUE);
-            turnoRepo.save(turno);
-            Collection<turno> turnosPaciente = paciente.getTurnos();
-            turnosPaciente.add(turno);
-            paciente.setTurnos(turnosPaciente);
-            pacienteRepo.save(paciente);
+            if (respuesta2.isPresent()) {
+                turno turno = respuesta2.get();
+                paciente paciente = respuesta.get();
+                System.out.println(paciente.getNombre() + turno.getFecha());
+                turno.setPaciente(paciente);
+                turno.setReservado(Boolean.TRUE);
+                turnoRepo.save(turno);
+                Collection<turno> turnosPaciente = paciente.getTurnos();
+                turnosPaciente.add(turno);
+                paciente.setTurnos(turnosPaciente);
+                pacienteRepo.save(paciente);
+            }
         }
     }
 
@@ -154,7 +166,7 @@ public class turnoServicio {
     public Collection<turno> accederTurnosPorMedico(String idMedico) {
 
         medico medico = medicoServicio.buscarMedicoPorID(idMedico);
-        
+
         return medico.getTurnos();
     }
 
