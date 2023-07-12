@@ -8,6 +8,12 @@
             // Lógica para solicitar turno con el médico
             console.log('Solicitar turno con el médico');
         }
+        
+        function modificarTurno() {
+            // Lógica para modificar turno con el médico
+            console.log('Modificar turno con el médico');
+        }
+
 
         function Horarios() {
             // Lógica para ver los turnos del paciente
