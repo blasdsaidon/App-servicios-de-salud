@@ -174,6 +174,7 @@ public class medicoControlador {
             return "redirect:/perfil";
         }
     }
+
     
     @GetMapping("/verTurno")
     public String verTurnos(ModelMap modelo, HttpSession session){
@@ -186,3 +187,6 @@ public class medicoControlador {
     }
     
 }
+
+}
+

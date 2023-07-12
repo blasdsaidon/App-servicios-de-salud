@@ -8,10 +8,7 @@
     margin-bottom: 50px;
 }
 
-
-
 body {
-    
     padding-bottom: 3rem;
     color: #5a5a5a;
     background-color: rgba(226, 247, 250, 0.651);
@@ -22,11 +19,7 @@ body {
 .form-registro {
     width: 60%;
     margin: auto;
-
 }
-
-
-
 
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
@@ -35,6 +28,7 @@ body {
 .carousel {
     margin-bottom: 4rem;
 }
+
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
     color: black;
@@ -60,7 +54,6 @@ body {
     height: 40rem;
 }
 
-
 /* MARKETING CONTENT
 -------------------------------------------------- */
 
@@ -84,13 +77,13 @@ body {
 .marketing h2 {
     font-weight: 400;
 }
+
 /* rtl:begin:ignore */
 .marketing .col-lg-3 p {
     margin-right: .75rem;
     margin-left: .75rem;
 }
 /* rtl:end:ignore */
-
 
 /* Featurettes
 ------------------------- */
@@ -106,7 +99,6 @@ body {
     /* rtl:remove */
     letter-spacing: -.05rem;
 }
-
 
 /* RESPONSIVE CSS
 -------------------------------------------------- */
