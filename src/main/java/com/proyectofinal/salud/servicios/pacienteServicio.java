@@ -80,7 +80,7 @@ public class pacienteServicio /*implements UserDetailsService */ {
             paciente.setRol(rol.USER);
             paciente.setPassword(new BCryptPasswordEncoder().encode(password));
             paciente.setImagen(respuesta.get().getImagen());
-
+            paciente.setTurnos(respuesta.get().getTurnos());
             if (archivo.getContentType().contains("image")) {
                 String idImagen = null;
                 if (paciente.getImagen() != null) {
@@ -192,29 +192,5 @@ public class pacienteServicio /*implements UserDetailsService */ {
             throw new MiException("Las contraseñas ingresadas deben ser iguales.");
         }
     }
-    /*
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        paciente paciente = pacienteRepo.buscarPorEmail(email);
-
-        if (paciente != null) {
-
-            List<GrantedAuthority> permisos = new ArrayList();
-
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + paciente.getRol().toString());
-
-            permisos.add(p);
-
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-
-            HttpSession session = attr.getRequest().getSession(true);
-
-            session.setAttribute("usuariosession", paciente);
-
-            return new User(paciente.getEmail(), paciente.getPassword(), permisos);
-        } else {
-            return null;
-        }
-    }*/
 }

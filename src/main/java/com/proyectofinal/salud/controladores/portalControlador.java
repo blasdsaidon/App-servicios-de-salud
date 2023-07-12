@@ -73,6 +73,12 @@ public class portalControlador {
 
         return "listado_profesionales";
     }
+    
+    @GetMapping("/obrasSociales")
+    public String obrasSociales(ModelMap modelo, HttpSession session){
+    
+    return "obras_sociales.html";
+    }
 
     @PostMapping("/profesionBuscada")
     public String profesionBuscada(String buscar, ModelMap modelo) {
