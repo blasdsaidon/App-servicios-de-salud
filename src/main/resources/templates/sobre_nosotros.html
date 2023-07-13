@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Sobre Nosotros</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"/>
+        <link href="/style/sobreNosotros.css" rel="stylesheet"/>
+    </head>
+
+    <body>
+
+        <div class="container">
+            <header class="d-flex flex-wrap align-items-center justify-content-between justify-content-md-between py-3 mb-4 border-bottom">
+                <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" style="fill: rgba(23, 226, 39, 1); transform: ; msfilter: ">
+                    <path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path>
+                    </svg>
+                </a>
+
+                <ul class="nav col-md-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="/" class="nav-link px-2 link-dark">Inicio</a></li>
+                    <li><a href="/listadoProfesionales" class="nav-link px-2 link-dark">Profesionales</a></li>
+                    <li><a href="/obrasSociales" class="nav-link px-2 link-dark">Obras Sociales</a></li>
+                    <li><a href="/sobreNosotros" class="nav-link px-2 link-dark">Sobre Nosotros</a></li>
+                </ul>
+            </header>
+        </div>
+        <div style="padding: 25px;">
+            <div>
+                <h2>Salud EGG</h2>
+
+                <p>
+                    Somos una clínica médica comprometida con el bienestar de nuestros
+                    pacientes. Nuestro objetivo es brindar servicios de calidad, ofreciendo
+                    atención integral y personalizada.
+                </p>
+
+                <p>
+                    Valoramos la confianza que nuestros pacientes depositan en nosotros y nos
+                    esforzamos por establecer relaciones sólidas y duraderas. Nos
+                    comprometemos a escuchar a nuestros pacientes, responder a sus inquietudes
+                    y brindarles el apoyo necesario en cada etapa de su atención médica.
+                </p>
+            </div>
+            <div class="image-container">
+                <div class="item">
+                    <img src="Otra-imagen/medicos-1.jpg" />
+                </div>
+                <div class="item">
+                    <p>
+                        En nuestra clínica, entendemos la importancia de tratar a cada persona
+                        como un ser humano único. Nos preocupamos no solo por el diagnóstico y
+                        el tratamiento, sino también por el bienestar emocional y la comodidad
+                        de nuestros pacientes.
+                    </p>
+                </div>
+            </div>
+
+            <div class="image-container">
+
+                <div class="item">
+                    <p>
+                        Nuestro equipo de profesionales altamente capacitados y especializados
+                        se dedica a brindar servicios médicos de vanguardia, utilizando las
+                        últimas tecnologías y prácticas basadas en la evidencia. Nos
+                        mantenemos actualizados con los avances médicos para garantizar la
+                        mejor atención posible.
+                    </p>
+                </div>
+                <div class="item">
+                    <img src="Otra-imagen/medicos-2.jpg" />
+                </div>
+            </div>
+            <div style="padding-top: 20px ;">
+                <p >
+                    En nuestra clínica, creemos en la importancia de promover la prevención y
+                    la educación en salud. Trabajamos junto con nuestros pacientes para
+                    fomentar un estilo de vida saludable y proporcionarles la información
+                    necesaria para tomar decisiones informadas sobre su bienestar.
+                </p>
+
+                <p>
+                    Gracias por confiar en nosotros como su proveedor de atención médica.
+                    Estamos aquí para cuidar de usted y su salud.
+                </p>
+            </div>
+        </div>
+        
+        <div th:replace="/fragments/footer :: div"></div>
+    </body>
+</html>
