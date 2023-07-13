@@ -57,17 +57,6 @@ public class medicoServicio /*implements UserDetailsService */ {
         medicoRepo.save(medico);
     }
 
-//    @Transactional
-//    public void cargarObrasSociales(obraSocial idMedico, obraSocial obraSocial) {
-//
-//        Optional<medico> respuesta = medicoRepo.findById(idMedico);
-//        medico medico = respuesta.get();
-//
-//        if (respuesta.isPresent()) {
-//            medico.setObraSocialRecibida(obraSocial);
-//            medicoRepo.save(medico);
-//        }
-//    }
     @Transactional
     public void estado(String idPersona) throws Exception {
 

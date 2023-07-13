@@ -79,27 +79,35 @@ public class portalControlador {
 
         if (buscar == null || buscar.isEmpty()) {
             modelo.put("listadoProfesionales", medicoServicio.listarMedicos());
+
         } else {
             if (buscar.equalsIgnoreCase("PEDIATRIA") || buscar.equalsIgnoreCase("GINECOLOGIA")
                     || buscar.equalsIgnoreCase("CLINICA") || buscar.equalsIgnoreCase("CARDIOLOGIA")) {
                 especialidad especialidad = null;
+
                 try {
                     especialidad = especialidad.valueOf(buscar.toUpperCase());
                     List<medico> busqueda = medicoServicio.buscarMedicoPorEspecialidad(especialidad);
                     modelo.put("listadoProfesionales", busqueda);
+
                 } catch (Exception e) {
                     modelo.put("error", "La especialidad buscada no existe.");
+
                 } finally {
                     return "listado_profesionales.html";
                 }
+
             } else {
                 String nombre = null;
+
                 try {
                     nombre = nombre.valueOf(buscar.toUpperCase());
                     List<medico> busqueda = medicoServicio.buscarMedicoPorNombre(nombre);
                     modelo.put("listadoProfesionales", busqueda);
+
                 } catch (Exception e) {
                     modelo.put("error", "El nombre del profesional buscado no existe.");
+
                 } finally {
                     return "listado_profesionales.html";
                 }
@@ -109,8 +117,15 @@ public class portalControlador {
         return "listado_profesionales.html";
     }
 
+    @GetMapping("/obrasSociales")
+    public String obrasSociales() {
+
+        return "obras_sociales.html";
+    }
+
     @GetMapping("/sobreNosotros")
     public String sobreNosotros() {
+
         return "sobre_nosotros.html";
     }
 }
